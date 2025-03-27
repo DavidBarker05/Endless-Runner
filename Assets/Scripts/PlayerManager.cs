@@ -1,5 +1,5 @@
 using UnityEngine;
-using utilityMethods = GameUtilities.UtilityMethods;
+using UtilityMethods = GameUtilities.UtilityMethods;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -42,7 +42,7 @@ public class PlayerManager : MonoBehaviour
         pLanes[2] = lanes[2].position;
         transform.position = pLanes[currentLane];
         vVel = SNAP_TO_GROUND_SPEED;
-        cc.Move(utilityMethods.YVector(vVel));
+        cc.Move(UtilityMethods.YVector(vVel));
     }
 
     void Update()
@@ -59,16 +59,16 @@ public class PlayerManager : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Vector3 laneDisplacement = utilityMethods.HorizontalVector(pLanes[targetLane] - pLanes[currentLane]);
+        Vector3 laneDisplacement = UtilityMethods.HorizontalVector(pLanes[targetLane] - pLanes[currentLane]);
         Vector3 hVel = laneDisplacement / switchTime;
-        Vector3 movement = (hVel + utilityMethods.YVector(vVel)) * Time.fixedDeltaTime;
+        Vector3 movement = (hVel + UtilityMethods.YVector(vVel)) * Time.fixedDeltaTime;
         cc.Move(movement);
         if (cc.isGrounded) vVel = SNAP_TO_GROUND_SPEED;
         else vVel -= gravity * Time.fixedDeltaTime;
-        float currentDistsance = utilityMethods.HorizontalDistance(transform.position, pLanes[targetLane]);
+        float currentDistsance = UtilityMethods.HorizontalDistance(transform.position, pLanes[targetLane]);
         if (currentDistsance <= SNAP_DISTANCE)
         {
-            transform.position = utilityMethods.YVector(transform.position) + utilityMethods.HorizontalVector(pLanes[targetLane]);
+            transform.position = UtilityMethods.YVector(transform.position) + UtilityMethods.HorizontalVector(pLanes[targetLane]);
             currentLane = targetLane;
         }
     }
