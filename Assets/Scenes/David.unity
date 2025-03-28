@@ -560,7 +560,7 @@ GameObject:
   - component: {fileID: 1153828379}
   - component: {fileID: 1153828378}
   m_Layer: 0
-  m_Name: Capsule
+  m_Name: Mesh
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -671,6 +671,8 @@ MonoBehaviour:
   switchTime: 0.25
   jumpHeight: 1
   jumpTime: 1
+  slideHeight: 1
+  maxSlideTime: 0
   gravity: 9.8
 --- !u!4 &1220848833
 Transform:
