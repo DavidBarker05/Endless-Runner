@@ -39,6 +39,9 @@ public class PlayerManager : MonoBehaviour
     [Tooltip("The time in seconds that the player must hold the reset button in order to reset")]
     [Min(0.001f)]
     float resetHoldTime;
+    [SerializeField]
+    [Tooltip("The level manager of the game")]
+    LevelManager levelManager;
 
     public bool IsSliding { get; private set; }
 
@@ -59,7 +62,9 @@ public class PlayerManager : MonoBehaviour
         cc = GetComponent<CharacterController>();
         standHeight = cc.height;
         IsSliding = false;
+        cc.enabled = false;
         transform.position = lanes[currentLane].position;
+        cc.enabled = true;
         vVel = SNAP_TO_GROUND_SPEED;
         cc.Move(UtilityMethods.YVector(vVel));
     }
@@ -76,12 +81,9 @@ public class PlayerManager : MonoBehaviour
         if (Input.GetKey(KeyCode.Space) && cc.isGrounded && !IsSliding) vVel = 2 * jumpHeight / jumpTime + gravity * jumpTime / 4f;
         pressingSlide = Input.GetKey(KeyCode.LeftControl);
         if (!pressingSlide) currentSlideTime = 0f;
-        if (Input.GetKey(KeyCode.R)) resetHoldTime += Time.deltaTime;
+        if (Input.GetKey(KeyCode.R)) currentResetHoldTime += Time.deltaTime;
         if (Input.GetKeyUp(KeyCode.R)) currentResetHoldTime = 0f;
-        if (currentResetHoldTime >= resetHoldTime)
-        {
-            // Reset
-        }
+        if (currentResetHoldTime >= resetHoldTime) levelManager.ResetGame();
     }
 
     private void FixedUpdate()
@@ -110,5 +112,20 @@ public class PlayerManager : MonoBehaviour
             transform.position = UtilityMethods.YVector(transform.position) + UtilityMethods.HorizontalVector(lanes[targetLane].position);
             currentLane = targetLane;
         }
+    }
+
+    public void ResetPlayer()
+    {
+        IsSliding = false;
+        currentLane = 1;
+        targetLane = 1;
+        cc.enabled = false;
+        transform.position = lanes[currentLane].position;
+        cc.enabled = true;
+        vVel = SNAP_TO_GROUND_SPEED;
+        cc.Move(UtilityMethods.YVector(vVel));
+        currentSlideTime = 0f;
+        currentResetHoldTime = 0f;
+        pressingSlide = false;
     }
 }

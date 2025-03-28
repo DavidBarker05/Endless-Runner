@@ -2,15 +2,19 @@ using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    [SerializeField]
+    PlayerManager playerManager;
+
     void Start()
     {
-        
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+    }
+
+    public void ResetGame()
+    {
+        playerManager.ResetPlayer();
     }
 }
