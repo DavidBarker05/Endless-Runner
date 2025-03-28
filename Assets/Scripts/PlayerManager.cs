@@ -49,6 +49,7 @@ public class PlayerManager : MonoBehaviour
     CharacterController cc;
     int currentLane = 1;
     int targetLane = 1;
+    int horizontalDirection = 0;
     float vVel;
     float standHeight;
     float currentSlideTime = 0f;
@@ -76,10 +77,12 @@ public class PlayerManager : MonoBehaviour
         if ((Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D)) && !IsSliding)
         {
             currentLane = targetLane;
-            if (Input.GetKeyDown(KeyCode.A)) targetLane--;
-            if (Input.GetKeyDown(KeyCode.D)) targetLane++;
+            if (Input.GetKeyDown(KeyCode.A)) horizontalDirection = -1;
+            if (Input.GetKeyDown(KeyCode.D)) horizontalDirection = 1;
+            targetLane += horizontalDirection;
             targetLane = Mathf.Clamp(targetLane, 0, 2);
         }
+        if (Input.GetKeyUp(KeyCode.A) && horizontalDirection == -1 || Input.GetKeyUp(KeyCode.D) && horizontalDirection == 1) horizontalDirection = 0;
         if (Input.GetKey(KeyCode.Space) && cc.isGrounded && !IsSliding) vVel = 2 * (jumpHeight + ExtraJumpHeight) / jumpTime + gravity * jumpTime / 4f;
         pressingSlide = Input.GetKey(KeyCode.LeftControl);
         if (!pressingSlide) currentSlideTime = 0f;
@@ -113,6 +116,8 @@ public class PlayerManager : MonoBehaviour
         {
             transform.position = UtilityMethods.YVector(transform.position) + UtilityMethods.HorizontalVector(lanes[targetLane].position);
             currentLane = targetLane;
+            targetLane += horizontalDirection;
+            targetLane = Mathf.Clamp(targetLane, 0, 2);
         }
     }
 
@@ -122,6 +127,7 @@ public class PlayerManager : MonoBehaviour
         ExtraJumpHeight = 0f;
         currentLane = 1;
         targetLane = 1;
+        horizontalDirection = 0;
         cc.enabled = false;
         transform.position = lanes[currentLane].position;
         cc.enabled = true;
