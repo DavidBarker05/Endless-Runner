@@ -44,6 +44,7 @@ public class PlayerManager : MonoBehaviour
     LevelManager levelManager;
 
     public bool IsSliding { get; private set; }
+    public float ExtraJumpHeight { private get; set; }
 
     CharacterController cc;
     int currentLane = 1;
@@ -62,6 +63,7 @@ public class PlayerManager : MonoBehaviour
         cc = GetComponent<CharacterController>();
         standHeight = cc.height;
         IsSliding = false;
+        ExtraJumpHeight = 0f;
         cc.enabled = false;
         transform.position = lanes[currentLane].position;
         cc.enabled = true;
@@ -78,7 +80,7 @@ public class PlayerManager : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.D)) targetLane++;
             targetLane = Mathf.Clamp(targetLane, 0, 2);
         }
-        if (Input.GetKey(KeyCode.Space) && cc.isGrounded && !IsSliding) vVel = 2 * jumpHeight / jumpTime + gravity * jumpTime / 4f;
+        if (Input.GetKey(KeyCode.Space) && cc.isGrounded && !IsSliding) vVel = 2 * (jumpHeight + ExtraJumpHeight) / jumpTime + gravity * jumpTime / 4f;
         pressingSlide = Input.GetKey(KeyCode.LeftControl);
         if (!pressingSlide) currentSlideTime = 0f;
         if (Input.GetKey(KeyCode.R)) currentResetHoldTime += Time.deltaTime;
@@ -117,6 +119,7 @@ public class PlayerManager : MonoBehaviour
     public void ResetPlayer()
     {
         IsSliding = false;
+        ExtraJumpHeight = 0f;
         currentLane = 1;
         targetLane = 1;
         cc.enabled = false;
