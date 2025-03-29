@@ -20,6 +20,12 @@ namespace GameUtilities
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector3 ZVector(float z)
+        {
+            return new Vector3(0f, 0f, z);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 HorizontalVector(Vector3 v)
         {
             return new Vector3(v.x, 0f, v.z);

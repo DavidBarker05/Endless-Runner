@@ -59,16 +59,20 @@ public class PlayerManager : MonoBehaviour
     const float SNAP_DISTANCE = 0.5f;
     const float SNAP_TO_GROUND_SPEED = -0.01f;
 
-    void Start()
+    private void Awake()
     {
         cc = GetComponent<CharacterController>();
         standHeight = cc.height;
         IsSliding = false;
         ExtraJumpHeight = 0f;
+        vVel = SNAP_TO_GROUND_SPEED;
+    }
+
+    void Start()
+    {
         cc.enabled = false;
         transform.position = lanes[currentLane].position;
         cc.enabled = true;
-        vVel = SNAP_TO_GROUND_SPEED;
         cc.Move(UtilityMethods.YVector(vVel));
     }
 
