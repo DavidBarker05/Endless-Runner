@@ -6,6 +6,7 @@ TagManager:
   tags:
   - FrontTerrain
   - BackTerrain
+  - SecurityDoor
   layers:
   - Default
   - TransparentFX

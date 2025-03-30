@@ -1,4 +1,5 @@
 using Vector3 = UnityEngine.Vector3;
+using Random = UnityEngine.Random;
 using Math = System.Math;
 using MethodImpl = System.Runtime.CompilerServices.MethodImplAttribute;
 using MethodImplOptions = System.Runtime.CompilerServices.MethodImplOptions;
@@ -7,6 +8,12 @@ namespace GameUtilities
 {
     public struct UtilityMethods
     {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector3 XVector(Vector3 v)
+        {
+            return new Vector3(v.x, 0f, 0f);
+        }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 YVector(float y)
         {
@@ -26,13 +33,19 @@ namespace GameUtilities
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Vector3 HorizontalVector(Vector3 v)
+        public static Vector3 XZVector(Vector3 v)
         {
             return new Vector3(v.x, 0f, v.z);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float HorizontalDistance(Vector3 a, Vector3 b)
+        public static Vector3 YZVector(Vector3 v)
+        {
+            return new Vector3(0f, v.y, v.z);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float XZDistance(Vector3 a, Vector3 b)
         {
             float dx = a.x - b.x;
             float dz = a.z - b.z;

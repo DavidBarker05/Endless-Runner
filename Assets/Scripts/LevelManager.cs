@@ -45,14 +45,7 @@ public class LevelManager : MonoBehaviour
         GenerateTerrainOnTrigger = false;
     }
 
-    void Start()
-    {
-        GenerateStartingTerrain();
-    }
-
-    void Update()
-    {
-    }
+    void Start() => GenerateStartingTerrain();
 
     private void FixedUpdate()
     {
@@ -89,19 +82,34 @@ public class LevelManager : MonoBehaviour
     public void GenerateTerrain()
     {
         if (PossibleTerrain.Count == 0) return;
-        int index = Random.Range(0, PossibleTerrain.Count);
-        while (!IsValidTerrain(PossibleTerrain[index]))
+        int terrainIndex = Random.Range(0, PossibleTerrain.Count);
+        while (!IsValidTerrain(PossibleTerrain[terrainIndex]))
         {
-            index = Random.Range(0, PossibleTerrain.Count);
+            terrainIndex = Random.Range(0, PossibleTerrain.Count);
         }
-        var terrain = Instantiate(PossibleTerrain[index], transform);
+        var terrain = Instantiate(PossibleTerrain[terrainIndex], transform);
         terrain.transform.position = transform.position;
-        terrain.transform.rotation = transform.rotation;
-        if (terrain.GetComponent<SpawnableTerrain>().ObstacleRows.Count > 0)
+        if (levelOneObstacles.Count > 0 && terrain.GetComponent<SpawnableTerrain>().ObstacleRows.Count > 0)
         {
             foreach (var obstacleRow in terrain.GetComponent<SpawnableTerrain>().ObstacleRows)
             {
-
+                int numberOfObstacles = Random.Range(obstacleRow.GetComponent<ObstacleRow>().MinimumObstacles, obstacleRow.GetComponent<ObstacleRow>().MaximumObstacles + 1);
+                if (numberOfObstacles == 0) continue;
+                int firstSpawnLane = Random.Range(0, lanes.Length);
+                int obstacleIndex = Random.Range(0, levelOneObstacles.Count);
+                Vector3 spawnPos = UtilityMethods.YZVector(obstacleRow.transform.position) + UtilityMethods.XVector(lanes[firstSpawnLane].position);
+                var firstObstacle = Instantiate(levelOneObstacles[obstacleIndex], obstacleRow.transform);
+                firstObstacle.transform.position = spawnPos;
+                if (numberOfObstacles == 1) continue;
+                int secondSpawnLane = Random.Range(0, lanes.Length);
+                while (firstSpawnLane == secondSpawnLane)
+                {
+                    secondSpawnLane = Random.Range(0, lanes.Length);
+                }
+                obstacleIndex = Random.Range(0, levelOneObstacles.Count);
+                spawnPos = UtilityMethods.YZVector(obstacleRow.transform.position) + UtilityMethods.XVector(lanes[secondSpawnLane].position);
+                var secondObstacle = Instantiate(levelOneObstacles[obstacleIndex], obstacleRow.transform);
+                secondObstacle.transform.position = spawnPos;
             }
         }
         generatedTerrain.Add(terrain);
