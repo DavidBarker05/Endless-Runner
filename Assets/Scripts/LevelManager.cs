@@ -31,6 +31,9 @@ public class LevelManager : MonoBehaviour
     [SerializeField]
     [Tooltip("List of spawnable obstacles for level one")]
     List<GameObject> levelOneObstacles = new List<GameObject>();
+    [SerializeField]
+    [Tooltip("List of spawnable pickups for level one")]
+    List<GameObject> levelOnePickups = new List<GameObject>();
 
     public float Speed { get; private set; }
     public bool GenerateTerrainOnTrigger { get; private set; }
@@ -110,6 +113,21 @@ public class LevelManager : MonoBehaviour
                 spawnPos = UtilityMethods.YZVector(obstacleRow.transform.position) + UtilityMethods.XVector(lanes[secondSpawnLane].position);
                 var secondObstacle = Instantiate(levelOneObstacles[obstacleIndex], obstacleRow.transform);
                 secondObstacle.transform.position = spawnPos;
+            }
+        }
+        if (levelOnePickups.Count > 0 && terrain.GetComponent<SpawnableTerrain>().PickupRows.Count > 0)
+        {
+            foreach (var pickupRow in terrain.GetComponent<SpawnableTerrain>().PickupRows)
+            {
+                float foo = Random.Range(0f, 1f);
+                if (foo <= pickupRow.GetComponent<PickupRow>().SpawnChance)
+                {
+                    int lane = Random.Range(0, lanes.Length);
+                    int pickupIndex = Random.Range(0, levelOnePickups.Count);
+                    Vector3 spawnPos = UtilityMethods.YZVector(pickupRow.transform.position) + UtilityMethods.XVector(lanes[lane].position);
+                    var pickup = Instantiate(levelOnePickups[pickupIndex], pickupRow.transform);
+                    pickup.transform.position = spawnPos;
+                }
             }
         }
         generatedTerrain.Add(terrain);
