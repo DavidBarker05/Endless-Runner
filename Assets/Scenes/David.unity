@@ -1328,7 +1328,7 @@ MonoBehaviour:
   levelOneStartingTerrain:
   - {fileID: 1368948074}
   levelOneTerrain:
-  - {fileID: 1368948074}
+  - {fileID: 375678367}
   levelOneObstacles: []
 --- !u!4 &1756536977
 Transform:

@@ -88,19 +88,21 @@ public class LevelManager : MonoBehaviour
 
     public void GenerateTerrain()
     {
-        if (isLevelStart && levelOneStartingTerrain.Count == 0 || !isLevelStart && levelOneTerrain.Count == 0) return;
-        int index = Random.Range(0, isLevelStart ? levelOneStartingTerrain.Count : levelOneTerrain.Count);
-        bool validTerrain = IsValidTerrain(isLevelStart ? levelOneStartingTerrain[index] : levelOneTerrain[index]);
-        while (!validTerrain)
+        if (PossibleTerrain.Count == 0) return;
+        int index = Random.Range(0, PossibleTerrain.Count);
+        while (!IsValidTerrain(PossibleTerrain[index]))
         {
-            index = Random.Range(0, isLevelStart ? levelOneStartingTerrain.Count : levelOneTerrain.Count);
-            validTerrain = IsValidTerrain(isLevelStart ? levelOneStartingTerrain[index] : levelOneTerrain[index]);
+            index = Random.Range(0, PossibleTerrain.Count);
         }
-        var terrain = Instantiate(isLevelStart ? levelOneStartingTerrain[index] : levelOneTerrain[index], transform);
+        var terrain = Instantiate(PossibleTerrain[index], transform);
         terrain.transform.position = transform.position;
         terrain.transform.rotation = transform.rotation;
-        if (terrain.GetComponent<SpawnableTerrain>().obstacleRows.Count > 0)
+        if (terrain.GetComponent<SpawnableTerrain>().ObstacleRows.Count > 0)
         {
+            foreach (var obstacleRow in terrain.GetComponent<SpawnableTerrain>().ObstacleRows)
+            {
+
+            }
         }
         generatedTerrain.Add(terrain);
         lastGeneratedTerrain = terrain;
@@ -125,8 +127,17 @@ public class LevelManager : MonoBehaviour
         isLevelStart = false;
     }
 
+    List<GameObject> PossibleTerrain
+    {
+        get
+        {
+            return isLevelStart ? levelOneStartingTerrain : levelOneTerrain;
+        }
+    }
+
     bool IsValidTerrain(GameObject terrain)
     {
+        if (lastGeneratedTerrain == null) return true;
         if (lastGeneratedTerrain.CompareTag("SecurityDoor")) return !terrain.CompareTag("SecurityDoor");
         return true;
     }
