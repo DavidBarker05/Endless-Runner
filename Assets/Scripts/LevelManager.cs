@@ -90,16 +90,18 @@ public class LevelManager : MonoBehaviour
     {
         if (isLevelStart && levelOneStartingTerrain.Count == 0 || !isLevelStart && levelOneTerrain.Count == 0) return;
         int index = Random.Range(0, isLevelStart ? levelOneStartingTerrain.Count : levelOneTerrain.Count);
-        var terrain = Instantiate(isLevelStart ? levelOneStartingTerrain[index] : levelOneTerrain[index], transform);
-        bool validTerrain = IsValidTerrain(terrain);
+        bool validTerrain = IsValidTerrain(isLevelStart ? levelOneStartingTerrain[index] : levelOneTerrain[index]);
         while (!validTerrain)
         {
             index = Random.Range(0, isLevelStart ? levelOneStartingTerrain.Count : levelOneTerrain.Count);
-            terrain = Instantiate(isLevelStart ? levelOneStartingTerrain[index] : levelOneTerrain[index], transform);
-            validTerrain = IsValidTerrain(terrain);
+            validTerrain = IsValidTerrain(isLevelStart ? levelOneStartingTerrain[index] : levelOneTerrain[index]);
         }
+        var terrain = Instantiate(isLevelStart ? levelOneStartingTerrain[index] : levelOneTerrain[index], transform);
         terrain.transform.position = transform.position;
         terrain.transform.rotation = transform.rotation;
+        if (terrain.GetComponent<SpawnableTerrain>().obstacleRows.Count > 0)
+        {
+        }
         generatedTerrain.Add(terrain);
         lastGeneratedTerrain = terrain;
     }
