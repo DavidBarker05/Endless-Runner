@@ -1,5 +1,5 @@
-using UnityEngine;
 using GameUtilities;
+using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
 {
