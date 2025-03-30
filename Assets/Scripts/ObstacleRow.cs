@@ -6,7 +6,7 @@ public class ObstacleRow : MonoBehaviour
     [Range(0, 2)]
     int minimumObstacles;
     [SerializeField]
-    [Range(0, 2)]
+    [Range(1, 2)]
     int maximumObstacles;
 
     public int MinimumObstacles { get { return minimumObstacles; } }
