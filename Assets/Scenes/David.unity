@@ -1492,7 +1492,7 @@ GameObject:
   - component: {fileID: 1153828376}
   - component: {fileID: 1153828379}
   - component: {fileID: 1153828378}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Mesh
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -1578,7 +1578,7 @@ GameObject:
   - component: {fileID: 1220848833}
   - component: {fileID: 1220848832}
   - component: {fileID: 1220848834}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Player Empty
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -2177,13 +2177,13 @@ MonoBehaviour:
   - {fileID: 424864655}
   playerManager: {fileID: 1220848832}
   startingSpeed: 0.1
-  startingTerrainCount: 6
+  startingTerrainCount: 7
   levelOneStartingTerrain:
   - {fileID: 1368948074}
   levelOneTerrain:
   - {fileID: 375678367}
   - {fileID: 332504614}
-  - {fileID: 332504614}
+  - {fileID: 1577308175}
   levelOneObstacles:
   - {fileID: 1520621689}
   levelOnePickups:
@@ -2223,7 +2223,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 10, y: 10, z: 0.1}
-  m_Center: {x: 0, y: -5.001, z: -60.05}
+  m_Center: {x: 0, y: -5.001, z: -70.05}
 --- !u!1 &1971858634
 GameObject:
   m_ObjectHideFlags: 0
