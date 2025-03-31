@@ -20,21 +20,9 @@ namespace GameUtilities
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Vector3 YVector(Vector3 v)
-        {
-            return new Vector3(0f, v.y, 0f);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 ZVector(float z)
         {
             return new Vector3(0f, 0f, z);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Vector3 XZVector(Vector3 v)
-        {
-            return new Vector3(v.x, 0f, v.z);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -44,11 +32,10 @@ namespace GameUtilities
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float XZDistance(Vector3 a, Vector3 b)
+        public static float XDistance(Vector3 a, Vector3 b)
         {
             float dx = a.x - b.x;
-            float dz = a.z - b.z;
-            return (float)Math.Sqrt(dx * dx + dz * dz);
+            return (float)Math.Sqrt(dx * dx);
         }
     }
 }

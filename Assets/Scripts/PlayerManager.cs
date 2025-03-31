@@ -109,16 +109,16 @@ public class PlayerManager : MonoBehaviour
             cc.height = standHeight;
             cc.center = UtilityMethods.YVector(standHeight / 2f);
         }
-        Vector3 laneDisplacement = UtilityMethods.XZVector(lanes[targetLane].position - lanes[currentLane].position);
+        Vector3 laneDisplacement = UtilityMethods.XVector(lanes[targetLane].position - lanes[currentLane].position);
         Vector3 hVel = laneDisplacement / switchTime;
         Vector3 movement = (hVel + UtilityMethods.YVector(vVel)) * Time.fixedDeltaTime;
         cc.Move(movement);
         if (cc.isGrounded) vVel = SNAP_TO_GROUND_SPEED;
         else vVel -= gravity * Time.fixedDeltaTime;
-        float currentDistsance = UtilityMethods.XZDistance(transform.position, lanes[targetLane].position);
-        if (currentDistsance <= SNAP_DISTANCE)
+        float currentDistance = UtilityMethods.XDistance(transform.position, lanes[targetLane].position);
+        if (currentDistance <= SNAP_DISTANCE)
         {
-            transform.position = UtilityMethods.YVector(transform.position) + UtilityMethods.XZVector(lanes[targetLane].position);
+            transform.position = UtilityMethods.YZVector(transform.position) + UtilityMethods.XVector(lanes[targetLane].position);
             currentLane = targetLane;
             targetLane += horizontalDirection;
             targetLane = Mathf.Clamp(targetLane, 0, 2);
