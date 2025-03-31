@@ -6,14 +6,14 @@ public class ExplosiveBarrel : MonoBehaviour
     [Min(0.001f)]
     float explosionSize;
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Bullet")) Explode();
+        if (other.gameObject.CompareTag("Player") || other.gameObject.CompareTag("Bullet")) Explode();
     }
 
     void Explode()
     {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, explosionSize, LayerMask.NameToLayer("Explodable"));
+        Collider[] colliders = Physics.OverlapSphere(transform.position, explosionSize, LayerMask.NameToLayer("Explodable"), QueryTriggerInteraction.Collide);
         foreach (Collider collider in colliders)
         {
             if (collider.gameObject.CompareTag("Player"))
