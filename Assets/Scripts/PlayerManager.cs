@@ -87,7 +87,7 @@ public class PlayerManager : MonoBehaviour
             targetLane = Mathf.Clamp(targetLane, 0, 2);
         }
         if (Input.GetKeyUp(KeyCode.A) && horizontalDirection == -1 || Input.GetKeyUp(KeyCode.D) && horizontalDirection == 1) horizontalDirection = 0;
-        if (Input.GetKey(KeyCode.Space) && cc.isGrounded && !IsSliding) vVel = 2 * (jumpHeight + ExtraJumpHeight) / jumpTime + gravity * jumpTime / 4f;
+        if (Input.GetKey(KeyCode.Space) && cc.isGrounded && !IsSliding) vVel = 2 * (jumpHeight + ExtraJumpHeight) / jumpTime + gravity * jumpTime / 4f; // dx = (Vi)*(dt) + (1/2)*(a)*(dt)^2
         pressingSlide = Input.GetKey(KeyCode.LeftControl);
         if (!pressingSlide) currentSlideTime = 0f;
         if (Input.GetKey(KeyCode.R)) currentResetHoldTime += Time.deltaTime;
