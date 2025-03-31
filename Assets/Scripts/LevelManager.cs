@@ -129,6 +129,7 @@ public class LevelManager : MonoBehaviour
                 secondObstacle.transform.position = spawnPos;
             }
         }
+        else lastGeneratedObstacleCount = 0;
         if (levelOnePickups.Count > 0 && terrain.GetComponent<SpawnableTerrain>().PickupRows.Count > 0)
         {
             foreach (var pickupRow in terrain.GetComponent<SpawnableTerrain>().PickupRows)
