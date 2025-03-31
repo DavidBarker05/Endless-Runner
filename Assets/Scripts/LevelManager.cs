@@ -37,6 +37,7 @@ public class LevelManager : MonoBehaviour
 
     public float Speed { get; private set; }
     public bool GenerateTerrainOnTrigger { get; private set; }
+    public int Score { get; private set; }
 
     List<GameObject> generatedTerrain = new List<GameObject>();
     bool isLevelStart = true;
@@ -182,4 +183,6 @@ public class LevelManager : MonoBehaviour
         if (lastGeneratedTerrain.CompareTag("SecurityDoor")) return !terrain.CompareTag("SecurityDoor");
         return true;
     }
+
+    public void IncreaseScore(int amount) => Score += amount;
 }
