@@ -5,6 +5,8 @@ public class ExplosiveBarrel : MonoBehaviour
     [SerializeField]
     [Min(0.001f)]
     float explosionSize;
+    [SerializeField]
+    LayerMask explodableObjects;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -13,7 +15,7 @@ public class ExplosiveBarrel : MonoBehaviour
 
     void Explode()
     {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, explosionSize, LayerMask.NameToLayer("Explodable"), QueryTriggerInteraction.Collide);
+        Collider[] colliders = Physics.OverlapSphere(transform.position, explosionSize, explodableObjects, QueryTriggerInteraction.Collide);
         foreach (Collider collider in colliders)
         {
             if (collider.gameObject.CompareTag("Player"))
