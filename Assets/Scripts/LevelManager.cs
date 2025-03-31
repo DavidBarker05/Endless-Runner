@@ -59,7 +59,7 @@ public class LevelManager : MonoBehaviour
         {
             if (terrain.GetComponent<SpawnableTerrain>().CanMove) terrain.transform.position -= UtilityMethods.ZVector(Speed);
         }
-        Speed += startingSpeed / 10f * Time.fixedDeltaTime;
+        Speed += startingSpeed / 30f * Time.fixedDeltaTime;
         Speed = Mathf.Clamp(Speed, startingSpeed, MAX_SPEED);
     }
 
