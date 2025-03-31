@@ -1,5 +1,4 @@
 using Vector3 = UnityEngine.Vector3;
-using Random = UnityEngine.Random;
 using Math = System.Math;
 using MethodImpl = System.Runtime.CompilerServices.MethodImplAttribute;
 using MethodImplOptions = System.Runtime.CompilerServices.MethodImplOptions;
