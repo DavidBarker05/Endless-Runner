@@ -41,6 +41,9 @@ public class LevelManager : MonoBehaviour
     List<GameObject> generatedTerrain = new List<GameObject>();
     bool isLevelStart = true;
     GameObject lastGeneratedTerrain;
+    int lastGeneratedObstacleCount;
+
+    const float MAX_SPEED = 0.5f;
 
     private void Awake()
     {
@@ -56,6 +59,8 @@ public class LevelManager : MonoBehaviour
         {
             if (terrain.GetComponent<SpawnableTerrain>().CanMove) terrain.transform.position -= UtilityMethods.ZVector(Speed);
         }
+        Speed += startingSpeed / 10f * Time.fixedDeltaTime;
+        Speed = Mathf.Clamp(Speed, startingSpeed, MAX_SPEED);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -97,13 +102,22 @@ public class LevelManager : MonoBehaviour
             foreach (var obstacleRow in terrain.GetComponent<SpawnableTerrain>().ObstacleRows)
             {
                 int numberOfObstacles = Random.Range(obstacleRow.GetComponent<ObstacleRow>().MinimumObstacles, obstacleRow.GetComponent<ObstacleRow>().MaximumObstacles + 1);
-                if (numberOfObstacles == 0) continue;
+                if (numberOfObstacles == 0 || lastGeneratedObstacleCount == 2)
+                {
+                    lastGeneratedObstacleCount = 0;
+                    continue;
+                }
                 int firstSpawnLane = Random.Range(0, lanes.Length);
                 int obstacleIndex = Random.Range(0, levelOneObstacles.Count);
                 Vector3 spawnPos = UtilityMethods.YZVector(obstacleRow.transform.position) + UtilityMethods.XVector(lanes[firstSpawnLane].position);
                 var firstObstacle = Instantiate(levelOneObstacles[obstacleIndex], obstacleRow.transform);
                 firstObstacle.transform.position = spawnPos;
-                if (numberOfObstacles == 1) continue;
+                if (numberOfObstacles == 1 || lastGeneratedObstacleCount == 1)
+                {
+                    lastGeneratedObstacleCount = 1;
+                    continue;
+                }
+                lastGeneratedObstacleCount = 2;
                 int secondSpawnLane = Random.Range(0, lanes.Length);
                 while (firstSpawnLane == secondSpawnLane)
                 {

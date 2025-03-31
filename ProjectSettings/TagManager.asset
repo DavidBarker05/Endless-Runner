@@ -6,8 +6,8 @@ TagManager:
   tags:
   - FrontTerrain
   - BackTerrain
-  - SecurityDoor
   - Bullet
+  - SecurityDoor
   layers:
   - Default
   - TransparentFX
