@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
+    [SerializeField]
+    Transform spawnLocation;
     [Header("Lanes")]
     [SerializeField]
     [Tooltip("The three lanes everything spawns on")]
@@ -74,7 +76,7 @@ public class LevelManager : MonoBehaviour
             terrainIndex = Random.Range(0, PossibleTerrain.Count);
         }
         var terrain = Instantiate(PossibleTerrain[terrainIndex], transform);
-        terrain.transform.position = transform.position;
+        terrain.transform.position = spawnLocation.position;
         if (levelOneObstacles.Count > 0 && terrain.GetComponent<SpawnableTerrain>().ObstacleRows.Count > 0)
         {
             foreach (var obstacleRow in terrain.GetComponent<SpawnableTerrain>().ObstacleRows)
