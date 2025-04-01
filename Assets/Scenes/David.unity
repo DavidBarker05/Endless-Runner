@@ -370,6 +370,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a09178135fd18947a0cdc25aef18706, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 864786150}
   explosionSize: 10
   explodables:
     serializedVersion: 2
@@ -6838,6 +6839,7 @@ MonoBehaviour:
   gravity: 9.8
   resetHoldTime: 1
   levelManager: {fileID: 1756536976}
+  gameManager: {fileID: 864786150}
 --- !u!4 &1220848833
 Transform:
   m_ObjectHideFlags: 0
@@ -7804,6 +7806,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d890a30f8fdef524098de07d8e11b028, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 864786150}
   spawnLocation: {fileID: 1948463716}
   lanes:
   - {fileID: 1021149099}
