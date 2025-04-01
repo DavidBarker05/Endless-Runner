@@ -1,16 +1,19 @@
+using TMPro;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    [SerializeField]
+    TextMeshProUGUI scoreCounter;
+    [SerializeField]
+    LevelManager levelManager;
+
     void Start()
     {
-        
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        scoreCounter.text = $"SCORE: {levelManager.Score}";
     }
 }
