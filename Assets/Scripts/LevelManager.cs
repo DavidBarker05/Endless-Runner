@@ -81,8 +81,11 @@ public class LevelManager : MonoBehaviour
     public void ResetGame()
     {
         Speed = startingSpeed;
+        Score = 0;
         GenerateTerrainOnTrigger = false;
         isLevelStart = true;
+        lastGeneratedTerrain = null;
+        lastGeneratedObstacleCount = 0;
         playerManager.ResetPlayer();
         generatedTerrain.Clear();
         GenerateStartingTerrain();
