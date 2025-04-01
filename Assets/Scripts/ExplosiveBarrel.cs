@@ -8,7 +8,7 @@ public class ExplosiveBarrel : MonoBehaviour
     [SerializeField]
     LayerMask explodableObjects;
 
-    private void OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player") || other.gameObject.CompareTag("Bullet")) Explode();
     }

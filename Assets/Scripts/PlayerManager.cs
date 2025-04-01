@@ -43,8 +43,8 @@ public class PlayerManager : MonoBehaviour
     [Tooltip("The level manager of the game")]
     LevelManager levelManager;
 
-    public bool IsSliding { get; private set; }
-    public float ExtraJumpHeight { private get; set; }
+    const float SNAP_DISTANCE = 0.5f;
+    const float SNAP_TO_GROUND_SPEED = -0.01f;
 
     CharacterController cc;
     int currentLane = 1;
@@ -56,10 +56,10 @@ public class PlayerManager : MonoBehaviour
     float currentResetHoldTime = 0f;
     bool pressingSlide = false;
 
-    const float SNAP_DISTANCE = 0.5f;
-    const float SNAP_TO_GROUND_SPEED = -0.01f;
+    public bool IsSliding { get; private set; }
+    public float ExtraJumpHeight { private get; set; }
 
-    private void Awake()
+    void Awake()
     {
         cc = GetComponent<CharacterController>();
         standHeight = cc.height;
@@ -95,7 +95,7 @@ public class PlayerManager : MonoBehaviour
         if (currentResetHoldTime >= resetHoldTime) levelManager.ResetGame();
     }
 
-    private void FixedUpdate()
+    void FixedUpdate()
     {
         IsSliding = pressingSlide && currentSlideTime <= maxSlideTime;
         if (IsSliding)

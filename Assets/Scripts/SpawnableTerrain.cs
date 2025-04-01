@@ -13,8 +13,5 @@ public class SpawnableTerrain : MonoBehaviour
     public List<GameObject> ObstacleRows { get { return obstacleRows; } }
     public List<GameObject> PickupRows { get { return pickupRows; } }
 
-    private void Awake()
-    {
-        Size = gameObject.transform.localScale.z * 10f;
-    }
+    private void Awake() => Size = gameObject.transform.localScale.z * 10f;
 }

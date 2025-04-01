@@ -35,18 +35,18 @@ public class LevelManager : MonoBehaviour
     [Tooltip("List of spawnable pickups for level one")]
     List<GameObject> levelOnePickups = new List<GameObject>();
 
-    public float Speed { get; private set; }
-    public bool GenerateTerrainOnTrigger { get; private set; }
-    public int Score { get; private set; }
+    const float MAX_SPEED = 0.5f;
 
     List<GameObject> generatedTerrain = new List<GameObject>();
     bool isLevelStart = true;
     GameObject lastGeneratedTerrain;
     int lastGeneratedObstacleCount;
 
-    const float MAX_SPEED = 0.5f;
+    public float Speed { get; private set; }
+    public bool GenerateTerrainOnTrigger { get; private set; }
+    public int Score { get; private set; }
 
-    private void Awake()
+    void Awake()
     {
         Speed = startingSpeed;
         GenerateTerrainOnTrigger = false;
@@ -54,7 +54,7 @@ public class LevelManager : MonoBehaviour
 
     void Start() => GenerateStartingTerrain();
 
-    private void FixedUpdate()
+    void FixedUpdate()
     {
         foreach (var terrain in generatedTerrain)
         {
@@ -64,7 +64,7 @@ public class LevelManager : MonoBehaviour
         Speed = Mathf.Clamp(Speed, startingSpeed, MAX_SPEED);
     }
 
-    private void OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("FrontTerrain"))
         {
@@ -86,9 +86,10 @@ public class LevelManager : MonoBehaviour
         isLevelStart = true;
         lastGeneratedTerrain = null;
         lastGeneratedObstacleCount = 0;
-        playerManager.ResetPlayer();
+        System.Array.ForEach<GameObject>(generatedTerrain.ToArray(), t => Destroy(t));
         generatedTerrain.Clear();
         GenerateStartingTerrain();
+        playerManager.ResetPlayer();
     }
 
     public void GenerateTerrain()
@@ -141,8 +142,8 @@ public class LevelManager : MonoBehaviour
         {
             foreach (var pickupRow in terrain.GetComponent<SpawnableTerrain>().PickupRows)
             {
-                float foo = Random.Range(0f, 1f);
-                if (foo <= pickupRow.GetComponent<PickupRow>().SpawnChance)
+                float spawnRoll = Random.Range(0f, 1f);
+                if (spawnRoll <= pickupRow.GetComponent<PickupRow>().SpawnChance)
                 {
                     int lane = Random.Range(0, lanes.Length);
                     int pickupIndex = Random.Range(0, levelOnePickups.Count);
@@ -156,7 +157,7 @@ public class LevelManager : MonoBehaviour
         lastGeneratedTerrain = terrain;
     }
 
-    public void GenerateStartingTerrain()
+    void GenerateStartingTerrain()
     {
         for (int i = 0; i < startingTerrainCount; i++)
         {
@@ -175,14 +176,6 @@ public class LevelManager : MonoBehaviour
         isLevelStart = false;
     }
 
-    List<GameObject> PossibleTerrain
-    {
-        get
-        {
-            return isLevelStart ? levelOneStartingTerrain : levelOneTerrain;
-        }
-    }
-
     bool IsValidTerrain(GameObject terrain)
     {
         if (lastGeneratedTerrain == null) return true;
@@ -191,4 +184,6 @@ public class LevelManager : MonoBehaviour
     }
 
     public void IncreaseScore(int amount) => Score += amount;
+
+    List<GameObject> PossibleTerrain => isLevelStart ? levelOneStartingTerrain : levelOneTerrain;
 }

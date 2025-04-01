@@ -7,12 +7,9 @@ public class ScoreCollider : MonoBehaviour
 
     ObstacleRow obstacleRow;
 
-    void Start()
-    {
-        obstacleRow = GetComponentInParent<ObstacleRow>();
-    }
+    void Awake() => obstacleRow = GetComponentInParent<ObstacleRow>();
 
-    private void OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player") && obstacleRow.ObstacleCount > 0) levelManager.IncreaseScore(1);
     }

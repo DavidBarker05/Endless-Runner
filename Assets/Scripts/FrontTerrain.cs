@@ -6,7 +6,7 @@ public class FrontTerrain : MonoBehaviour
     [SerializeField]
     LevelManager levelManager;
 
-    private void OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("BackTerrain"))
         {
