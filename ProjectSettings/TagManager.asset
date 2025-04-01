@@ -8,6 +8,7 @@ TagManager:
   - BackTerrain
   - Bullet
   - SecurityDoor
+  - ExplosiveBarrel
   layers:
   - Default
   - TransparentFX

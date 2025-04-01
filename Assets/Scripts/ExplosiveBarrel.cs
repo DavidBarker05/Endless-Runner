@@ -1,4 +1,4 @@
-using GameUtilities;
+using Array = System.Array;
 using UnityEngine;
 
 public class ExplosiveBarrel : MonoBehaviour
@@ -7,7 +7,7 @@ public class ExplosiveBarrel : MonoBehaviour
     [Min(0.001f)]
     float explosionSize;
     [SerializeField]
-    LayerMask explodableObjects;
+    LayerMask explodables;
 
     void OnTriggerEnter(Collider other)
     {
@@ -16,15 +16,10 @@ public class ExplosiveBarrel : MonoBehaviour
 
     void Explode()
     {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, explosionSize, explodableObjects, QueryTriggerInteraction.Collide);
-        foreach (Collider collider in colliders)
-        {
-            if (collider.CompareTag("Player"))
-            {
-                // To-Do: Kill
-                continue;
-            }
-            collider.gameObject.GetComponent<ExplosiveBarrel>().Explode();
-        }
+        Collider[] colliders = Physics.OverlapSphere(transform.position, explosionSize, explodables, QueryTriggerInteraction.Collide);
+        Collider player = Array.Find<Collider>(colliders, (Collider c) => c.CompareTag("Player"));
+        // To-Do: Kill Player
+        Collider[] barrels = Array.FindAll<Collider>(colliders, (Collider c) => c.CompareTag("ExplosiveBarrel"));
+        Array.ForEach<Collider>(barrels, b => b.gameObject.GetComponent<ExplosiveBarrel>().Explode());
     }
 }

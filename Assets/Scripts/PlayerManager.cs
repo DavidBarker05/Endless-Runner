@@ -49,21 +49,20 @@ public class PlayerManager : MonoBehaviour
     CharacterController cc;
     int currentLane = 1;
     int targetLane = 1;
-    int horizontalDirection = 0;
-    float vVel;
+    int horizontalDirection;
+    float vVel = SNAP_TO_GROUND_SPEED;
     float standHeight;
-    float currentSlideTime = 0f;
-    float currentResetHoldTime = 0f;
-    bool pressingSlide = false;
+    float currentSlideTime;
+    float currentResetHoldTime;
+    bool pressingSlide;
 
     public bool IsSliding { get; private set; }
-    public float ExtraJumpHeight { private get; set; }
+    public float ExtraJumpHeight { get; set; }
 
     void Awake()
     {
         cc = GetComponent<CharacterController>();
         standHeight = cc.height;
-        vVel = SNAP_TO_GROUND_SPEED;
     }
 
     void Start()
@@ -96,31 +95,21 @@ public class PlayerManager : MonoBehaviour
     void FixedUpdate()
     {
         IsSliding = pressingSlide && currentSlideTime <= maxSlideTime;
-        if (IsSliding)
-        {
-            currentSlideTime += Time.fixedDeltaTime;
-            cc.height = slideHeight;
-            cc.center = UtilityMethods.YVector(slideHeight / 2f);
-        }
-        else
-        {
-            cc.height = standHeight;
-            cc.center = UtilityMethods.YVector(standHeight / 2f);
-        }
+        if (IsSliding) currentSlideTime += Time.fixedDeltaTime;
+        cc.height = IsSliding ? slideHeight : standHeight;
+        cc.center = UtilityMethods.YVector(cc.height / 2f);
         Vector3 laneDisplacement = UtilityMethods.XVector(lanes[targetLane].position - lanes[currentLane].position);
         Vector3 hVel = laneDisplacement / switchTime;
         Vector3 movement = (hVel + UtilityMethods.YVector(vVel)) * Time.fixedDeltaTime;
         cc.Move(movement);
         if (cc.isGrounded) vVel = SNAP_TO_GROUND_SPEED;
         else vVel -= gravity * Time.fixedDeltaTime;
-        float currentDistance = UtilityMethods.XDistance(transform.position, lanes[targetLane].position);
-        if (currentDistance <= SNAP_DISTANCE)
-        {
-            transform.position = UtilityMethods.YZVector(transform.position) + UtilityMethods.XVector(lanes[targetLane].position);
-            currentLane = targetLane;
-            targetLane += horizontalDirection;
-            targetLane = Mathf.Clamp(targetLane, 0, 2);
-        }
+        float targetDistance = UtilityMethods.XDistance(transform.position, lanes[targetLane].position);
+        if (targetDistance > SNAP_DISTANCE) return;
+        transform.position = UtilityMethods.YZVector(transform.position) + UtilityMethods.XVector(lanes[targetLane].position);
+        currentLane = targetLane;
+        targetLane += horizontalDirection;
+        targetLane = Mathf.Clamp(targetLane, 0, 2);
     }
 
     public void ResetPlayer()
