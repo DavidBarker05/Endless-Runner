@@ -1,10 +1,10 @@
 using Array = System.Array;
 using UnityEngine;
 using GameUtilities;
-using Unity.VisualScripting;
 
 public class ExplosiveBarrel : MonoBehaviour
 {
+    [Header("Game Manager")]
     [SerializeField]
     GameManager gameManager;
     [SerializeField]
