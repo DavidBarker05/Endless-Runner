@@ -1,3 +1,4 @@
+using GameUtilities;
 using UnityEngine;
 
 public class ExplosiveBarrel : MonoBehaviour
@@ -10,7 +11,7 @@ public class ExplosiveBarrel : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Player") || other.gameObject.CompareTag("Bullet")) Explode();
+        if (other.CompareTag("Player") || other.CompareTag("Bullet")) Explode();
     }
 
     void Explode()
@@ -18,11 +19,12 @@ public class ExplosiveBarrel : MonoBehaviour
         Collider[] colliders = Physics.OverlapSphere(transform.position, explosionSize, explodableObjects, QueryTriggerInteraction.Collide);
         foreach (Collider collider in colliders)
         {
-            if (collider.gameObject.CompareTag("Player"))
+            if (collider.CompareTag("Player"))
             {
-                // Kill
+                // To-Do: Kill
+                continue;
             }
-            else if (collider.gameObject.CompareTag("ExplosiveBarrel")) collider.gameObject.GetComponent<ExplosiveBarrel>().Explode();
+            collider.gameObject.GetComponent<ExplosiveBarrel>().Explode();
         }
     }
 }

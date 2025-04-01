@@ -1,4 +1,6 @@
 using Vector3 = UnityEngine.Vector3;
+using GameObject = UnityEngine.GameObject;
+using Collider = UnityEngine.Collider;
 using Math = System.Math;
 using MethodImpl = System.Runtime.CompilerServices.MethodImplAttribute;
 using MethodImplOptions = System.Runtime.CompilerServices.MethodImplOptions;
@@ -29,6 +31,12 @@ namespace GameUtilities
         public static Vector3 YZVector(Vector3 v)
         {
             return new Vector3(0f, v.y, v.z);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static GameObject GetParent(GameObject o)
+        {
+            return o.transform.parent.gameObject;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

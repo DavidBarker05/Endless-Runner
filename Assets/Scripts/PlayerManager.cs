@@ -63,8 +63,6 @@ public class PlayerManager : MonoBehaviour
     {
         cc = GetComponent<CharacterController>();
         standHeight = cc.height;
-        IsSliding = false;
-        ExtraJumpHeight = 0f;
         vVel = SNAP_TO_GROUND_SPEED;
     }
 

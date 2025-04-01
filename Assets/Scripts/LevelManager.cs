@@ -1,5 +1,6 @@
 using GameUtilities;
 using System.Collections.Generic;
+using Array = System.Array;
 using UnityEngine;
 
 public class LevelManager : MonoBehaviour
@@ -44,38 +45,27 @@ public class LevelManager : MonoBehaviour
 
     public float Speed { get; private set; }
     public bool GenerateTerrainOnTrigger { get; private set; }
-    public int Score { get; private set; }
+    public int Score { get; set; }
 
-    void Awake()
-    {
-        Speed = startingSpeed;
-        GenerateTerrainOnTrigger = false;
-    }
+    void Awake() => Speed = startingSpeed;
 
     void Start() => GenerateStartingTerrain();
 
     void FixedUpdate()
     {
-        foreach (var terrain in generatedTerrain)
-        {
-            if (terrain.GetComponent<SpawnableTerrain>().CanMove) terrain.transform.position -= UtilityMethods.ZVector(Speed);
-        }
+        GameObject[] moveableTerrain = Array.FindAll<GameObject>(generatedTerrain.ToArray(), (GameObject t) => t.GetComponent<SpawnableTerrain>().CanMove);
+        Array.ForEach<GameObject>(moveableTerrain, t => t.transform.position -= UtilityMethods.ZVector(Speed));
         Speed += startingSpeed / 30f * Time.fixedDeltaTime;
         Speed = Mathf.Clamp(Speed, startingSpeed, MAX_SPEED);
     }
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("FrontTerrain"))
-        {
-            generatedTerrain.Remove(other.gameObject.transform.parent.gameObject);
-            Destroy(other.gameObject.transform.parent.gameObject);
-            if (!GenerateTerrainOnTrigger)
-            {
-                GenerateTerrainOnTrigger = true;
-                GenerateTerrain();
-            }
-        }
+        if (!other.CompareTag("FrontTerrain")) return;
+        DestroyTerrain(UtilityMethods.GetParent(other.gameObject));
+        if (GenerateTerrainOnTrigger) return;
+        GenerateTerrainOnTrigger = true;
+        GenerateTerrain();
     }
 
     public void ResetGame()
@@ -86,8 +76,7 @@ public class LevelManager : MonoBehaviour
         isLevelStart = true;
         lastGeneratedTerrain = null;
         lastGeneratedObstacleCount = 0;
-        System.Array.ForEach<GameObject>(generatedTerrain.ToArray(), t => Destroy(t));
-        generatedTerrain.Clear();
+        Array.ForEach<GameObject>(generatedTerrain.ToArray(), t => DestroyTerrain(t));
         GenerateStartingTerrain();
         playerManager.ResetPlayer();
     }
@@ -110,9 +99,9 @@ public class LevelManager : MonoBehaviour
                 if (numberOfObstacles == 0 || lastGeneratedObstacleCount == 2)
                 {
                     lastGeneratedObstacleCount = 0;
-                    obstacleRow.GetComponent<ObstacleRow>().ObstacleCount = 0;
                     continue;
                 }
+                obstacleRow.GetComponent<ObstacleRow>().HasObstacles = true;
                 int firstSpawnLane = Random.Range(0, lanes.Length);
                 int obstacleIndex = Random.Range(0, levelOneObstacles.Count);
                 Vector3 spawnPos = UtilityMethods.YZVector(obstacleRow.transform.position) + UtilityMethods.XVector(lanes[firstSpawnLane].position);
@@ -121,11 +110,9 @@ public class LevelManager : MonoBehaviour
                 if (numberOfObstacles == 1 || lastGeneratedObstacleCount == 1)
                 {
                     lastGeneratedObstacleCount = 1;
-                    obstacleRow.GetComponent<ObstacleRow>().ObstacleCount = 1;
                     continue;
                 }
                 lastGeneratedObstacleCount = 2;
-                obstacleRow.GetComponent<ObstacleRow>().ObstacleCount = 2;
                 int secondSpawnLane = Random.Range(0, lanes.Length);
                 while (firstSpawnLane == secondSpawnLane)
                 {
@@ -176,14 +163,17 @@ public class LevelManager : MonoBehaviour
         isLevelStart = false;
     }
 
-    bool IsValidTerrain(GameObject terrain)
+    bool IsValidTerrain(GameObject terrain) => lastGeneratedTerrain?.tag switch
     {
-        if (lastGeneratedTerrain == null) return true;
-        if (lastGeneratedTerrain.CompareTag("SecurityDoor")) return !terrain.CompareTag("SecurityDoor");
-        return true;
-    }
+        "SecurityDoor" => !terrain.CompareTag("SecurityDoor"),
+        _ => true,
+    };
 
-    public void IncreaseScore(int amount) => Score += amount;
+    void DestroyTerrain(GameObject terrain)
+    {
+        generatedTerrain.Remove(terrain);
+        Destroy(terrain);
+    }
 
     List<GameObject> PossibleTerrain => isLevelStart ? levelOneStartingTerrain : levelOneTerrain;
 }
