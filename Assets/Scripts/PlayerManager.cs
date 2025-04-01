@@ -88,7 +88,7 @@ public class PlayerManager : MonoBehaviour
         pressingSlide = Input.GetKey(KeyCode.LeftControl);
         if (!pressingSlide) currentSlideTime = 0f;
         if (Input.GetKey(KeyCode.R)) currentResetHoldTime += Time.deltaTime;
-        if (Input.GetKeyUp(KeyCode.R)) currentResetHoldTime = 0f;
+        else currentResetHoldTime = 0f;
         if (currentResetHoldTime >= resetHoldTime) levelManager.ResetGame();
     }
 
