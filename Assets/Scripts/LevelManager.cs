@@ -6,6 +6,8 @@ using UnityEngine;
 public class LevelManager : MonoBehaviour
 {
     [SerializeField]
+    GameManager gameManager;
+    [SerializeField]
     Transform spawnLocation;
     [Header("Lanes")]
     [SerializeField]
@@ -52,6 +54,7 @@ public class LevelManager : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (!(gameManager.State == GameManager.GameState.Alive)) return;
         GameObject[] moveableTerrain = Array.FindAll<GameObject>(generatedTerrain.ToArray(), (GameObject t) => t.GetComponent<SpawnableTerrain>().CanMove);
         Array.ForEach<GameObject>(moveableTerrain, t => t.transform.position -= UtilityMethods.ZVector(Speed));
         Speed += startingSpeed / 30f * Time.fixedDeltaTime;
@@ -163,6 +166,7 @@ public class LevelManager : MonoBehaviour
 
     public void ResetGame()
     {
+        gameManager.State = GameManager.GameState.Alive;
         Array.ForEach<GameObject>(generatedTerrain.ToArray(), t => DestroyTerrain(t));
         isLevelStart = true;
         lastGeneratedTerrain = null;

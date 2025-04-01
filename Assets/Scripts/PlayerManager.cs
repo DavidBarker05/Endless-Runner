@@ -42,6 +42,8 @@ public class PlayerManager : MonoBehaviour
     [SerializeField]
     [Tooltip("The level manager of the game")]
     LevelManager levelManager;
+    [SerializeField]
+    GameManager gameManager;
 
     const float SNAP_DISTANCE = 0.5f;
     const float SNAP_TO_GROUND_SPEED = -0.01f;
@@ -56,10 +58,10 @@ public class PlayerManager : MonoBehaviour
     float currentResetHoldTime;
     bool pressingSlide;
 
-    public bool CanSlide => currentSlideTime <= maxSlideTime;
+    public bool CanSlide => currentSlideTime <= maxSlideTime && gameManager.State == GameManager.GameState.Alive;
     public bool IsSliding => CanSlide && pressingSlide;
-    public bool CanMove => !IsSliding;
-    public bool CanJump => cc.isGrounded && !IsSliding;
+    public bool CanMove => !IsSliding && gameManager.State == GameManager.GameState.Alive;
+    public bool CanJump => cc.isGrounded && !IsSliding && gameManager.State == GameManager.GameState.Alive;
     public float ExtraJumpHeight { get; set; }
 
     void Awake()

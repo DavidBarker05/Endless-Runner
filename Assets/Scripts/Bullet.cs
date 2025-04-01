@@ -3,6 +3,8 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     [SerializeField]
+    GameManager gameManager;
+    [SerializeField]
     float velocity;
     [SerializeField]
     LayerMask shootables;
@@ -17,10 +19,7 @@ public class Bullet : MonoBehaviour
         if (Physics.Linecast(transform.position, previous, out RaycastHit hit, shootables, QueryTriggerInteraction.Collide))
         {
             if (hit.collider.CompareTag("ExplosiveBarrel")) hit.collider.gameObject.GetComponent<ExplosiveBarrel>().Explode();
-            if (hit.collider.CompareTag("Player"))
-            {
-                // To-Do: Kill Player
-            }
+            if (hit.collider.CompareTag("Player")) gameManager.State = GameManager.GameState.Dead;
         }
         previous = transform.position;
     }
