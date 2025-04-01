@@ -30,6 +30,7 @@ public class Bullet : MonoBehaviour
         {
             if (hit.collider.CompareTag("Player")) gameManager.State = GameManager.GameState.Dead; // Kill the player if it hits the player
             hit.collider.gameObject.GetComponent<ExplosiveBarrel>()?.Explode(); // Explode the object if it is a barrel
+            if (hit.collider != null) Destroy(gameObject); // If the bullet collided with something then destroy it
         }
         previous = transform.position;
     }

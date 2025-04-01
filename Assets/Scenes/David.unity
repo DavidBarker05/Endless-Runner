@@ -353,7 +353,7 @@ GameObject:
   - component: {fileID: 250971426}
   m_Layer: 6
   m_Name: Barrel
-  m_TagString: ExplosiveBarrel
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1258,7 +1258,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea1468b1be2b9c34786071e885c42139, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minimumObstacles: 0
+  minimumObstacles: 2
   maximumObstacles: 2
 --- !u!1 &523530046
 GameObject:
@@ -1526,8 +1526,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aeca13c58f819634fa8ae90c529f6f44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scoreCounter: {fileID: 1402564256}
   levelManager: {fileID: 1756536976}
+  scoreCounter: {fileID: 1402564256}
 --- !u!1 &890835951
 GameObject:
   m_ObjectHideFlags: 0
@@ -1712,7 +1712,7 @@ GameObject:
   - component: {fileID: 1099091991}
   m_Layer: 6
   m_Name: Particle System
-  m_TagString: ExplosiveBarrel
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7822,7 +7822,7 @@ MonoBehaviour:
   - {fileID: 375678367}
   - {fileID: 375678367}
   levelOneObstacles:
-  - {fileID: 1520621689}
+  - {fileID: 1929347033}
   - {fileID: 1929347033}
   levelOnePickups:
   - {fileID: 739247839}
@@ -7908,7 +7908,7 @@ GameObject:
   - component: {fileID: 1929347034}
   m_Layer: 6
   m_Name: Explosive Barrel
-  m_TagString: ExplosiveBarrel
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

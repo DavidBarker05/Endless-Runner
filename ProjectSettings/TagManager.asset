@@ -6,9 +6,8 @@ TagManager:
   tags:
   - FrontTerrain
   - BackTerrain
-  - Bullet
   - SecurityDoor
-  - ExplosiveBarrel
+  - SecurityGuard
   layers:
   - Default
   - TransparentFX
@@ -17,7 +16,7 @@ TagManager:
   - Water
   - UI
   - ExplosiveBarrel
-  - 
+  - MaxGuardRange
   - 
   - 
   - 
