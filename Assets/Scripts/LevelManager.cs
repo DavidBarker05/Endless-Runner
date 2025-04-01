@@ -64,7 +64,7 @@ public class LevelManager : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         if (!other.CompareTag("FrontTerrain")) return;
-        DestroyTerrain(UtilityMethods.GetParent(other.gameObject));
+        DestroyTerrain(UtilityMethods.Parent(other.gameObject));
         if (GenerateTerrainOnTrigger) return;
         GenerateTerrainOnTrigger = true;
         GenerateTerrain();

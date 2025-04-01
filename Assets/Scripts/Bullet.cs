@@ -1,5 +1,9 @@
 using UnityEngine;
 
+
+/// <summary>
+/// Makes a bullet move forward and checks if any collisions occured then does the appropriate actions
+/// </summary>
 public class Bullet : MonoBehaviour
 {
     [Header("Game Manager")]
@@ -11,7 +15,7 @@ public class Bullet : MonoBehaviour
     float velocity;
     [Header("Shootable Selection")]
     [SerializeField]
-    [Tooltip("What layers are able to be hit by the bullet")]
+    [Tooltip("The layers that are able to be hit by the bullet")]
     LayerMask shootables;
 
     Vector3 previous;
