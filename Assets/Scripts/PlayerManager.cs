@@ -56,7 +56,10 @@ public class PlayerManager : MonoBehaviour
     float currentResetHoldTime;
     bool pressingSlide;
 
-    public bool IsSliding { get; private set; }
+    public bool CanSlide => currentSlideTime <= maxSlideTime;
+    public bool IsSliding => CanSlide && pressingSlide;
+    public bool CanMove => !IsSliding;
+    public bool CanJump => cc.isGrounded && !IsSliding;
     public float ExtraJumpHeight { get; set; }
 
     void Awake()
@@ -67,7 +70,7 @@ public class PlayerManager : MonoBehaviour
 
     void Update()
     {
-        if ((Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D)) && !IsSliding)
+        if ((Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D)) && CanMove)
         {
             currentLane = targetLane;
             if (Input.GetKeyDown(KeyCode.A)) horizontalDirection = -1;
@@ -76,7 +79,7 @@ public class PlayerManager : MonoBehaviour
             targetLane = Mathf.Clamp(targetLane, 0, 2);
         }
         if (Input.GetKeyUp(KeyCode.A) && horizontalDirection == -1 || Input.GetKeyUp(KeyCode.D) && horizontalDirection == 1) horizontalDirection = 0;
-        if (Input.GetKey(KeyCode.Space) && cc.isGrounded && !IsSliding) vVel = 2 * (jumpHeight + ExtraJumpHeight) / jumpTime + gravity * jumpTime / 4f; // dx = (Vi)*(dt) + (1/2)*(a)*(dt)^2
+        if (Input.GetKey(KeyCode.Space) && CanJump) vVel = 2 * (jumpHeight + ExtraJumpHeight) / jumpTime + gravity * jumpTime / 4f; // dx = (Vi)*(dt) + (1/2)*(a)*(dt)^2
         pressingSlide = Input.GetKey(KeyCode.LeftControl);
         if (!pressingSlide) currentSlideTime = 0f;
         if (Input.GetKey(KeyCode.R)) currentResetHoldTime += Time.deltaTime;
@@ -86,7 +89,6 @@ public class PlayerManager : MonoBehaviour
 
     void FixedUpdate()
     {
-        IsSliding = pressingSlide && currentSlideTime <= maxSlideTime;
         if (IsSliding) currentSlideTime += Time.fixedDeltaTime;
         cc.height = IsSliding ? slideHeight : standHeight;
         cc.center = UtilityMethods.YVector(cc.height / 2f);
@@ -113,7 +115,6 @@ public class PlayerManager : MonoBehaviour
         currentSlideTime = 0f;
         currentResetHoldTime = 0f;
         pressingSlide = false;
-        IsSliding = false;
         ExtraJumpHeight = 0f;
         cc.height = standHeight;
         cc.center = UtilityMethods.YVector(cc.height / 2f);
