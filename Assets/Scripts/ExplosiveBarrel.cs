@@ -11,10 +11,10 @@ public class ExplosiveBarrel : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") || other.CompareTag("Bullet")) Explode();
+        if (other.CompareTag("Player")) Explode();
     }
 
-    void Explode()
+    public void Explode()
     {
         Collider[] colliders = Physics.OverlapSphere(transform.position, explosionSize, explodables, QueryTriggerInteraction.Collide);
         Collider player = Array.Find<Collider>(colliders, (Collider c) => c.CompareTag("Player"));
