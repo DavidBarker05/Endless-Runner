@@ -1,6 +1,7 @@
 using Array = System.Array;
 using UnityEngine;
 using GameUtilities;
+using Unity.VisualScripting;
 
 public class ExplosiveBarrel : MonoBehaviour
 {
@@ -26,9 +27,8 @@ public class ExplosiveBarrel : MonoBehaviour
         gameObject.layer = 2;
         Collider[] colliders = Physics.OverlapSphere(transform.position, explosionSize, explodables, QueryTriggerInteraction.Collide);
         Collider player = Array.Find<Collider>(colliders, (Collider c) => c.CompareTag("Player"));
-        gameManager.State = GameManager.GameState.Dead;
-        Collider[] barrels = Array.FindAll<Collider>(colliders, (Collider c) => c.CompareTag("ExplosiveBarrel"));
-        Array.ForEach<Collider>(barrels, b => b.gameObject.GetComponent<ExplosiveBarrel>().Explode());
+        if (player != null) gameManager.State = GameManager.GameState.Dead;
+        Array.ForEach<Collider>(colliders, c => c.gameObject.GetComponent<ExplosiveBarrel>()?.Explode());
         gameObject.SetActive(false);
         explosion.Play();
         Destroy(UtilityMethods.GetParent(gameObject), explosion.main.duration);
