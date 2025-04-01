@@ -8,12 +8,15 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     LevelManager levelManager;
 
-    void Start()
-    {
-    }
+    void Start() => StartGame();
 
     void Update()
     {
         scoreCounter.text = $"SCORE: {levelManager.Score}";
+    }
+
+    public void StartGame()
+    {
+        levelManager.ResetGame();
     }
 }

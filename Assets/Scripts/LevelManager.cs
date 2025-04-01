@@ -46,10 +46,7 @@ public class LevelManager : MonoBehaviour
     public float Speed { get; private set; }
     public bool GenerateTerrainOnTrigger { get; private set; }
     public int Score { get; set; }
-
-    void Awake() => Speed = startingSpeed;
-
-    void Start() => GenerateStartingTerrain();
+    List<GameObject> PossibleTerrain => isLevelStart ? levelOneStartingTerrain : levelOneTerrain;
 
     void FixedUpdate()
     {
@@ -66,19 +63,6 @@ public class LevelManager : MonoBehaviour
         if (GenerateTerrainOnTrigger) return;
         GenerateTerrainOnTrigger = true;
         GenerateTerrain();
-    }
-
-    public void ResetGame()
-    {
-        Speed = startingSpeed;
-        Score = 0;
-        GenerateTerrainOnTrigger = false;
-        isLevelStart = true;
-        lastGeneratedTerrain = null;
-        lastGeneratedObstacleCount = 0;
-        Array.ForEach<GameObject>(generatedTerrain.ToArray(), t => DestroyTerrain(t));
-        GenerateStartingTerrain();
-        playerManager.ResetPlayer();
     }
 
     public void GenerateTerrain()
@@ -175,5 +159,16 @@ public class LevelManager : MonoBehaviour
         Destroy(terrain);
     }
 
-    List<GameObject> PossibleTerrain => isLevelStart ? levelOneStartingTerrain : levelOneTerrain;
+    public void ResetGame()
+    {
+        Array.ForEach<GameObject>(generatedTerrain.ToArray(), t => DestroyTerrain(t));
+        isLevelStart = true;
+        lastGeneratedTerrain = null;
+        lastGeneratedObstacleCount = 0;
+        Speed = startingSpeed;
+        GenerateTerrainOnTrigger = false;
+        Score = 0;
+        GenerateStartingTerrain();
+        playerManager.ResetPlayer();
+    }
 }

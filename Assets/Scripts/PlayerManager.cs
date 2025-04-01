@@ -65,14 +65,6 @@ public class PlayerManager : MonoBehaviour
         standHeight = cc.height;
     }
 
-    void Start()
-    {
-        cc.enabled = false;
-        transform.position = lanes[currentLane].position;
-        cc.enabled = true;
-        cc.Move(UtilityMethods.YVector(vVel));
-    }
-
     void Update()
     {
         if ((Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D)) && !IsSliding)
@@ -114,18 +106,20 @@ public class PlayerManager : MonoBehaviour
 
     public void ResetPlayer()
     {
-        IsSliding = false;
-        ExtraJumpHeight = 0f;
         currentLane = 1;
         targetLane = 1;
         horizontalDirection = 0;
-        cc.enabled = false;
-        transform.position = lanes[currentLane].position;
-        cc.enabled = true;
         vVel = SNAP_TO_GROUND_SPEED;
-        cc.Move(UtilityMethods.YVector(vVel));
         currentSlideTime = 0f;
         currentResetHoldTime = 0f;
         pressingSlide = false;
+        IsSliding = false;
+        ExtraJumpHeight = 0f;
+        cc.height = standHeight;
+        cc.center = UtilityMethods.YVector(cc.height / 2f);
+        cc.enabled = false;
+        transform.position = lanes[currentLane].position;
+        cc.enabled = true;
+        cc.Move(UtilityMethods.YVector(vVel));
     }
 }
