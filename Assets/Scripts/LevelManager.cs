@@ -106,6 +106,7 @@ public class LevelManager : MonoBehaviour
                 if (numberOfObstacles == 0 || lastGeneratedObstacleCount == 2)
                 {
                     lastGeneratedObstacleCount = 0;
+                    obstacleRow.GetComponent<ObstacleRow>().ObstacleCount = 0;
                     continue;
                 }
                 int firstSpawnLane = Random.Range(0, lanes.Length);
@@ -116,9 +117,11 @@ public class LevelManager : MonoBehaviour
                 if (numberOfObstacles == 1 || lastGeneratedObstacleCount == 1)
                 {
                     lastGeneratedObstacleCount = 1;
+                    obstacleRow.GetComponent<ObstacleRow>().ObstacleCount = 1;
                     continue;
                 }
                 lastGeneratedObstacleCount = 2;
+                obstacleRow.GetComponent<ObstacleRow>().ObstacleCount = 2;
                 int secondSpawnLane = Random.Range(0, lanes.Length);
                 while (firstSpawnLane == secondSpawnLane)
                 {

@@ -11,6 +11,7 @@ public class ObstacleRow : MonoBehaviour
 
     public int MinimumObstacles { get { return minimumObstacles; } }
     public int MaximumObstacles { get { return maximumObstacles; } }
+    public int ObstacleCount { get; set; }
 
     private void Awake() => minimumObstacles = Mathf.Clamp(minimumObstacles, 0, maximumObstacles);
 }
