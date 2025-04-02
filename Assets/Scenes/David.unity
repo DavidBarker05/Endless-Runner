@@ -7919,7 +7919,7 @@ MonoBehaviour:
   - {fileID: 1520621689}
   levelOnePickups:
   - {fileID: 739247839}
-  - {fileID: 5872463233622113277, guid: 0aad3a5c74bf8334089df71ab9e986d6, type: 3}
+  - {fileID: 7570511728596950709, guid: fa3e8a6cea331954b99068cd589fffd6, type: 3}
 --- !u!4 &1756536977
 Transform:
   m_ObjectHideFlags: 0
