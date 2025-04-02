@@ -1,5 +1,8 @@
 using UnityEngine;
 
+/// <summary>
+/// Manages the number of obstacles in a row
+/// </summary>
 public class ObstacleRow : MonoBehaviour
 {
     [SerializeField]
@@ -9,9 +12,18 @@ public class ObstacleRow : MonoBehaviour
     [Range(1, 2)]
     int maximumObstacles;
 
+    /// <summary>
+    /// The minimum number of obstacles this row can have
+    /// </summary>
     public int MinimumObstacles { get { return minimumObstacles; } }
+    /// <summary>
+    /// The maximum number of obstacles this row can have
+    /// </summary>
     public int MaximumObstacles { get { return maximumObstacles; } }
+    /// <summary>
+    /// Indicates if this row has obstacles
+    /// </summary>
     public bool HasObstacles { get; set; }
 
-    private void Awake() => minimumObstacles = Mathf.Clamp(minimumObstacles, 0, maximumObstacles);
+    private void Awake() => minimumObstacles = Mathf.Clamp(minimumObstacles, 0, maximumObstacles); // Makes sure minimum doesn't exceed maximum
 }

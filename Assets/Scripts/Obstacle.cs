@@ -1,11 +1,13 @@
 using UnityEngine;
 
+/// <summary>
+/// Code that kills the player when they collide with an obstacle
+/// </summary>
 public class Obstacle : MonoBehaviour
 {
     [SerializeField]
     GameManager gameManager;
 
-    // OnTriggerEnter works with CharacterController, but OnCollisionEnter does not, so we use OnTriggerEnter
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
