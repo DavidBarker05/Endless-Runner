@@ -10,10 +10,6 @@ public class Obstacle : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
-        {
-            // Do obstacle killing stuff
-            // Work with game manager game states
-        }
+        if (other.CompareTag("Player")) gameManager.State = GameManager.GameState.Dead;
     }
 }
