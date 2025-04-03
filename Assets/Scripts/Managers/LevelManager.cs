@@ -12,6 +12,8 @@ public class LevelManager : MonoBehaviour
     [SerializeField]
     GameManager gameManager;
     [SerializeField]
+    PickupManager pickupManager;
+    [SerializeField]
     PlayerManager playerManager;
     [Header("Spawn Management")]
     [SerializeField]
@@ -142,6 +144,9 @@ public class LevelManager : MonoBehaviour
                     Vector3 spawnPos = UtilityMethods.YZVector(pickupRow.transform.position) + UtilityMethods.XVector(lanes[lane].position);
                     var pickup = Instantiate(levelOnePickups[pickupIndex], pickupRow.transform);
                     pickup.transform.position = spawnPos;
+                    var pickupInterface = pickup.GetComponentInChildren<IPickup>();
+                    pickupInterface.PickupManager = pickupManager;
+                    pickupInterface.PlayerManager = playerManager;
                 }
             }
         }
