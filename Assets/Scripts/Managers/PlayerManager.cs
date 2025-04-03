@@ -24,10 +24,6 @@ public class PlayerManager : MonoBehaviour
     [Tooltip("The max height the player can jump")]
     [Min(0f)]
     float jumpHeight;
-    [SerializeField]
-    [Tooltip("The time it takes the player to complete the jump (beginning the jump to the next time the player lands)")]
-    [Min(0.001f)]
-    float jumpTime;
     [Header("Sliding")]
     [SerializeField]
     [Tooltip("The height of the player's hitbox while sliding")]
@@ -99,7 +95,7 @@ public class PlayerManager : MonoBehaviour
             targetLane = Mathf.Clamp(targetLane, 0, 2); // Make sure target lane can't be out of bounds
         }
         if (Input.GetKeyUp(KeyCode.A) && horizontalDirection == -1 || Input.GetKeyUp(KeyCode.D) && horizontalDirection == 1) horizontalDirection = 0; // Stop player from being able to move again if they release the key related to the direction they're moving in
-        if (Input.GetKey(KeyCode.Space) && CanJump) vVel = 2 * (jumpHeight + ExtraJumpHeight) / jumpTime + gravity * jumpTime / 4f; // dx = (Vi)*(dt) + (1/2)*(a)*(dt)^2
+        if (Input.GetKey(KeyCode.Space) && CanJump) vVel = Mathf.Sqrt(2 * gravity * (jumpHeight + ExtraJumpHeight));
         pressingSlide = Input.GetKey(KeyCode.LeftControl);
         if (!pressingSlide) currentSlideTime = 0f; // Reset time player is sliding for
         if (Input.GetKey(KeyCode.R)) currentResetHoldTime += Time.deltaTime; // Make time increase while player holds r
