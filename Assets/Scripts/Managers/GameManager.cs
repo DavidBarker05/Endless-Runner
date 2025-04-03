@@ -25,9 +25,9 @@ public class GameManager : MonoBehaviour
         Dead
     }
 
-    [Header("Level Manager")]
+    [Header("Player")]
     [SerializeField]
-    LevelManager levelManager;
+    PlayerManager playerManager;
     [Header("UI")]
     [SerializeField]
     [Tooltip("Text used to display the score while the player is alive")]
@@ -37,6 +37,25 @@ public class GameManager : MonoBehaviour
     /// The current state of the game
     /// </summary>
     public GameState State { get; set; }
+    /// <summary>
+    /// The level manager of the game
+    /// </summary>
+    public LevelManager LevelManager { get; private set; }
+    /// <summary>
+    /// The player manager of the game
+    /// </summary>
+    public PlayerManager PlayerManager => playerManager;
+    /// <summary>
+    /// The pickup manager of the game
+    /// </summary>
+    public PickupManager PickupManager { get; private set; }
+
+
+    void Awake()
+    {
+        LevelManager = GetComponent<LevelManager>();
+        PickupManager = GetComponent<PickupManager>();
+    }
 
     void Start() => StartGame();
 
@@ -45,12 +64,12 @@ public class GameManager : MonoBehaviour
         if (State == GameState.Alive) // UI while the player is alive
         {
             scoreCounter.enabled = true;
-            scoreCounter.text = $"SCORE: {levelManager.Score}";
+            scoreCounter.text = $"SCORE: {LevelManager.Score}";
         }
     }
 
     /// <summary>
     /// Starts the game
     /// </summary>
-    public void StartGame() => levelManager.ResetGame();
+    public void StartGame() => LevelManager.ResetGame();
 }

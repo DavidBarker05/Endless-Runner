@@ -8,13 +8,9 @@ using UnityEngine;
 /// </summary>
 public class LevelManager : MonoBehaviour
 {
-    [Header("Managers")]
+    [Header("Game Manager")]
     [SerializeField]
     GameManager gameManager;
-    [SerializeField]
-    PickupManager pickupManager;
-    [SerializeField]
-    PlayerManager playerManager;
     [Header("Spawn Management")]
     [SerializeField]
     [Tooltip("The location where tiles spawn on")]
@@ -47,6 +43,8 @@ public class LevelManager : MonoBehaviour
 
     const float MAX_SPEED = 0.5f; // The max speed that everything can reach
 
+    PlayerManager playerManager;
+    PickupManager pickupManager;
     List<GameObject> generatedTerrain = new List<GameObject>();
     bool isLevelStart = true;
     GameObject lastGeneratedTerrain;
@@ -66,6 +64,12 @@ public class LevelManager : MonoBehaviour
     public int Score { get; set; }
     // What terrain is currently able to be spawned
     List<GameObject> PossibleTerrain => isLevelStart ? levelOneStartingTerrain : levelOneTerrain;
+
+    void Start()
+    {
+        playerManager = gameManager.PlayerManager;
+        pickupManager = gameManager.PickupManager;
+    }
 
     void FixedUpdate()
     {

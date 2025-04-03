@@ -6,9 +6,7 @@ using UnityEngine;
 /// </summary>
 public class PlayerManager : MonoBehaviour
 {
-    [Header("Managers")]
-    [SerializeField]
-    LevelManager levelManager;
+    [Header("Game Manager")]
     [SerializeField]
     GameManager gameManager;
     [Header("Lane Switching")]
@@ -47,6 +45,7 @@ public class PlayerManager : MonoBehaviour
     const float SNAP_DISTANCE = 0.5f; // The distance between the player and row needed to snap to the row
     const float SNAP_TO_GROUND_SPEED = -0.01f; // The speed the player moves into the ground when grounded so that character controller grounded state works
 
+    LevelManager levelManager;
     CharacterController cc;
     int currentLane = 1;
     int targetLane = 1;
@@ -84,11 +83,16 @@ public class PlayerManager : MonoBehaviour
         standHeight = cc.height;
     }
 
+    void Start()
+    {
+        levelManager = gameManager.LevelManager;
+    }
+
     void Update()
     {
         if ((Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D)) && CanMove)
         {
-            currentLane = targetLane; //
+            currentLane = targetLane;
             if (Input.GetKeyDown(KeyCode.A)) horizontalDirection = -1;
             if (Input.GetKeyDown(KeyCode.D)) horizontalDirection = 1;
             targetLane += horizontalDirection;
