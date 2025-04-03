@@ -113,6 +113,7 @@ public class LevelManager : MonoBehaviour
                 Vector3 spawnPos = UtilityMethods.YZVector(obstacleRow.transform.position) + UtilityMethods.XVector(lanes[firstSpawnLane].position);
                 var firstObstacle = Instantiate(levelOneObstacles[obstacleIndex], obstacleRow.transform);
                 firstObstacle.transform.position = spawnPos;
+                firstObstacle.GetComponentInChildren<Obstacle>().GameManager = gameManager;
                 if (numberOfObstacles == 1 || lastGeneratedObstacleCount == 1) // If number of obstacles is 1, or the previous number was 1 then can't generate 2 obstacles
                 {
                     lastGeneratedObstacleCount = 1;
@@ -128,6 +129,7 @@ public class LevelManager : MonoBehaviour
                 spawnPos = UtilityMethods.YZVector(obstacleRow.transform.position) + UtilityMethods.XVector(lanes[secondSpawnLane].position);
                 var secondObstacle = Instantiate(levelOneObstacles[obstacleIndex], obstacleRow.transform);
                 secondObstacle.transform.position = spawnPos;
+                secondObstacle.GetComponentInChildren<Obstacle>().GameManager = gameManager;
             }
         }
         else lastGeneratedObstacleCount = 0;
