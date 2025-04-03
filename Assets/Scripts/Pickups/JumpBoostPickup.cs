@@ -9,7 +9,7 @@ public class JumpBoostPickup : MonoBehaviour, IPickup
     public string Name => "JumpBoostPickup";
     public float Duration => 5f;
 
-    public void Effect(float useTime) => PlayerManager.ExtraJumpHeight = useTime >= 0f ? 10f : 0f;
+    public void Effect(float useTime) => PlayerManager.ExtraJumpHeight = useTime >= 0f ? 5f : 0f;
 
     void OnTriggerEnter(Collider other)
     {
