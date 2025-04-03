@@ -102,7 +102,7 @@ public class PlayerManager : MonoBehaviour
         if (Input.GetKey(KeyCode.Space) && CanJump) vVel = Mathf.Sqrt(2 * gravity * (jumpHeight + ExtraJumpHeight));
         pressingSlide = Input.GetKey(KeyCode.LeftControl);
         if (!pressingSlide) currentSlideTime = 0f; // Reset time player is sliding for
-        if (Input.GetKey(KeyCode.R)) currentResetHoldTime += Time.deltaTime; // Make time increase while player holds r
+        if (Input.GetKey(KeyCode.R) && gameManager.State == GameManager.GameState.Alive) currentResetHoldTime += Time.deltaTime; // Make time increase while player holds r
         else currentResetHoldTime = 0f; // Reset timer when release r
         if (currentResetHoldTime >= resetHoldTime) levelManager.ResetGame(); // Reset game once timer excedes time
     }

@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 /// Manages the game state and UI elements
@@ -32,6 +33,15 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     [Tooltip("Text used to display the score while the player is alive")]
     TextMeshProUGUI scoreCounter;
+    [SerializeField]
+    [Tooltip("Text used to explain how to restart")]
+    TextMeshProUGUI restartText;
+    [SerializeField]
+    [Tooltip("Text used to display the score when the player is dead")]
+    TextMeshProUGUI deathScore;
+    [SerializeField]
+    [Tooltip("Button used to restart the game when the player is dead")]
+    Button restartButton;
 
     /// <summary>
     /// The current state of the game
@@ -64,7 +74,18 @@ public class GameManager : MonoBehaviour
         if (State == GameState.Alive) // UI while the player is alive
         {
             scoreCounter.enabled = true;
+            restartText.enabled = true;
+            deathScore.enabled = false;
+            restartButton.gameObject.SetActive(false);
             scoreCounter.text = $"SCORE: {LevelManager.Score}";
+        }
+        if (State == GameState.Dead) // UI while the player is dead
+        {
+            scoreCounter.enabled = false;
+            restartText.enabled = false;
+            deathScore.enabled = true;
+            restartButton.gameObject.SetActive(true);
+            deathScore.text = $"FINAL SCORE: {LevelManager.Score}";
         }
     }
 
