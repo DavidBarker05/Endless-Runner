@@ -105,6 +105,7 @@ public class LevelManager : MonoBehaviour
         {
             foreach (var obstacleRow in terrain.GetComponent<SpawnableTerrain>().ObstacleRows) // Go through all obstacle rows
             {
+                obstacleRow.GetComponentInChildren<ScoreCollider>().LevelManager = this;
                 int numberOfObstacles = Random.Range(obstacleRow.GetComponent<ObstacleRow>().MinimumObstacles, obstacleRow.GetComponent<ObstacleRow>().MaximumObstacles + 1); // Get random number of obstacles to generate
                 if (numberOfObstacles == 0 || lastGeneratedObstacleCount == 2) // If number of obstacles to generate is 0, or the previous number was 2 (which would make the game too hard if generate again)
                 {
@@ -155,6 +156,12 @@ public class LevelManager : MonoBehaviour
                     pickupInterface.PlayerManager = playerManager;
                 }
             }
+        }
+        terrain.GetComponentInChildren<FrontTerrain>().LevelManager = this;
+        if (terrain.CompareTag("SecurityDoor"))
+        {
+            lastGeneratedObstacleCount = 2;
+            terrain.GetComponentInChildren<Obstacle>().GameManager = gameManager;
         }
         generatedTerrain.Add(terrain);
         lastGeneratedTerrain = terrain;

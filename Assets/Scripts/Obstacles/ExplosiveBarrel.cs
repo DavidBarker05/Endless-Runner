@@ -7,9 +7,6 @@ using GameUtilities;
 /// </summary>
 public class ExplosiveBarrel : MonoBehaviour
 {
-    [Header("Game Manager")]
-    [SerializeField]
-    GameManager gameManager;
     [Header("Explosion")]
     [SerializeField]
     [Tooltip("The radius of the explosion")]
@@ -21,8 +18,9 @@ public class ExplosiveBarrel : MonoBehaviour
 
     ParticleSystem explosion; // Explosion particle system
 
-    void Awake() => explosion = UtilityMethods.Parent(gameObject).GetComponentInChildren<ParticleSystem>();
+    GameManager gameManager;
 
+    void Awake() => explosion = UtilityMethods.Parent(gameObject).GetComponentInChildren<ParticleSystem>();
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player")) Explode();
@@ -30,6 +28,7 @@ public class ExplosiveBarrel : MonoBehaviour
 
     public void Explode()
     {
+        gameManager = GetComponent<Obstacle>().GameManager;
         gameObject.layer = 2; // Make sure current barrel isn't in the list of barrels that need to explode
         Collider[] colliders = Physics.OverlapSphere(transform.position, explosionSize, explodables, QueryTriggerInteraction.Collide); // Find all explodable objects
         Collider player = Array.Find<Collider>(colliders, (Collider c) => c.CompareTag("Player"));

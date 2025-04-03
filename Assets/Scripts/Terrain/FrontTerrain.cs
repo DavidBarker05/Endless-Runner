@@ -6,9 +6,7 @@ using GameUtilities;
 /// </summary>
 public class FrontTerrain : MonoBehaviour
 {
-    [Header("Level Manager")]
-    [SerializeField]
-    LevelManager levelManager;
+    public LevelManager LevelManager { get; set; }
 
     void OnTriggerEnter(Collider other)
     {
@@ -16,6 +14,6 @@ public class FrontTerrain : MonoBehaviour
         other.enabled = false;
         GetComponentInParent<SpawnableTerrain>().CanMove = true;
         transform.parent.position = other.transform.parent.position + UtilityMethods.ZVector((other.GetComponentInParent<SpawnableTerrain>().Size + GetComponentInParent<SpawnableTerrain>().Size) / 2f); // Position the other terrain to the correct place
-        if (levelManager.GenerateTerrainOnTrigger) levelManager.GenerateTerrain();
+        if (LevelManager.GenerateTerrainOnTrigger) LevelManager.GenerateTerrain();
     }
 }

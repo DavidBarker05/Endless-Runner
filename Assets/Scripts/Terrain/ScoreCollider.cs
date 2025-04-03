@@ -5,11 +5,10 @@ using UnityEngine;
 /// </summary>
 public class ScoreCollider : MonoBehaviour
 {
-    [SerializeField]
-    LevelManager levelManager;
+    public LevelManager LevelManager { get; set; }
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Player") && GetComponentInParent<ObstacleRow>().HasObstacles) levelManager.Score++;
+        if (other.gameObject.CompareTag("Player") && GetComponentInParent<ObstacleRow>().HasObstacles) LevelManager.Score++;
     }
 }
