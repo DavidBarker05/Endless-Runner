@@ -4,21 +4,18 @@ using static IPickup;
 
 public class PickupManager : MonoBehaviour
 {
-    List<string> names = new List<string>();
-    List<float> useTimes = new List<float>();
-    List<Effect> effects = new List<Effect>();
+    readonly List<string> names = new List<string>();
+    readonly List<float> useTimes = new List<float>();
+    readonly List<Effect> effects = new List<Effect>();
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void FixedUpdate()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (names.Count == 0) return;
-        effects[0](useTimes[0]);
+        for (int i = 0; i < names.Count; i++)
+        {
+            effects[i](useTimes[i]);
+            useTimes[i] -= Time.deltaTime;
+            if (useTimes[i] < 0f) RemovePickup(i);
+        }
     }
 
     public bool PickupExists(string name) => names.Contains(name);
@@ -28,6 +25,13 @@ public class PickupManager : MonoBehaviour
         names.Add(name);
         useTimes.Add(duration);
         effects.Add(effect);
+    }
+
+    void RemovePickup(int index)
+    {
+        names.RemoveAt(index);
+        useTimes.RemoveAt(index);
+        effects.RemoveAt(index);
     }
 
     public void ResetUseTime(string name, float duration) => useTimes[names.IndexOf(name)] = duration;
