@@ -161,6 +161,7 @@ public class LevelManager : MonoBehaviour
         if (terrain.CompareTag("SecurityDoor"))
         {
             lastGeneratedObstacleCount = 2;
+            terrain.GetComponentInChildren<ScoreCollider>().LevelManager = this;
             terrain.GetComponentInChildren<Obstacle>().GameManager = gameManager;
         }
         generatedTerrain.Add(terrain);
