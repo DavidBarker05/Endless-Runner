@@ -12,8 +12,8 @@ public class PickupManager : MonoBehaviour
     {
         for (int i = 0; i < names.Count; i++)
         {
-            effects[i](useTimes[i]);
             useTimes[i] -= Time.deltaTime;
+            effects[i](useTimes[i]);
             if (useTimes[i] < 0f) RemovePickup(i);
         }
     }
