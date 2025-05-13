@@ -1,6 +1,6 @@
 using Array = System.Array;
-using UnityEngine;
 using GameUtilities;
+using UnityEngine;
 
 /// <summary>
 /// Handles the explosion of an explosive barrel

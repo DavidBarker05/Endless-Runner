@@ -1,5 +1,5 @@
-using UnityEngine;
 using GameUtilities;
+using UnityEngine;
 
 /// <summary>
 /// Attatched to the front of a terrain so that it can make the terrain behind it move forward
