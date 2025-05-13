@@ -6,6 +6,7 @@ using UnityEngine;
 public class SecurityGuard : MonoBehaviour
 {
     [SerializeField]
+    [Tooltip("How many times the guard shoots per second")]
     float fireRate;
     [SerializeField]
     [Tooltip("The place to spawn bullets")]
@@ -13,6 +14,9 @@ public class SecurityGuard : MonoBehaviour
     [SerializeField]
     [Tooltip("Bullet prefab")]
     GameObject bullet;
+    [Tooltip("Max range of the guard")]
+    [SerializeField]
+    GameObject maxRange;
 
     float shootTime;
 
@@ -21,14 +25,19 @@ public class SecurityGuard : MonoBehaviour
     /// </summary>
     public bool ShootingEnabled { get; set; }
 
+    /// <summary>
+    /// Max range of the guard
+    /// </summary>
+    public GameObject MaxRange => maxRange;
+
     void FixedUpdate()
     {
         if (!ShootingEnabled) return; // If can't shoot then skip
         shootTime += Time.fixedDeltaTime; // Increase time since last shot
         if (shootTime <= 1f / fireRate) return; // If time is before the shooting then skip
-        var go = Instantiate(bullet, transform);
-        go.transform.position = gunBarrel.position;
-        go.transform.rotation = gunBarrel.rotation;
+        var _bullet = Instantiate(bullet, gunBarrel);
+        _bullet.transform.position = gunBarrel.position;
+        _bullet.transform.rotation = gunBarrel.rotation;
         shootTime = 0f; // Reset time
     }
 }

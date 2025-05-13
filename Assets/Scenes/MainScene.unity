@@ -1550,12 +1550,7 @@ MonoBehaviour:
   - {fileID: 1266680257699730657, guid: 273005c3cfe3d2d4c916ce74b22ceb02, type: 3}
   levelOneTerrain:
   - {fileID: 6889921596724400978, guid: c801baf9ea854894abffc0c9843f28e3, type: 3}
-  - {fileID: 8204541959150788127, guid: ec2c5d9683b4d2d46b428d5f05d79dea, type: 3}
-  - {fileID: 3377377349911056766, guid: a288d5d7e3c1c684cb79af36e5fa6bb0, type: 3}
-  - {fileID: 5747243546686712981, guid: 903fff6e65efd254caa4327217b38a62, type: 3}
   levelOneObstacles:
-  - {fileID: 1716645432113708684, guid: bad90c7f36e45514888c0f69ce9e79b9, type: 3}
-  - {fileID: 7491506462756276976, guid: b89e846ed2758164890d2f75712ab7b8, type: 3}
   - {fileID: 8921068675084077163, guid: 89f7c9d3ca0ac7741bdc652ab46b4ac9, type: 3}
   levelOnePickups:
   - {fileID: 7570511728596950709, guid: fa3e8a6cea331954b99068cd589fffd6, type: 3}

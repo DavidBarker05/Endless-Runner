@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7fc9a0c4426c2247ae2dc9454b1de1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  velocity: 1
+  velocity: 20
   shootables:
     serializedVersion: 2
     m_Bits: 200

@@ -27,7 +27,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1.5, z: -10}
-  m_LocalScale: {x: 10, y: 3, z: 1}
+  m_LocalScale: {x: 1, y: 3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7521012748149462597}
@@ -66,7 +66,7 @@ GameObject:
   - component: {fileID: 9131509395828189422}
   m_Layer: 0
   m_Name: Bounds
-  m_TagString: Untagged
+  m_TagString: SecurityGuard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -164,7 +164,7 @@ GameObject:
   - component: {fileID: 2297495414633420655}
   m_Layer: 0
   m_Name: Security Guard
-  m_TagString: Untagged
+  m_TagString: SecurityGuard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -203,6 +203,7 @@ MonoBehaviour:
   fireRate: 1
   gunBarrel: {fileID: 1367453410696025834}
   bullet: {fileID: 1817919041150978180, guid: 5f537769cd8cd6b45b220a200e48ae3d, type: 3}
+  maxRange: {fileID: 2915067822309506901}
 --- !u!1001 &3243205083987145971
 PrefabInstance:
   m_ObjectHideFlags: 0

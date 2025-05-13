@@ -22,7 +22,7 @@ public class Bullet : MonoBehaviour
 
     void FixedUpdate()
     {
-        transform.position += Vector3.forward * (velocity * Time.fixedDeltaTime);
+        transform.position -= Vector3.forward * (velocity * Time.fixedDeltaTime);
         // Check if any shootable objects are between the current and previous position, can hit the trigger of the explosive barrel
         if (Physics.Linecast(transform.position, previous, out RaycastHit hit, shootables, QueryTriggerInteraction.Collide))
         {
@@ -32,7 +32,12 @@ public class Bullet : MonoBehaviour
                 gameManager.State = GameManager.GameState.Dead; // Kill the player if it hits the player
             }
             hit.collider.gameObject.GetComponent<ExplosiveBarrel>()?.Explode(); // Explode the object if it is a barrel
-            if (hit.collider != null) Destroy(gameObject); // If the bullet collided with something then destroy it
+            if (hit.collider.gameObject.layer == LayerMask.NameToLayer("MaxGuardRange"))
+            {
+                GameObject maxRange = UtilityMethods.Parent(gameObject).GetComponentInParent<SecurityGuard>().MaxRange;
+                if (hit.collider.gameObject.GetInstanceID() == maxRange.GetInstanceID()) Destroy(gameObject); // Check if the max range it hits belongs to the bullet's guard and not another guard before destroying the bullet
+            }
+            else Destroy(gameObject); // Destroy the bullet if it hits something
         }
         previous = transform.position;
     }
