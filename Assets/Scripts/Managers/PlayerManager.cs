@@ -6,9 +6,8 @@ using UnityEngine;
 /// </summary>
 public class PlayerManager : MonoBehaviour
 {
-    [Header("Game Manager")]
-    [SerializeField]
-    GameManager gameManager;
+    public static PlayerManager instance;
+
     [Header("Lane Switching")]
     [SerializeField]
     [Tooltip("The three lanes the player can switch between")]
@@ -45,7 +44,6 @@ public class PlayerManager : MonoBehaviour
     const float SNAP_DISTANCE = 0.5f; // The distance between the player and row needed to snap to the row
     const float SNAP_TO_GROUND_SPEED = -0.01f; // The speed the player moves into the ground when grounded so that character controller grounded state works
 
-    LevelManager levelManager;
     CharacterController cc;
     int currentLane = 1;
     int targetLane = 1;
@@ -59,7 +57,7 @@ public class PlayerManager : MonoBehaviour
     /// <summary>
     /// Indicates if the player can slide
     /// </summary>
-    public bool CanSlide => currentSlideTime <= maxSlideTime && gameManager.State == GameManager.GameState.Alive; // Needs to be alive and sliding for less time than max time
+    public bool CanSlide => currentSlideTime <= maxSlideTime && GameManager.instance.State == GameManager.GameState.Alive; // Needs to be alive and sliding for less time than max time
     /// <summary>
     /// Indicates if the player is currently sliding
     /// </summary>
@@ -67,11 +65,11 @@ public class PlayerManager : MonoBehaviour
     /// <summary>
     /// Indicates if the player can move
     /// </summary>
-    public bool CanMove => !IsSliding && gameManager.State == GameManager.GameState.Alive;
+    public bool CanMove => !IsSliding && GameManager.instance.State == GameManager.GameState.Alive;
     /// <summary>
     /// Indicates if the player can jump
     /// </summary>
-    public bool CanJump => cc.isGrounded && !IsSliding && gameManager.State == GameManager.GameState.Alive;
+    public bool CanJump => cc.isGrounded && !IsSliding && GameManager.instance.State == GameManager.GameState.Alive;
     /// <summary>
     /// Extra jump height added to the base jump height, used for the jump boost powerup
     /// </summary>
@@ -79,13 +77,10 @@ public class PlayerManager : MonoBehaviour
 
     void Awake()
     {
+        if (instance != null && instance != this) Destroy(this);
+        else instance = this;
         cc = GetComponent<CharacterController>();
         standHeight = cc.height;
-    }
-
-    void Start()
-    {
-        levelManager = gameManager.LevelManager;
     }
 
     void Update()
@@ -102,9 +97,9 @@ public class PlayerManager : MonoBehaviour
         if (Input.GetKey(KeyCode.Space) && CanJump) vVel = Mathf.Sqrt(2 * gravity * (jumpHeight + ExtraJumpHeight));
         pressingSlide = Input.GetKey(KeyCode.LeftControl);
         if (!pressingSlide) currentSlideTime = 0f; // Reset time player is sliding for
-        if (Input.GetKey(KeyCode.R) && gameManager.State == GameManager.GameState.Alive) currentResetHoldTime += Time.deltaTime; // Make time increase while player holds r
+        if (Input.GetKey(KeyCode.R) && GameManager.instance.State == GameManager.GameState.Alive) currentResetHoldTime += Time.deltaTime; // Make time increase while player holds r
         else currentResetHoldTime = 0f; // Reset timer when release r
-        if (currentResetHoldTime >= resetHoldTime) levelManager.ResetGame(); // Reset game once timer excedes time
+        if (currentResetHoldTime >= resetHoldTime) LevelManager.instance.ResetGame(); // Reset game once timer excedes time
     }
 
     void FixedUpdate()

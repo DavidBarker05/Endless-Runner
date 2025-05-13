@@ -7,6 +7,8 @@ using UnityEngine.UI;
 /// </summary>
 public class GameManager : MonoBehaviour
 {
+    public static GameManager instance;
+
     /// <summary>
     /// Different states the game can be in
     /// </summary>
@@ -26,9 +28,6 @@ public class GameManager : MonoBehaviour
         Dead
     }
 
-    [Header("Player")]
-    [SerializeField]
-    PlayerManager playerManager;
     [Header("UI")]
     [SerializeField]
     [Tooltip("Text used to display the score while the player is alive")]
@@ -47,24 +46,11 @@ public class GameManager : MonoBehaviour
     /// The current state of the game
     /// </summary>
     public GameState State { get; set; }
-    /// <summary>
-    /// The level manager of the game
-    /// </summary>
-    public LevelManager LevelManager { get; private set; }
-    /// <summary>
-    /// The player manager of the game
-    /// </summary>
-    public PlayerManager PlayerManager => playerManager;
-    /// <summary>
-    /// The pickup manager of the game
-    /// </summary>
-    public PickupManager PickupManager { get; private set; }
-
 
     void Awake()
     {
-        LevelManager = GetComponent<LevelManager>();
-        PickupManager = GetComponent<PickupManager>();
+        if (instance != null && instance != this) Destroy(this);
+        else instance = this;
     }
 
     void Start() => StartGame();
@@ -77,7 +63,7 @@ public class GameManager : MonoBehaviour
             restartText.enabled = true;
             deathScore.enabled = false;
             restartButton.gameObject.SetActive(false);
-            scoreCounter.text = $"SCORE: {LevelManager.Score}";
+            scoreCounter.text = $"SCORE: {LevelManager.instance.Score}";
         }
         if (State == GameState.Dead) // UI while the player is dead
         {
@@ -85,12 +71,12 @@ public class GameManager : MonoBehaviour
             restartText.enabled = false;
             deathScore.enabled = true;
             restartButton.gameObject.SetActive(true);
-            deathScore.text = $"FINAL SCORE: {LevelManager.Score}";
+            deathScore.text = $"FINAL SCORE: {LevelManager.instance.Score}";
         }
     }
 
     /// <summary>
     /// Starts the game
     /// </summary>
-    public void StartGame() => LevelManager.ResetGame();
+    public void StartGame() => LevelManager.instance.ResetGame();
 }

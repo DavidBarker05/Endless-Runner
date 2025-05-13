@@ -5,10 +5,8 @@ using UnityEngine;
 /// </summary>
 public class Obstacle : MonoBehaviour
 {
-    public GameManager GameManager { get; set; }
-
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player")) GameManager.State = GameManager.GameState.Dead;
+        if (other.CompareTag("Player")) GameManager.instance.State = GameManager.GameState.Dead;
     }
 }

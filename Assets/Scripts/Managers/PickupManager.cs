@@ -4,9 +4,17 @@ using static IPickup;
 
 public class PickupManager : MonoBehaviour
 {
+    public static PickupManager instance;
+
     readonly List<string> names = new List<string>();
     readonly List<float> useTimes = new List<float>();
     readonly List<Effect> effects = new List<Effect>();
+
+    void Awake()
+    {
+        if (instance != null && instance != this) Destroy(this);
+        else instance = this;
+    }
 
     void FixedUpdate()
     {

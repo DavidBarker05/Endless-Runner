@@ -18,9 +18,8 @@ public class ExplosiveBarrel : MonoBehaviour
 
     ParticleSystem explosion; // Explosion particle system
 
-    GameManager gameManager;
-
     void Awake() => explosion = UtilityMethods.Parent(gameObject).GetComponentInChildren<ParticleSystem>();
+    
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player")) Explode();
@@ -28,11 +27,10 @@ public class ExplosiveBarrel : MonoBehaviour
 
     public void Explode()
     {
-        gameManager = GetComponent<Obstacle>().GameManager;
         gameObject.layer = 2; // Make sure current barrel isn't in the list of barrels that need to explode
         Collider[] colliders = Physics.OverlapSphere(transform.position, explosionSize, explodables, QueryTriggerInteraction.Collide); // Find all explodable objects
         Collider player = Array.Find<Collider>(colliders, (Collider c) => c.CompareTag("Player"));
-        if (player != null) gameManager.State = GameManager.GameState.Dead; // If the player is in the explosion kill them
+        if (player != null) GameManager.instance.State = GameManager.GameState.Dead; // If the player is in the explosion kill them
         Array.ForEach<Collider>(colliders, c => c.gameObject.GetComponent<ExplosiveBarrel>()?.Explode()); // If another barrel is in the explosion explode it
         gameObject.SetActive(false); // Hide the barrel mesh and collider
         explosion.Play();

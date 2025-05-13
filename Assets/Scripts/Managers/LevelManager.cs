@@ -8,9 +8,8 @@ using UnityEngine;
 /// </summary>
 public class LevelManager : MonoBehaviour
 {
-    [Header("Game Manager")]
-    [SerializeField]
-    GameManager gameManager;
+    public static LevelManager instance;
+
     [Header("Spawn Management")]
     [SerializeField]
     [Tooltip("The location where tiles spawn on")]
@@ -43,8 +42,6 @@ public class LevelManager : MonoBehaviour
 
     const float MAX_SPEED = 0.5f; // The max speed that everything can reach
 
-    PlayerManager playerManager;
-    PickupManager pickupManager;
     List<GameObject> generatedTerrain = new List<GameObject>();
     bool isLevelStart = true;
     GameObject lastGeneratedTerrain;
@@ -65,15 +62,15 @@ public class LevelManager : MonoBehaviour
     // What terrain is currently able to be spawned
     List<GameObject> PossibleTerrain => isLevelStart ? levelOneStartingTerrain : levelOneTerrain;
 
-    void Start()
+    private void Awake()
     {
-        playerManager = gameManager.PlayerManager;
-        pickupManager = gameManager.PickupManager;
+        if (instance != null && instance != this) Destroy(this);
+        else instance = this;
     }
 
     void FixedUpdate()
     {
-        if (!(gameManager.State == GameManager.GameState.Alive)) return;
+        if (!(GameManager.instance.State == GameManager.GameState.Alive)) return;
         GameObject[] moveableTerrain = Array.FindAll<GameObject>(generatedTerrain.ToArray(), (GameObject t) => t.GetComponent<SpawnableTerrain>().CanMove); // Find all terrain that can move
         Array.ForEach<GameObject>(moveableTerrain, t => t.transform.position -= UtilityMethods.ZVector(Speed)); // Move all the terrain that can move
         Speed += startingSpeed / 30f * Time.fixedDeltaTime; // Increase speed
@@ -105,7 +102,6 @@ public class LevelManager : MonoBehaviour
         {
             foreach (var obstacleRow in terrain.GetComponent<SpawnableTerrain>().ObstacleRows) // Go through all obstacle rows
             {
-                obstacleRow.GetComponentInChildren<ScoreCollider>().LevelManager = this;
                 int numberOfObstacles = Random.Range(obstacleRow.GetComponent<ObstacleRow>().MinimumObstacles, obstacleRow.GetComponent<ObstacleRow>().MaximumObstacles + 1); // Get random number of obstacles to generate
                 if (numberOfObstacles == 0 || lastGeneratedObstacleCount == 2) // If number of obstacles to generate is 0, or the previous number was 2 (which would make the game too hard if generate again)
                 {
@@ -118,7 +114,6 @@ public class LevelManager : MonoBehaviour
                 Vector3 spawnPos = UtilityMethods.YZVector(obstacleRow.transform.position) + UtilityMethods.XVector(lanes[firstSpawnLane].position);
                 var firstObstacle = Instantiate(levelOneObstacles[obstacleIndex], obstacleRow.transform);
                 firstObstacle.transform.position = spawnPos;
-                firstObstacle.GetComponentInChildren<Obstacle>().GameManager = gameManager;
                 if (numberOfObstacles == 1 || lastGeneratedObstacleCount == 1) // If number of obstacles is 1, or the previous number was 1 then can't generate 2 obstacles
                 {
                     lastGeneratedObstacleCount = 1;
@@ -134,7 +129,6 @@ public class LevelManager : MonoBehaviour
                 spawnPos = UtilityMethods.YZVector(obstacleRow.transform.position) + UtilityMethods.XVector(lanes[secondSpawnLane].position);
                 var secondObstacle = Instantiate(levelOneObstacles[obstacleIndex], obstacleRow.transform);
                 secondObstacle.transform.position = spawnPos;
-                secondObstacle.GetComponentInChildren<Obstacle>().GameManager = gameManager;
             }
         }
         else lastGeneratedObstacleCount = 0;
@@ -151,19 +145,10 @@ public class LevelManager : MonoBehaviour
                     Vector3 spawnPos = UtilityMethods.YZVector(pickupRow.transform.position) + UtilityMethods.XVector(lanes[lane].position);
                     var pickup = Instantiate(levelOnePickups[pickupIndex], pickupRow.transform);
                     pickup.transform.position = spawnPos;
-                    var pickupInterface = pickup.GetComponentInChildren<IPickup>();
-                    pickupInterface.PickupManager = pickupManager;
-                    pickupInterface.PlayerManager = playerManager;
                 }
             }
         }
-        terrain.GetComponentInChildren<FrontTerrain>().LevelManager = this;
-        if (terrain.CompareTag("SecurityDoor"))
-        {
-            lastGeneratedObstacleCount = 2;
-            terrain.GetComponentInChildren<ScoreCollider>().LevelManager = this;
-            terrain.GetComponentInChildren<Obstacle>().GameManager = gameManager;
-        }
+        if (terrain.CompareTag("SecurityDoor")) lastGeneratedObstacleCount = 2;
         generatedTerrain.Add(terrain);
         lastGeneratedTerrain = terrain;
     }
@@ -205,7 +190,7 @@ public class LevelManager : MonoBehaviour
     // Resets game to start
     public void ResetGame()
     {
-        gameManager.State = GameManager.GameState.Alive;
+        GameManager.instance.State = GameManager.GameState.Alive;
         Array.ForEach<GameObject>(generatedTerrain.ToArray(), t => DestroyTerrain(t));
         isLevelStart = true;
         lastGeneratedTerrain = null;
@@ -214,6 +199,6 @@ public class LevelManager : MonoBehaviour
         GenerateTerrainOnTrigger = false;
         Score = 0;
         GenerateStartingTerrain();
-        playerManager.ResetPlayer();
+        PlayerManager.instance.ResetPlayer();
     }
 }

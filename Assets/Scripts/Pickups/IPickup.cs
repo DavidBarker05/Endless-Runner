@@ -4,14 +4,6 @@
 public interface IPickup
 {
     /// <summary>
-    /// Pickup managager
-    /// </summary>
-    public PickupManager PickupManager { get; set; }
-    /// <summary>
-    /// Player manager
-    /// </summary>
-    public PlayerManager PlayerManager { get; set; }
-    /// <summary>
     /// Name of pickup
     /// </summary>
     public string Name { get; }
