@@ -8,6 +8,7 @@ TagManager:
   - BackTerrain
   - SecurityDoor
   - SecurityGuard
+  - Pickup
   layers:
   - Default
   - TransparentFX
