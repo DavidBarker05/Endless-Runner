@@ -7,9 +7,9 @@ public class PlayerCollision : MonoBehaviour
     {
         if (other.CompareTag("Pickup"))
         {
-            IPickup foo = other.GetComponent<IPickup>();
+            IPickup pickup = other.GetComponent<IPickup>();
             Destroy(UtilityMethods.Parent(other.gameObject)); // Destroy the pickup
-            PickupManager.instance.AddPickup(foo);
+            PickupManager.instance.AddPickup(pickup);
         }
     }
 }
