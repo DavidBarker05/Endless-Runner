@@ -1,14 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
-using static IPickup;
 
 public class PickupManager : MonoBehaviour
 {
     public static PickupManager instance;
 
-    readonly List<string> names = new List<string>();
-    readonly List<float> useTimes = new List<float>();
-    readonly List<Effect> effects = new List<Effect>();
+    Dictionary<string, IPickup> foo2 = new Dictionary<string, IPickup>();
 
     void Awake()
     {
@@ -18,46 +15,28 @@ public class PickupManager : MonoBehaviour
 
     void FixedUpdate()
     {
-        for (int i = 0; i < names.Count; i++) // Go through all pickups
+        List<string> toRemove = new List<string>();
+        foreach (var idk in foo2)
         {
-            useTimes[i] -= Time.deltaTime; // Count down their use times
-            effects[i](useTimes[i]); // Use their effect
-            if (useTimes[i] < 0f) RemovePickup(i); // Remove them if the use time is below 0
+            idk.Value.UseTime -= Time.fixedDeltaTime;
+            idk.Value.Effect();
+            if (idk.Value.UseTime < 0f) toRemove.Add(idk.Key);
+        }
+        foreach (string key in toRemove)
+        {
+            foo2.Remove(key);
         }
     }
 
-    /// <summary>
-    /// Checks if the pickup already exists in the list
-    /// </summary>
-    /// <param name="name">The name of the pickup to check for</param>
-    /// <returns>Bool stating if the pickup exists</returns>
-    public bool PickupExists(string name) => names.Contains(name);
-
-    /// <summary>
-    /// Add a pickup
-    /// </summary>
-    /// <param name="name">Name of the pickup</param>
-    /// <param name="duration">Duration of the pickup</param>
-    /// <param name="effect">Effect of the pickup</param>
-    public void AddPickup(string name, float duration, Effect effect)
+    public void AddPickup(IPickup pickup)
     {
-        names.Add(name);
-        useTimes.Add(duration);
-        effects.Add(effect);
+        if (foo2.ContainsKey(pickup.Name))
+        {
+            foo2[pickup.Name].UseTime = pickup.Duration;
+        }
+        else
+        {
+            foo2.Add(pickup.Name, pickup);
+        }
     }
-
-    // Remove a pickup at that index
-    void RemovePickup(int index)
-    {
-        names.RemoveAt(index);
-        useTimes.RemoveAt(index);
-        effects.RemoveAt(index);
-    }
-
-    /// <summary>
-    /// Reset the use time of a pick
-    /// </summary>
-    /// <param name="name">Name of pickup to reset</param>
-    /// <param name="duration">Duration to set back to</param>
-    public void ResetUseTime(string name, float duration) => useTimes[names.IndexOf(name)] = duration;
 }

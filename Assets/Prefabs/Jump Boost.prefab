@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 144467217316652144}
   m_Layer: 0
   m_Name: Jump Boost Bounds
-  m_TagString: Untagged
+  m_TagString: Pickup
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -66,8 +66,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 811dd4ef27529f644ae89d4127874940, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pickupManager: {fileID: 0}
-  playerManager: {fileID: 0}
 --- !u!1 &7570511728596950709
 GameObject:
   m_ObjectHideFlags: 0
