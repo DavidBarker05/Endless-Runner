@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
         /// <summary>
         /// Player is currently dead
         /// </summary>
-        Dead
+        Dead,
     }
 
     [Header("UI")]
