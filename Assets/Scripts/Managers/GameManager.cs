@@ -57,21 +57,22 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        if (State == GameState.Alive) // UI while the player is alive
+        switch (State)
         {
-            scoreCounter.enabled = true;
-            restartText.enabled = true;
-            deathScore.enabled = false;
-            restartButton.gameObject.SetActive(false);
-            scoreCounter.text = $"SCORE: {LevelManager.instance.Score}";
-        }
-        if (State == GameState.Dead) // UI while the player is dead
-        {
-            scoreCounter.enabled = false;
-            restartText.enabled = false;
-            deathScore.enabled = true;
-            restartButton.gameObject.SetActive(true);
-            deathScore.text = $"FINAL SCORE: {LevelManager.instance.Score}";
+            case GameState.Alive: // UI while the player is alive
+                scoreCounter.enabled = true;
+                restartText.enabled = true;
+                deathScore.enabled = false;
+                restartButton.gameObject.SetActive(false);
+                scoreCounter.text = $"SCORE: {LevelManager.instance.Score}";
+                break;
+            case GameState.Dead: // UI while the player is dead
+                scoreCounter.enabled = false;
+                restartText.enabled = false;
+                deathScore.enabled = true;
+                restartButton.gameObject.SetActive(true);
+                deathScore.text = $"FINAL SCORE: {LevelManager.instance.Score}";
+                break;
         }
     }
 
