@@ -8,6 +8,6 @@ public class PlayerCollision : MonoBehaviour
         if (!other.CompareTag("Pickup")) return;
         IPickup pickup = other.GetComponent<IPickup>();
         Destroy(UtilityMethods.Parent(other.gameObject)); // Destroy the pickup
-        PickupManager.instance.AddPickup(pickup);
+        PickupManager.Instance.AddPickup(pickup);
     }
 }

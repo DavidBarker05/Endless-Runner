@@ -8,7 +8,7 @@ using UnityEngine;
 /// </summary>
 public class LevelManager : MonoBehaviour
 {
-    public static LevelManager instance;
+    public static LevelManager Instance { get; private set; }
 
     [Header("Spawn Management")]
     [SerializeField]
@@ -64,13 +64,13 @@ public class LevelManager : MonoBehaviour
 
     private void Awake()
     {
-        if (instance != null && instance != this) Destroy(this);
-        else instance = this;
+        if (Instance != null && Instance != this) Destroy(this);
+        else Instance = this;
     }
 
     void FixedUpdate()
     {
-        if (GameManager.instance.State != GameManager.GameState.Alive) return;
+        if (GameManager.Instance.State != GameManager.GameState.Alive) return;
         GameObject[] moveableTerrain = Array.FindAll<GameObject>(generatedTerrain.ToArray(), (GameObject t) => t.GetComponent<SpawnableTerrain>().CanMove); // Find all terrain that can move
         Array.ForEach<GameObject>(moveableTerrain, t => t.transform.position -= UtilityMethods.ZVector(Speed)); // Move all the terrain that can move
         Speed += startingSpeed / 30f * Time.fixedDeltaTime; // Increase speed
@@ -190,7 +190,7 @@ public class LevelManager : MonoBehaviour
     // Resets game to start
     public void ResetGame()
     {
-        GameManager.instance.State = GameManager.GameState.Alive;
+        GameManager.Instance.State = GameManager.GameState.Alive;
         Array.ForEach<GameObject>(generatedTerrain.ToArray(), t => DestroyTerrain(t));
         isLevelStart = true;
         lastGeneratedTerrain = null;
@@ -199,6 +199,6 @@ public class LevelManager : MonoBehaviour
         GenerateTerrainOnTrigger = false;
         Score = 0;
         GenerateStartingTerrain();
-        PlayerManager.instance.ResetPlayer();
+        PlayerManager.Instance.ResetPlayer();
     }
 }

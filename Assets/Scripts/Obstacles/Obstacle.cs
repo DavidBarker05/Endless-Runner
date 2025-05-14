@@ -7,6 +7,6 @@ public class Obstacle : MonoBehaviour
 {
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player")) GameManager.instance.State = GameManager.GameState.Dead;
+        if (other.CompareTag("Player")) GameManager.Instance.State = GameManager.GameState.Dead;
     }
 }

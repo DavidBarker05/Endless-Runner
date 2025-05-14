@@ -31,7 +31,7 @@ public class SecurityGuard : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(1f / fireRate);
-            if (GameManager.instance.State == GameManager.GameState.Alive)
+            if (GameManager.Instance.State == GameManager.GameState.Alive)
             {
                 var _bullet = Instantiate(bullet, gunBarrel);
                 _bullet.transform.position = gunBarrel.position;

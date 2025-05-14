@@ -9,6 +9,6 @@ public class ScoreCollider : MonoBehaviour
     {
         if (!other.gameObject.CompareTag("Player")) return; // If doesn't collide with player then skip
         if (GetComponentInParent<ObstacleRow>() != null && !GetComponentInParent<ObstacleRow>().HasObstacles) return; // If has obstacle rows but no obstacles then skip
-        LevelManager.instance.Score++; // If there are obstacles or it's a security door then increase score
+        LevelManager.Instance.Score++; // If there are obstacles or it's a security door then increase score
     }
 }

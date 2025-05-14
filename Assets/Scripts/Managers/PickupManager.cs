@@ -3,14 +3,14 @@ using UnityEngine;
 
 public class PickupManager : MonoBehaviour
 {
-    public static PickupManager instance;
+    public static PickupManager Instance { get; private set; }
 
     Dictionary<string, IPickup> activePickups = new Dictionary<string, IPickup>();
 
     void Awake()
     {
-        if (instance != null && instance != this) Destroy(this);
-        else instance = this;
+        if (Instance != null && Instance != this) Destroy(this);
+        else Instance = this;
     }
 
     void FixedUpdate()

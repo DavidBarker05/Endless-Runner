@@ -20,5 +20,5 @@ public class JumpBoostPickup : MonoBehaviour, IPickup
     /// <summary>
     /// Jump boost effect
     /// </summary>
-    public void Effect() => PlayerManager.instance.ExtraJumpHeight = UseTime >= 0f ? 5f : 0f; // If greater than 0 give jump boost else don't
+    public void Effect() => PlayerManager.Instance.ExtraJumpHeight = UseTime >= 0f ? 5f : 0f; // If greater than 0 give jump boost else don't
 }

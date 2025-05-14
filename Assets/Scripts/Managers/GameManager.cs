@@ -7,7 +7,7 @@ using UnityEngine.UI;
 /// </summary>
 public class GameManager : MonoBehaviour
 {
-    public static GameManager instance;
+    public static GameManager Instance { get; private set; }
 
     /// <summary>
     /// Different states the game can be in
@@ -49,8 +49,8 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
-        if (instance != null && instance != this) Destroy(this);
-        else instance = this;
+        if (Instance != null && Instance != this) Destroy(this);
+        else Instance = this;
     }
 
     void Start() => StartGame();
@@ -64,14 +64,14 @@ public class GameManager : MonoBehaviour
                 restartText.enabled = true;
                 deathScore.enabled = false;
                 restartButton.gameObject.SetActive(false);
-                scoreCounter.text = $"SCORE: {LevelManager.instance.Score}";
+                scoreCounter.text = $"SCORE: {LevelManager.Instance.Score}";
                 break;
             case GameState.Dead: // UI while the player is dead
                 scoreCounter.enabled = false;
                 restartText.enabled = false;
                 deathScore.enabled = true;
                 restartButton.gameObject.SetActive(true);
-                deathScore.text = $"FINAL SCORE: {LevelManager.instance.Score}";
+                deathScore.text = $"FINAL SCORE: {LevelManager.Instance.Score}";
                 break;
         }
     }
@@ -79,5 +79,5 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// Starts the game
     /// </summary>
-    public void StartGame() => LevelManager.instance.ResetGame();
+    public void StartGame() => LevelManager.Instance.ResetGame();
 }
