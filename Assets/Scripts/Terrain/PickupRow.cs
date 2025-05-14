@@ -12,5 +12,5 @@ public class PickupRow : MonoBehaviour
     /// <summary>
     /// The spawn chance of a pickup in this row
     /// </summary>
-    public float SpawnChance {  get { return baseSpawnChance; } }
+    public float SpawnChance => baseSpawnChance;
 }

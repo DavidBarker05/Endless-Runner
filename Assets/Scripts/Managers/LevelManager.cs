@@ -74,7 +74,7 @@ public class LevelManager : MonoBehaviour
         GameObject[] moveableTerrain = Array.FindAll<GameObject>(generatedTerrain.ToArray(), (GameObject t) => t.GetComponent<SpawnableTerrain>().CanMove); // Find all terrain that can move
         Array.ForEach<GameObject>(moveableTerrain, t => t.transform.position -= UtilityMethods.ZVector(Speed)); // Move all the terrain that can move
         Speed += startingSpeed / 30f * Time.fixedDeltaTime; // Increase speed
-        Speed = Mathf.Clamp(Speed, startingSpeed, MAX_SPEED); // Make sure doesn't increas max speed
+        Speed = Mathf.Clamp(Speed, startingSpeed, MAX_SPEED); // Make sure doesn't exceed max speed
     }
 
     // The trigger is behind the player

@@ -30,13 +30,7 @@ public class PickupManager : MonoBehaviour
 
     public void AddPickup(IPickup pickup)
     {
-        if (activePickups.ContainsKey(pickup.Name))
-        {
-            activePickups[pickup.Name].UseTime = pickup.Duration;
-        }
-        else
-        {
-            activePickups.Add(pickup.Name, pickup);
-        }
+        if (activePickups.ContainsKey(pickup.Name)) activePickups[pickup.Name].UseTime = pickup.Duration; 
+        else activePickups.Add(pickup.Name, pickup);
     }
 }

@@ -18,15 +18,13 @@ public class SpawnableTerrain : MonoBehaviour
     /// <summary>
     /// The size of the terrain on the z-axis
     /// </summary>
-    public float Size { get; private set; }
+    public float Size => gameObject.transform.localScale.z * 10f;
     /// <summary>
     /// The obstacle rows attatched to the terrain
     /// </summary>
-    public List<GameObject> ObstacleRows { get { return obstacleRows; } }
+    public List<GameObject> ObstacleRows => obstacleRows;
     /// <summary>
     /// The pickup rows attatched to the terrain
     /// </summary>
-    public List<GameObject> PickupRows { get { return pickupRows; } }
-
-    private void Awake() => Size = gameObject.transform.localScale.z * 10f; // Set the size
+    public List<GameObject> PickupRows => pickupRows;
 }

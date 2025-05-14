@@ -5,11 +5,9 @@ public class PlayerCollision : MonoBehaviour
 {
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Pickup"))
-        {
-            IPickup pickup = other.GetComponent<IPickup>();
-            Destroy(UtilityMethods.Parent(other.gameObject)); // Destroy the pickup
-            PickupManager.instance.AddPickup(pickup);
-        }
+        if (!other.CompareTag("Pickup")) return;
+        IPickup pickup = other.GetComponent<IPickup>();
+        Destroy(UtilityMethods.Parent(other.gameObject)); // Destroy the pickup
+        PickupManager.instance.AddPickup(pickup);
     }
 }
