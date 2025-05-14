@@ -21,6 +21,7 @@ public class Bullet : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (GameManager.instance.State != GameManager.GameState.Alive) return;
         transform.position -= Vector3.forward * (velocity * Time.fixedDeltaTime);
         // Check if any shootable objects are between the current and previous position, can hit the trigger of the explosive barrel
         if (Physics.Linecast(transform.position, previous, out RaycastHit hit, shootables, QueryTriggerInteraction.Collide))
