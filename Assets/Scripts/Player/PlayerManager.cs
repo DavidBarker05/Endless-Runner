@@ -42,7 +42,7 @@ public class PlayerManager : MonoBehaviour
     
 
     const float SNAP_DISTANCE = 0.5f; // The distance between the player and row needed to snap to the row
-    const float SNAP_TO_GROUND_SPEED = -0.01f; // The speed the player moves into the ground when grounded so that character controller grounded state works
+    const float SNAP_TO_GROUND_SPEED = -0.01f; // The speed the player moves into the ground when grounded so that character controller grounded State works
 
     CharacterController cc;
     int currentLane = 1;

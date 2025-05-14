@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// Manages the game state and UI elements
+/// Manages the game State and UI elements
 /// </summary>
 public class GameManager : MonoBehaviour
 {
@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
     public enum GameState
     {
         /// <summary>
-        /// Empty state
+        /// Empty State
         /// </summary>
         None,
         /// <summary>
@@ -43,7 +43,7 @@ public class GameManager : MonoBehaviour
     Button restartButton;
 
     /// <summary>
-    /// The current state of the game
+    /// The current State of the game
     /// </summary>
     public GameState State { get; set; }
 

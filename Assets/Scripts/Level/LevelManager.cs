@@ -39,6 +39,9 @@ public class LevelManager : MonoBehaviour
     [SerializeField]
     [Tooltip("List of spawnable pickups for level one")]
     List<GameObject> levelOnePickups = new List<GameObject>();
+    [SerializeField]
+    [Tooltip("")]
+    LevelOneBoss levelOneBoss;
 
     const float MAX_SPEED = 0.5f; // The max speed that everything can reach
 
@@ -46,6 +49,8 @@ public class LevelManager : MonoBehaviour
     bool isLevelStart = true;
     GameObject lastGeneratedTerrain;
     int lastGeneratedObstacleCount;
+    float bossTimer;
+    IBoss boss;
 
     /// <summary>
     /// The speed that all terrain moves
@@ -75,6 +80,8 @@ public class LevelManager : MonoBehaviour
         Array.ForEach<GameObject>(moveableTerrain, t => t.transform.position -= UtilityMethods.ZVector(Speed)); // Move all the terrain that can move
         Speed += startingSpeed / 30f * Time.fixedDeltaTime; // Increase speed
         Speed = Mathf.Clamp(Speed, startingSpeed, MAX_SPEED); // Make sure doesn't exceed max speed
+        bossTimer += Time.fixedDeltaTime;
+        if (bossTimer >= 30f) ManageBoss();
     }
 
     // The trigger is behind the player
@@ -185,6 +192,14 @@ public class LevelManager : MonoBehaviour
     {
         generatedTerrain.Remove(terrain);
         Destroy(terrain);
+    }
+
+    void ManageBoss()
+    {
+        bossTimer = 0f;
+        if (levelOneBoss == null) return;
+        if (boss == null) boss = Instantiate(levelOneBoss);
+        else boss.Disengage();
     }
 
     // Resets game to start
