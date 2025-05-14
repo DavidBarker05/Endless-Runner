@@ -70,7 +70,7 @@ public class LevelManager : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (!(GameManager.instance.State == GameManager.GameState.Alive)) return;
+        if (GameManager.instance.State != GameManager.GameState.Alive) return;
         GameObject[] moveableTerrain = Array.FindAll<GameObject>(generatedTerrain.ToArray(), (GameObject t) => t.GetComponent<SpawnableTerrain>().CanMove); // Find all terrain that can move
         Array.ForEach<GameObject>(moveableTerrain, t => t.transform.position -= UtilityMethods.ZVector(Speed)); // Move all the terrain that can move
         Speed += startingSpeed / 30f * Time.fixedDeltaTime; // Increase speed
