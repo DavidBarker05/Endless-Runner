@@ -213,6 +213,8 @@ public class LevelManager : MonoBehaviour
         Speed = startingSpeed;
         GenerateTerrainOnTrigger = false;
         Score = 0;
+        bossTimer = 0f;
+        Destroy(((LevelOneBoss)boss).gameObject);
         GenerateStartingTerrain();
         PlayerManager.Instance.ResetPlayer();
     }
