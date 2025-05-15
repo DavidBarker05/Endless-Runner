@@ -228,5 +228,6 @@ public class LevelManager : MonoBehaviour
         if (boss != null) Destroy(boss.gameObject);
         GenerateStartingTerrain();
         PlayerManager.Instance.ResetPlayer();
+        PickupManager.Instance.ResetPickups();
     }
 }
