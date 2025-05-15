@@ -4,6 +4,7 @@ using UnityEngine;
 /// <summary>
 /// Handles player input and movement
 /// </summary>
+[RequireComponent(typeof(CharacterController))]
 public class PlayerManager : MonoBehaviour
 {
     public static PlayerManager Instance { get; private set; }
