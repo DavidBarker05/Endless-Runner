@@ -7,6 +7,12 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterController))]
 public class PlayerManager : MonoBehaviour
 {
+    public enum AnimationState
+    {
+        Run,
+        Fall,
+    }
+
     public static PlayerManager Instance { get; private set; }
 
     [Header("Lane Switching")]
@@ -54,6 +60,8 @@ public class PlayerManager : MonoBehaviour
     float currentSlideTime;
     float currentResetHoldTime;
     bool pressingSlide;
+    Animator animator;
+    bool groundedLastFrame = true;
 
     /// <summary>
     /// Indicates if the player can slide
@@ -75,6 +83,7 @@ public class PlayerManager : MonoBehaviour
     /// Extra jump height added to the base jump height, used for the jump boost powerup
     /// </summary>
     public float ExtraJumpHeight { get; set; }
+    public AnimationState State { get; set; }
 
     void Awake()
     {
@@ -82,6 +91,8 @@ public class PlayerManager : MonoBehaviour
         else Instance = this;
         cc = GetComponent<CharacterController>();
         standHeight = cc.height;
+        animator = GetComponentInChildren<Animator>();
+        State = AnimationState.Run;
     }
 
     void Update()
@@ -112,14 +123,26 @@ public class PlayerManager : MonoBehaviour
         Vector3 hVel = laneDisplacement / switchTime;
         Vector3 movement = (hVel + UtilityMethods.YVector(vVel)) * Time.fixedDeltaTime;
         cc.Move(movement);
-        if (cc.isGrounded) vVel = SNAP_TO_GROUND_SPEED;
-        else vVel -= gravity * Time.fixedDeltaTime;
+        if (cc.isGrounded)
+        {
+            vVel = SNAP_TO_GROUND_SPEED;
+            groundedLastFrame = true;
+            State = AnimationState.Run;
+        }
+        else
+        {
+            vVel -= gravity * Time.fixedDeltaTime;
+            if (groundedLastFrame) groundedLastFrame = false;
+            else State = AnimationState.Fall;
+        }
         float targetDistance = UtilityMethods.XDistance(transform.position, lanes[targetLane].position);
         if (targetDistance > SNAP_DISTANCE) return; // If distance is greater than snap distance then don't snap
         transform.position = UtilityMethods.YZVector(transform.position) + UtilityMethods.XVector(lanes[targetLane].position);
         currentLane = targetLane;
         targetLane += horizontalDirection;
         targetLane = Mathf.Clamp(targetLane, 0, 2);
+        //Debug.Log(State);
+        animator.SetInteger("AnimationState", (int)State);
     }
 
     /// <summary>
@@ -141,5 +164,6 @@ public class PlayerManager : MonoBehaviour
         transform.position = lanes[currentLane].position;
         cc.enabled = true;
         cc.Move(UtilityMethods.YVector(vVel)); // Move into ground so that is grounded can start working
+        groundedLastFrame = true;
     }
 }
