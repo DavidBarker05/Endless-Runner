@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1681359751955316262}
   m_Layer: 6
   m_Name: Collider
-  m_TagString: Untagged
+  m_TagString: ExplosiveBarrel
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

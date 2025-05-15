@@ -10,6 +10,8 @@ TagManager:
   - SecurityGuard
   - Pickup
   - BossSlideToggle
+  - ExplosiveBarrel
+  - LevelOneBoss
   layers:
   - Default
   - TransparentFX

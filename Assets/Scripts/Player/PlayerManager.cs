@@ -11,6 +11,9 @@ public class PlayerManager : MonoBehaviour
     {
         Run,
         Fall,
+        Crash,
+        Shot,
+        Exploded,
     }
 
     public static PlayerManager Instance { get; private set; }
@@ -92,7 +95,6 @@ public class PlayerManager : MonoBehaviour
         cc = GetComponent<CharacterController>();
         standHeight = cc.height;
         animator = GetComponentInChildren<Animator>();
-        State = AnimationState.Run;
     }
 
     void Update()
@@ -127,13 +129,13 @@ public class PlayerManager : MonoBehaviour
         {
             vVel = SNAP_TO_GROUND_SPEED;
             groundedLastFrame = true;
-            State = AnimationState.Run;
+            if (GameManager.Instance.State != GameManager.GameState.Dead) State = AnimationState.Run;
         }
         else
         {
             vVel -= gravity * Time.fixedDeltaTime;
             if (groundedLastFrame) groundedLastFrame = false;
-            else State = AnimationState.Fall;
+            else if (GameManager.Instance.State != GameManager.GameState.Dead) State = AnimationState.Fall;
         }
         float targetDistance = UtilityMethods.XDistance(transform.position, lanes[targetLane].position);
         if (targetDistance > SNAP_DISTANCE) return; // If distance is greater than snap distance then don't snap
@@ -141,7 +143,6 @@ public class PlayerManager : MonoBehaviour
         currentLane = targetLane;
         targetLane += horizontalDirection;
         targetLane = Mathf.Clamp(targetLane, 0, 2);
-        //Debug.Log(State);
         animator.SetInteger("AnimationState", (int)State);
     }
 
@@ -165,5 +166,6 @@ public class PlayerManager : MonoBehaviour
         cc.enabled = true;
         cc.Move(UtilityMethods.YVector(vVel)); // Move into ground so that is grounded can start working
         groundedLastFrame = true;
+        State = AnimationState.Run;
     }
 }
