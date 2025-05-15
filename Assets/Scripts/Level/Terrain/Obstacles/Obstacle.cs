@@ -7,7 +7,7 @@ public class Obstacle : MonoBehaviour
 {
     void OnTriggerEnter(Collider other)
     {
-        if (!other.CompareTag("Player")) return;
+        if (!other.CompareTag("Player") || PlayerManager.Instance.Invulnerable) return;
         GameManager.Instance.State = GameManager.GameState.Dead;
         if (gameObject.CompareTag("ExplosiveBarrel")) PlayerManager.Instance.State = PlayerManager.AnimationState.Exploded;
         else if (gameObject.CompareTag("LevelOneBoss"))

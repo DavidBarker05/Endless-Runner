@@ -90,6 +90,7 @@ public class PlayerManager : MonoBehaviour
     public float ExtraJumpHeight { get; set; }
     public AnimationState State { get; set; }
     public bool Caught { get; set; }
+    public bool Invulnerable { get; set; }
 
     void Awake()
     {

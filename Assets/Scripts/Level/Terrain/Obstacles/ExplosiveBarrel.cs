@@ -1,11 +1,10 @@
 using Array = System.Array;
-using GameUtilities;
 using UnityEngine;
 
 /// <summary>
 /// Handles the explosion of an explosive barrel
 /// </summary>
-public class ExplosiveBarrel : MonoBehaviour
+public class ExplosiveBarrel : Destructable
 {
     [Header("Explosion")]
     [SerializeField]
@@ -15,29 +14,24 @@ public class ExplosiveBarrel : MonoBehaviour
     [SerializeField]
     [Tooltip("The layers that are affected by the explosion")]
     LayerMask explodables;
-
-    ParticleSystem explosion; // Explosion particle system
-
-    void Awake() => explosion = UtilityMethods.Parent(gameObject).GetComponentInChildren<ParticleSystem>();
     
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player")) Explode();
+        if (other.CompareTag("Player") && !PlayerManager.Instance.Invulnerable) DestroyObstacle();
+        if (other.CompareTag("LevelOneBoss")) base.DestroyObstacle();
     }
 
-    public void Explode()
+    public override void DestroyObstacle()
     {
         gameObject.layer = 2; // Make sure current barrel isn't in the list of barrels that need to explode
         Collider[] colliders = Physics.OverlapSphere(transform.position, explosionSize, explodables, QueryTriggerInteraction.Collide); // Find all explodable objects
         Collider player = Array.Find<Collider>(colliders, (Collider c) => c.CompareTag("Player"));
-        if (player != null)
+        if (player != null && !PlayerManager.Instance.Invulnerable)
         {
             GameManager.Instance.State = GameManager.GameState.Dead; // If the player is in the explosion kill them
             PlayerManager.Instance.State = PlayerManager.AnimationState.Exploded;
         }
-        Array.ForEach<Collider>(colliders, c => c.gameObject.GetComponent<ExplosiveBarrel>()?.Explode()); // If another barrel is in the explosion explode it
-        gameObject.SetActive(false); // Hide the barrel mesh and collider
-        explosion.Play();
-        Destroy(UtilityMethods.Parent(gameObject), explosion.main.duration); // Destroy the explosive barrel once the animation ends
+        Array.ForEach<Collider>(colliders, c => c.gameObject.GetComponent<ExplosiveBarrel>()?.DestroyObstacle()); // If another barrel is in the explosion explode it
+        base.DestroyObstacle();
     }
 }

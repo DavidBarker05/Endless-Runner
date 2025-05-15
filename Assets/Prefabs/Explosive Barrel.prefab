@@ -81,6 +81,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a09178135fd18947a0cdc25aef18706, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  objectMesh: {fileID: 1371982303609371747}
   explosionSize: 10
   explodables:
     serializedVersion: 2
@@ -5075,6 +5076,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6635294e3d221c14caaa4e03d85e6758, type: 3}
+--- !u!1 &1371982303609371747 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 6635294e3d221c14caaa4e03d85e6758, type: 3}
+  m_PrefabInstance: {fileID: 2290972609188135218}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1747838720539780825 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 6635294e3d221c14caaa4e03d85e6758, type: 3}
