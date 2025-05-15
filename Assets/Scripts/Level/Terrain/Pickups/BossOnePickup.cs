@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class BossOnePickup : MonoBehaviour, IPickup
 {
-    public string Name => "Boss One";
+    public string Name => "BossOnePickup";
 
     public float Duration => 5f;
 
