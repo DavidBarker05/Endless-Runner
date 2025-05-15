@@ -31,6 +31,7 @@ public class LevelOneBoss : Boss
 
     void FixedUpdate()
     {
+        if (GameManager.Instance.State == GameManager.GameState.Dead) State = BossState.Catch;
         animator.SetInteger("AnimationState", (int)State);
         if (GameManager.Instance.State != GameManager.GameState.Alive) return;
         if (State != BossState.Slide) transform.position = UtilityMethods.YZVector(transform.position) + UtilityMethods.XVector(PlayerManager.Instance.transform.position);

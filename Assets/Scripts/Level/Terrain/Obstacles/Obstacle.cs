@@ -10,11 +10,7 @@ public class Obstacle : MonoBehaviour
         if (!other.CompareTag("Player") || PlayerManager.Instance.Invulnerable) return;
         GameManager.Instance.State = GameManager.GameState.Dead;
         if (gameObject.CompareTag("ExplosiveBarrel")) PlayerManager.Instance.State = PlayerManager.AnimationState.Exploded;
-        else if (gameObject.CompareTag("LevelOneBoss"))
-        {
-            PlayerManager.Instance.Caught = true;
-            GetComponent<LevelOneBoss>().State = LevelOneBoss.BossState.Catch;
-        }
+        else if (gameObject.CompareTag("LevelOneBoss")) PlayerManager.Instance.Caught = true;
         else PlayerManager.Instance.State = PlayerManager.AnimationState.Crash;
     }
 }
