@@ -178,5 +178,6 @@ public class PlayerManager : MonoBehaviour
         groundedLastFrame = true;
         State = AnimationState.Run;
         Caught = false;
+        Invulnerable = false;
     }
 }
