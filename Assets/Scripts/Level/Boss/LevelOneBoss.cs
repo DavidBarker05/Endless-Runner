@@ -2,6 +2,7 @@ using GameUtilities;
 using System.Collections;
 using UnityEngine;
 
+[RequireComponent(typeof(Animator))]
 public class LevelOneBoss : MonoBehaviour, IBoss
 {
     public enum BossState
@@ -16,33 +17,37 @@ public class LevelOneBoss : MonoBehaviour, IBoss
     float speed;
     [SerializeField]
     float setbackSpeed;
-    [SerializeField]
-    float disengageSpeed;
+
+    Animator animator;
 
     public BossState State { get; set; }
 
-    void Awake() => State = BossState.Run;
+    void Awake()
+    {
+        State = BossState.Run;
+        animator = GetComponent<Animator>();
+    }
 
     void FixedUpdate()
     {
         if (GameManager.Instance.State != GameManager.GameState.Alive) return;
-        transform.position = UtilityMethods.YZVector(transform.position) + UtilityMethods.XVector(PlayerManager.Instance.transform.position);
+        if (State != BossState.Slide) transform.position = UtilityMethods.YZVector(transform.position) + UtilityMethods.XVector(PlayerManager.Instance.transform.position);
         switch (State)
         {
             case BossState.Run:
                 transform.position += transform.forward * (speed * Time.fixedDeltaTime);
-                // Play running animation
+                animator.SetInteger("AnimationState", 0);
                 break;
             case BossState.Slide:
-                // Play sliding animation
+                animator.SetInteger("AnimationState", 1);
                 break;
             case BossState.Setback:
                 transform.position -= transform.forward * (setbackSpeed * Time.fixedDeltaTime);
-                // Play running animation
+                animator.SetInteger("AnimationState", 2);
                 break;
             case BossState.Disengage:
-                transform.position -= transform.forward * (disengageSpeed * Time.fixedDeltaTime);
-                // Play idle animation
+                transform.position -= UtilityMethods.ZVector(LevelManager.Instance.Speed);
+                animator.SetInteger("AnimationState", 3);
                 break;
         }
     }

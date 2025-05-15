@@ -199,7 +199,11 @@ public class LevelManager : MonoBehaviour
         bossTimer = 0f;
         if (levelOneBoss == null) return;
         if (boss == null) boss = Instantiate(levelOneBoss);
-        else boss.Disengage();
+        else
+        {
+            bossTimer = 5f; // Make boss disappear 5 seconds before end of level
+            boss.Disengage();
+        }
     }
 
     // Resets game to start
@@ -214,7 +218,7 @@ public class LevelManager : MonoBehaviour
         GenerateTerrainOnTrigger = false;
         Score = 0;
         bossTimer = 0f;
-        Destroy(((LevelOneBoss)boss).gameObject);
+        //Destroy(((LevelOneBoss)boss).gameObject);
         GenerateStartingTerrain();
         PlayerManager.Instance.ResetPlayer();
     }

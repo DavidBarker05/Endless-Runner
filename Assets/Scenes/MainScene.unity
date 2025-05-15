@@ -1648,6 +1648,7 @@ MonoBehaviour:
   - {fileID: 8921068675084077163, guid: 89f7c9d3ca0ac7741bdc652ab46b4ac9, type: 3}
   levelOnePickups:
   - {fileID: 7570511728596950709, guid: fa3e8a6cea331954b99068cd589fffd6, type: 3}
+  levelOneBoss: {fileID: 0}
 --- !u!114 &1835439953
 MonoBehaviour:
   m_ObjectHideFlags: 0
