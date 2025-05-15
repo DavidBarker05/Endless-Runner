@@ -50,7 +50,7 @@ public class LevelManager : MonoBehaviour
     GameObject lastGeneratedTerrain;
     int lastGeneratedObstacleCount;
     float bossTimer;
-    IBoss boss;
+    Boss boss;
 
     /// <summary>
     /// The speed that all terrain moves
@@ -81,7 +81,7 @@ public class LevelManager : MonoBehaviour
         Speed += startingSpeed / 30f * Time.fixedDeltaTime; // Increase speed
         Speed = Mathf.Clamp(Speed, startingSpeed, MAX_SPEED); // Make sure doesn't exceed max speed
         bossTimer += Time.fixedDeltaTime;
-        if (bossTimer >= 30f) ManageBoss();
+        if (bossTimer >= 30f) ToggleBoss();
     }
 
     // The trigger is behind the player
@@ -194,7 +194,7 @@ public class LevelManager : MonoBehaviour
         Destroy(terrain);
     }
 
-    void ManageBoss()
+    void ToggleBoss()
     {
         bossTimer = 0f;
         if (levelOneBoss == null) return;
@@ -218,7 +218,7 @@ public class LevelManager : MonoBehaviour
         GenerateTerrainOnTrigger = false;
         Score = 0;
         bossTimer = 0f;
-        //Destroy(((LevelOneBoss)boss).gameObject);
+        if (boss != null) Destroy(boss);
         GenerateStartingTerrain();
         PlayerManager.Instance.ResetPlayer();
     }

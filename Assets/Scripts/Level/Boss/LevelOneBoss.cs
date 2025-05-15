@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
-public class LevelOneBoss : MonoBehaviour, IBoss
+public class LevelOneBoss : Boss
 {
     public enum BossState
     {
@@ -48,15 +48,9 @@ public class LevelOneBoss : MonoBehaviour, IBoss
         if (other.CompareTag("BossSlideToggle")) State = BossState.Run;
     }
 
-    public void Disengage()
+    public override void Disengage()
     {
         State = BossState.Disengage;
-        StartCoroutine(Deactivate());
-    }
-
-    IEnumerator Deactivate()
-    {
-        yield return new WaitForSeconds(2.5f);
-        Destroy(gameObject);
+        base.Disengage();
     }
 }
