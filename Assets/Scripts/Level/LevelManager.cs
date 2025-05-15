@@ -225,7 +225,7 @@ public class LevelManager : MonoBehaviour
         GenerateTerrainOnTrigger = false;
         Score = 0;
         bossTimer = 0f;
-        if (boss != null) Destroy(boss);
+        if (boss != null) Destroy(boss.gameObject);
         GenerateStartingTerrain();
         PlayerManager.Instance.ResetPlayer();
     }

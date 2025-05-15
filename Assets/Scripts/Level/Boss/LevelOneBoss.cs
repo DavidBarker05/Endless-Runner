@@ -11,6 +11,7 @@ public class LevelOneBoss : Boss
         Slide,
         Setback,
         Disengage,
+        Catch,
     }
 
     [SerializeField]
@@ -30,10 +31,10 @@ public class LevelOneBoss : Boss
 
     void FixedUpdate()
     {
+        animator.SetInteger("AnimationState", (int)State);
         if (GameManager.Instance.State != GameManager.GameState.Alive) return;
         if (State != BossState.Slide) transform.position = UtilityMethods.YZVector(transform.position) + UtilityMethods.XVector(PlayerManager.Instance.transform.position);
         transform.position += UtilityMethods.ZVector((State == BossState.Run ? speed : State == BossState.Setback ? -setbackSpeed : State == BossState.Disengage ? -LevelManager.Instance.Speed : 0f) * Time.fixedDeltaTime);
-        animator.SetInteger("AnimationState", (int)State);
     }
 
     void OnTriggerEnter(Collider other)

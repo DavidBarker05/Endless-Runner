@@ -14,6 +14,7 @@ public class PlayerManager : MonoBehaviour
         Crash,
         Shot,
         Exploded,
+        Caught,
     }
 
     public static PlayerManager Instance { get; private set; }
@@ -87,6 +88,7 @@ public class PlayerManager : MonoBehaviour
     /// </summary>
     public float ExtraJumpHeight { get; set; }
     public AnimationState State { get; set; }
+    public bool Caught { get; set; }
 
     void Awake()
     {
@@ -130,6 +132,7 @@ public class PlayerManager : MonoBehaviour
             vVel = SNAP_TO_GROUND_SPEED;
             groundedLastFrame = true;
             if (GameManager.Instance.State != GameManager.GameState.Dead) State = AnimationState.Run;
+            if (Caught) State = AnimationState.Caught;
         }
         else
         {
@@ -167,5 +170,6 @@ public class PlayerManager : MonoBehaviour
         cc.Move(UtilityMethods.YVector(vVel)); // Move into ground so that is grounded can start working
         groundedLastFrame = true;
         State = AnimationState.Run;
+        Caught = false;
     }
 }

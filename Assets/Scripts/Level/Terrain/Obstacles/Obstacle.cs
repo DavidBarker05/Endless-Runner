@@ -9,11 +9,12 @@ public class Obstacle : MonoBehaviour
     {
         if (!other.CompareTag("Player")) return;
         GameManager.Instance.State = GameManager.GameState.Dead;
-        PlayerManager.Instance.State = gameObject.tag switch
+        if (gameObject.CompareTag("ExplosiveBarrel")) PlayerManager.Instance.State = PlayerManager.AnimationState.Exploded;
+        else if (gameObject.CompareTag("LevelOneBoss"))
         {
-            "ExplosiveBarrel" => PlayerManager.AnimationState.Exploded,
-            "LevelOneBoss" => PlayerManager.AnimationState.Shot,
-            _ => PlayerManager.AnimationState.Crash,
-        };
+            PlayerManager.Instance.Caught = true;
+            GetComponent<LevelOneBoss>().State = LevelOneBoss.BossState.Catch;
+        }
+        else PlayerManager.Instance.State = PlayerManager.AnimationState.Crash;
     }
 }

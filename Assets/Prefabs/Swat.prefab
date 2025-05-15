@@ -52,6 +52,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Swat
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 440eb59e22a0b5b4e8435a9d4167c309, type: 3}
+      propertyPath: m_TagString
+      value: LevelOneBoss
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
