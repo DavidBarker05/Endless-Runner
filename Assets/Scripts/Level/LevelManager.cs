@@ -26,6 +26,9 @@ public class LevelManager : MonoBehaviour
     [Tooltip("The amount of starting terrain that spawns at the start of the level")]
     [Min(2)]
     int startingTerrainCount;
+    [SerializeField]
+    [Tooltip("The location where the level one boss spawns")]
+    Transform levelOneBossSpawnLocation;
     [Header("Level One Spawnables")]
     [SerializeField]
     [Tooltip("List of spawnable terrain at the start of level one")]
@@ -198,7 +201,11 @@ public class LevelManager : MonoBehaviour
     {
         bossTimer = 0f;
         if (levelOneBoss == null) return;
-        if (boss == null) boss = Instantiate(levelOneBoss);
+        if (boss == null)
+        {
+            boss = Instantiate(levelOneBoss);
+            boss.transform.position = levelOneBossSpawnLocation.position;
+        }
         else
         {
             bossTimer = 5f; // Make boss disappear 5 seconds before end of level
