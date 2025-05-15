@@ -13,7 +13,7 @@ public class BossOnePickup : MonoBehaviour, IPickup
     public void Effect()
     {
         if (levelOneBoss == null) levelOneBoss = levelOneBoss = FindFirstObjectByType<LevelOneBoss>();
-        if (levelOneBoss.State == LevelOneBoss.BossState.Disengage) return;
+        if (levelOneBoss.State == LevelOneBoss.BossState.Disengage || levelOneBoss.State == LevelOneBoss.BossState.Slide) return;
         levelOneBoss.State = UseTime >= 0f ? LevelOneBoss.BossState.Setback : LevelOneBoss.BossState.Run;
     }
 }

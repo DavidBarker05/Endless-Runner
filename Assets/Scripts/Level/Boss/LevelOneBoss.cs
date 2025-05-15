@@ -36,6 +36,18 @@ public class LevelOneBoss : MonoBehaviour, IBoss
         animator.SetInteger("AnimationState", (int)State);
     }
 
+    void OnTriggerEnter(Collider other)
+    {
+        if (State == BossState.Disengage) return;
+        if (other.CompareTag("BossSlideToggle")) State = BossState.Slide;
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if (State == BossState.Disengage) return;
+        if (other.CompareTag("BossSlideToggle")) State = BossState.Run;
+    }
+
     public void Disengage()
     {
         State = BossState.Disengage;

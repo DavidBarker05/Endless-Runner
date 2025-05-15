@@ -9,6 +9,7 @@ TagManager:
   - SecurityDoor
   - SecurityGuard
   - Pickup
+  - BossSlideToggle
   layers:
   - Default
   - TransparentFX
