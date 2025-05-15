@@ -60,7 +60,7 @@ public class LevelOneBoss : MonoBehaviour, IBoss
 
     IEnumerator Deactivate()
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(2.5f);
         Destroy(gameObject);
     }
 }
