@@ -842,7 +842,7 @@ MonoBehaviour:
   - {fileID: 1382791575}
   switchTime: 0.25
   jumpHeight: 1
-  slideHeight: 1
+  slideHeight: 1.1
   maxSlideTime: 5
   gravity: 9.8
   resetHoldTime: 2
@@ -1321,7 +1321,7 @@ GameObject:
   - component: {fileID: 1563684899}
   m_Layer: 3
   m_Name: Player Pickup Collider
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1400,9 +1400,9 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.35
-  m_Height: 1.8
+  m_Height: 1.1
   m_Direction: 1
-  m_Center: {x: 0, y: 0.9, z: 0}
+  m_Center: {x: 0, y: 0.55, z: 0}
 --- !u!1 &1676448774
 GameObject:
   m_ObjectHideFlags: 0
@@ -1650,9 +1650,9 @@ MonoBehaviour:
   levelOneStartingTerrain:
   - {fileID: 1266680257699730657, guid: 273005c3cfe3d2d4c916ce74b22ceb02, type: 3}
   levelOneTerrain:
-  - {fileID: 3377377349911056766, guid: a288d5d7e3c1c684cb79af36e5fa6bb0, type: 3}
+  - {fileID: 6889921596724400978, guid: c801baf9ea854894abffc0c9843f28e3, type: 3}
   levelOneObstacles:
-  - {fileID: 8921068675084077163, guid: 89f7c9d3ca0ac7741bdc652ab46b4ac9, type: 3}
+  - {fileID: 1716645432113708684, guid: bad90c7f36e45514888c0f69ce9e79b9, type: 3}
   levelOnePickups:
   - {fileID: 7570511728596950709, guid: fa3e8a6cea331954b99068cd589fffd6, type: 3}
   levelOneBoss: {fileID: 5349580612360630572, guid: e478332471e0ecf4d9987cf9e993f9c6, type: 3}

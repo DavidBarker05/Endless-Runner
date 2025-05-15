@@ -15,6 +15,7 @@ public class PlayerManager : MonoBehaviour
         Shot,
         Exploded,
         Caught,
+        Slide,
     }
 
     public static PlayerManager Instance { get; private set; }
@@ -116,11 +117,16 @@ public class PlayerManager : MonoBehaviour
         if (Input.GetKey(KeyCode.R) && GameManager.Instance.State == GameManager.GameState.Alive) currentResetHoldTime += Time.deltaTime; // Make time increase while player holds r
         else currentResetHoldTime = 0f; // Reset timer when release r
         if (currentResetHoldTime >= resetHoldTime) LevelManager.Instance.ResetGame(); // Reset game once timer excedes time
+        if (Input.GetKey(KeyCode.L)) Time.timeScale = 0f;
     }
 
     void FixedUpdate()
     {
-        if (IsSliding) currentSlideTime += Time.fixedDeltaTime; // If sliding increase slide time
+        if (IsSliding)
+        {
+            currentSlideTime += Time.fixedDeltaTime; // If sliding increase slide time
+            State = AnimationState.Slide;
+        }
         cc.height = IsSliding ? slideHeight : standHeight; // Set appropriate height
         cc.center = UtilityMethods.YVector(cc.height / 2f); // Set appropriate center
         Vector3 laneDisplacement = UtilityMethods.XVector(lanes[targetLane].position - lanes[currentLane].position);
@@ -131,7 +137,7 @@ public class PlayerManager : MonoBehaviour
         {
             vVel = SNAP_TO_GROUND_SPEED;
             groundedLastFrame = true;
-            if (GameManager.Instance.State != GameManager.GameState.Dead) State = AnimationState.Run;
+            if (GameManager.Instance.State != GameManager.GameState.Dead && !IsSliding) State = AnimationState.Run;
             if (Caught) State = AnimationState.Caught;
         }
         else
