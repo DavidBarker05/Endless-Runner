@@ -32,24 +32,8 @@ public class LevelOneBoss : MonoBehaviour, IBoss
     {
         if (GameManager.Instance.State != GameManager.GameState.Alive) return;
         if (State != BossState.Slide) transform.position = UtilityMethods.YZVector(transform.position) + UtilityMethods.XVector(PlayerManager.Instance.transform.position);
-        switch (State)
-        {
-            case BossState.Run:
-                transform.position += transform.forward * (speed * Time.fixedDeltaTime);
-                animator.SetInteger("AnimationState", 0);
-                break;
-            case BossState.Slide:
-                animator.SetInteger("AnimationState", 1);
-                break;
-            case BossState.Setback:
-                transform.position -= transform.forward * (setbackSpeed * Time.fixedDeltaTime);
-                animator.SetInteger("AnimationState", 2);
-                break;
-            case BossState.Disengage:
-                transform.position -= UtilityMethods.ZVector(LevelManager.Instance.Speed);
-                animator.SetInteger("AnimationState", 3);
-                break;
-        }
+        transform.position += UtilityMethods.ZVector((State == BossState.Run ? speed : State == BossState.Setback ? -setbackSpeed : State == BossState.Disengage ? -LevelManager.Instance.Speed : 0f) * Time.fixedDeltaTime);
+        animator.SetInteger("AnimationState", (int)State);
     }
 
     public void Disengage()
