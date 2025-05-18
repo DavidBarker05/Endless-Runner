@@ -187,6 +187,8 @@ public class LevelManager : MonoBehaviour
     bool IsValidTerrain(GameObject terrain) => lastGeneratedTerrain?.tag switch
     {
         "SecurityDoor" => !terrain.CompareTag("SecurityDoor"),
+        "LitTerrain" => !terrain.CompareTag("LitTerrain"),
+        "UnlitTerrain" => !terrain.CompareTag("UnlitTerrain"),
         _ => true,
     };
 
