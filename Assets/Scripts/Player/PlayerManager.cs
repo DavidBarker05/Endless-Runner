@@ -20,6 +20,10 @@ public class PlayerManager : MonoBehaviour
 
     public static PlayerManager Instance { get; private set; }
 
+    [SerializeField]
+    ParticleSystem jumpParticles;
+    [SerializeField]
+    ParticleSystem bonusParticles;
     [Header("Lane Switching")]
     [SerializeField]
     [Tooltip("The three lanes the player can switch between")]
@@ -91,6 +95,8 @@ public class PlayerManager : MonoBehaviour
     public AnimationState State { get; set; }
     public bool Caught { get; set; }
     public bool Invulnerable { get; set; }
+    public ParticleSystem JumpParticles { get => jumpParticles; set => jumpParticles = value; }
+    public ParticleSystem BonusParticles { get => bonusParticles; set => bonusParticles = value; }
 
     void Awake()
     {

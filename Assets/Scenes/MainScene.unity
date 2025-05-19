@@ -716,6 +716,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f6991899ce510e458b2a62abca783c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  jumpParticles: {fileID: 2077486854}
+  bonusParticles: {fileID: 2062153254}
   lanes:
   - {fileID: 622720465}
   - {fileID: 926611462}
@@ -1813,7 +1815,7 @@ ParticleSystem:
   emitterVelocityMode: 1
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:
