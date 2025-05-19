@@ -24,6 +24,8 @@ public class PlayerManager : MonoBehaviour
     ParticleSystem jumpParticles;
     [SerializeField]
     ParticleSystem bonusParticles;
+    [SerializeField]
+    GameObject shieldBubble;
     [Header("Lane Switching")]
     [SerializeField]
     [Tooltip("The three lanes the player can switch between")]
@@ -97,6 +99,7 @@ public class PlayerManager : MonoBehaviour
     public bool Invulnerable { get; set; }
     public ParticleSystem JumpParticles { get => jumpParticles; set => jumpParticles = value; }
     public ParticleSystem BonusParticles { get => bonusParticles; set => bonusParticles = value; }
+    public GameObject ShieldBubble { get => shieldBubble; set => shieldBubble = value; }
 
     void Awake()
     {
