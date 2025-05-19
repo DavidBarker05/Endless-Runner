@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7285606901180305736}
   - component: {fileID: 5708812739224727239}
   m_Layer: 0
-  m_Name: Jumping Particles
+  m_Name: Setback Particles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5015,6 +5015,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 0.25
   setbackSpeed: 0.125
+  setbackParticles: {fileID: 7285606901180305736}
 --- !u!4 &6701457919293145395 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 440eb59e22a0b5b4e8435a9d4167c309, type: 3}
