@@ -20,6 +20,7 @@ public class LevelOneBoss : Boss
     float setbackSpeed;
 
     Animator animator;
+    CapsuleCollider c;
 
     public BossState State { get; set; }
 
@@ -27,6 +28,7 @@ public class LevelOneBoss : Boss
     {
         State = BossState.Run;
         animator = GetComponent<Animator>();
+        c = GetComponent<CapsuleCollider>();
     }
 
     void FixedUpdate()
@@ -41,13 +43,23 @@ public class LevelOneBoss : Boss
     void OnTriggerEnter(Collider other)
     {
         if (State == BossState.Disengage) return;
-        if (other.CompareTag("BossSlideToggle")) State = BossState.Slide;
+        if (other.CompareTag("BossSlideToggle"))
+        {
+            State = BossState.Slide;
+            c.height = 1.1f;
+            c.center = new Vector3(0f, 0.55f, 0f);
+        }
     }
 
     void OnTriggerExit(Collider other)
     {
         if (State == BossState.Disengage) return;
-        if (other.CompareTag("BossSlideToggle")) State = BossState.Run;
+        if (other.CompareTag("BossSlideToggle"))
+        {
+            State = BossState.Run;
+            c.height = 1.8f;
+            c.center = new Vector3(0f, 0.9f, 0f);
+        }
     }
 
     public override void Disengage()
