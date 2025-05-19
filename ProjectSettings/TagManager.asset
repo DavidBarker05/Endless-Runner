@@ -12,6 +12,8 @@ TagManager:
   - BossSlideToggle
   - ExplosiveBarrel
   - LevelOneBoss
+  - LitTerrain
+  - UnlitTerrain
   layers:
   - Default
   - TransparentFX

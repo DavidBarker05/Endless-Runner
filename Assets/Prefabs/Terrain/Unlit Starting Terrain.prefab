@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 1685859001718076652}
   - component: {fileID: 5794180565272192198}
   m_Layer: 0
-  m_Name: Plane (1)
+  m_Name: Ceiling
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -204,8 +204,8 @@ GameObject:
   - component: {fileID: 2255245774308886693}
   - component: {fileID: 3360210256768359252}
   m_Layer: 0
-  m_Name: Example
-  m_TagString: Untagged
+  m_Name: Unlit Starting Terrain
+  m_TagString: UnlitTerrain
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -332,7 +332,7 @@ GameObject:
   - component: {fileID: 8477746666224472971}
   - component: {fileID: 3229367342811931670}
   m_Layer: 0
-  m_Name: Plane (2)
+  m_Name: Right Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -441,7 +441,7 @@ GameObject:
   - component: {fileID: 9069748608828177855}
   - component: {fileID: 247269493824575182}
   m_Layer: 0
-  m_Name: Plane (3)
+  m_Name: Left Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

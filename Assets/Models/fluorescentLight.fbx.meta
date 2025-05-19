@@ -1,9 +1,29 @@
 fileFormatVersion: 2
-guid: 8181dc2d6e20584439c82f288ee80b20
+guid: 4af32c4d15b134b4e8be9ec1b3a23116
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material #2
+    second: {fileID: 2100000, guid: ea2da2208eb7da645bc67bb20c829b58, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material #3
+    second: {fileID: 2100000, guid: b56b8cbc71443cf4c92aad4ade1fe982, type: 2}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Background-elegant-white-texture
+    second: {fileID: 2800000, guid: 3932d080bfac423478b9dc672f85cd0e, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: photo-1656055448477-94f0757aa0d4
+    second: {fileID: 2800000, guid: 2dfe477feb0e9db4caeba6f489955068, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0
