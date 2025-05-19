@@ -1531,7 +1531,13 @@ MonoBehaviour:
   - {fileID: 4097095060515756661, guid: 07fb56771331ede49be75f08db234cb5, type: 3}
   - {fileID: 8504936321000109286, guid: 9fa3119ce087d5f45adea93de9cc0f88, type: 3}
   levelOneTerrain: []
-  levelOneObstacles: []
+  levelOneObstacles:
+  - {fileID: 7491506462756276976, guid: b89e846ed2758164890d2f75712ab7b8, type: 3}
+  - {fileID: 2119455103884263237, guid: 6a5a9334eca772b4f9d86d68b04b2640, type: 3}
+  - {fileID: 553942589582058192, guid: 1ac862425361b584586f0a1772162455, type: 3}
+  - {fileID: 8921068675084077163, guid: 89f7c9d3ca0ac7741bdc652ab46b4ac9, type: 3}
+  - {fileID: 18472835915522620, guid: dee87048553b59c49989c1d406256bf4, type: 3}
+  - {fileID: 7225635886527787220, guid: 156c83d98d02b9d4e8b76b8a4822420a, type: 3}
   levelOnePickups: []
   levelOneBoss: {fileID: 5349580612360630572, guid: e478332471e0ecf4d9987cf9e993f9c6, type: 3}
 --- !u!114 &1835439953
