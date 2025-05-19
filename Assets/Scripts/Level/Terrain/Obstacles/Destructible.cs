@@ -1,7 +1,7 @@
 using GameUtilities;
 using UnityEngine;
 
-public class Destructable : MonoBehaviour
+public class Destructible : MonoBehaviour
 {
     [SerializeField]
     GameObject objectMesh;

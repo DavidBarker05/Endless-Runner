@@ -4,7 +4,7 @@ using UnityEngine;
 /// <summary>
 /// Handles the explosion of an explosive barrel
 /// </summary>
-public class ExplosiveBarrel : Destructable
+public class ExplosiveBarrel : Destructible
 {
     [Header("Explosion")]
     [SerializeField]
