@@ -18,11 +18,14 @@ public class LevelOneBoss : Boss
     float speed;
     [SerializeField]
     float setbackSpeed;
+    [SerializeField]
+    ParticleSystem setbackParticles;
 
     Animator animator;
     CapsuleCollider c;
 
     public BossState State { get; set; }
+    public ParticleSystem SetbackParticles { get => setbackParticles; set => setbackParticles = value; }
 
     void Awake()
     {

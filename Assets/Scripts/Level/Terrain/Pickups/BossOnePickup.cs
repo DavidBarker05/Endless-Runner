@@ -18,5 +18,6 @@ public class BossOnePickup : MonoBehaviour, IPickup
         if (levelOneBoss == null) return;
         if (levelOneBoss.State == LevelOneBoss.BossState.Disengage || levelOneBoss.State == LevelOneBoss.BossState.Slide) return;
         levelOneBoss.State = UseTime >= 0f ? LevelOneBoss.BossState.Setback : LevelOneBoss.BossState.Run;
+        levelOneBoss.SetbackParticles.gameObject.SetActive(UseTime >= 0f);
     }
 }
