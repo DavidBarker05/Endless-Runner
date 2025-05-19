@@ -1530,7 +1530,9 @@ MonoBehaviour:
   levelOneStartingTerrain:
   - {fileID: 4097095060515756661, guid: 07fb56771331ede49be75f08db234cb5, type: 3}
   - {fileID: 8504936321000109286, guid: 9fa3119ce087d5f45adea93de9cc0f88, type: 3}
-  levelOneTerrain: []
+  levelOneTerrain:
+  - {fileID: 6362868614164263945, guid: 26014887e93885343b7507ebf56fe323, type: 3}
+  - {fileID: 4097095060515756661, guid: 07fb56771331ede49be75f08db234cb5, type: 3}
   levelOneObstacles:
   - {fileID: 7491506462756276976, guid: b89e846ed2758164890d2f75712ab7b8, type: 3}
   - {fileID: 2119455103884263237, guid: 6a5a9334eca772b4f9d86d68b04b2640, type: 3}
