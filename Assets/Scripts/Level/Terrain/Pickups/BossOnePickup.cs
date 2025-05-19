@@ -4,7 +4,7 @@ public class BossOnePickup : MonoBehaviour, IPickup
 {
     public string Name => "BossOnePickup";
 
-    public float Duration => 5f;
+    public float Duration => 3f;
 
     public float UseTime { get; set; }
 
