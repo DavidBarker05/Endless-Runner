@@ -158,10 +158,25 @@ public class LevelManager : MonoBehaviour
                     int lane = Random.Range(0, lanes.Length); // Lane to spawn in
                     var validPickups = levelOnePickups.FindAll(p => p.name != "BossOnePickup" || IsBossActive);
                     if (validPickups.Count == 0) continue;
-                    int pickupIndex = Random.Range(0, validPickups.Count);
                     Vector3 spawnPos = UtilityMethods.YZVector(pickupRow.transform.position) + UtilityMethods.XVector(lanes[lane].position);
-                    var pickup = Instantiate(levelOnePickups[pickupIndex], pickupRow.transform);
-                    pickup.transform.position = spawnPos;
+                    if (IsBossActive)
+                    {
+                        List<GameObject> weightedPickups = new List<GameObject>();
+                        foreach (var validPickup in validPickups)
+                        {
+                            int weight = validPickup.name == "BossOnePickup" ? 2 : 1;
+                            for (int i = 0; i < weight; i++) weightedPickups.Add(validPickup);
+                        }
+                        int pickupIndex = Random.Range(0, weightedPickups.Count);
+                        var pickup = Instantiate(weightedPickups[pickupIndex], pickupRow.transform);
+                        pickup.transform.position = spawnPos;
+                    }
+                    else
+                    {
+                        int pickupIndex = Random.Range(0, validPickups.Count);
+                        var pickup = Instantiate(validPickups[pickupIndex], pickupRow.transform);
+                        pickup.transform.position = spawnPos;
+                    }
                 }
             }
         }
