@@ -1540,7 +1540,11 @@ MonoBehaviour:
   - {fileID: 8921068675084077163, guid: 89f7c9d3ca0ac7741bdc652ab46b4ac9, type: 3}
   - {fileID: 18472835915522620, guid: dee87048553b59c49989c1d406256bf4, type: 3}
   - {fileID: 7225635886527787220, guid: 156c83d98d02b9d4e8b76b8a4822420a, type: 3}
-  levelOnePickups: []
+  levelOnePickups:
+  - {fileID: 2916651130221960852, guid: 44320ff7ac34b6a4ba2e2867dc3efdfc, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   levelOneBoss: {fileID: 5349580612360630572, guid: e478332471e0ecf4d9987cf9e993f9c6, type: 3}
 --- !u!114 &1835439953
 MonoBehaviour:
