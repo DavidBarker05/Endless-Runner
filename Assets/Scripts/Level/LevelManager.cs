@@ -156,7 +156,7 @@ public class LevelManager : MonoBehaviour
                 if (spawnRoll <= pickupRow.GetComponent<PickupRow>().SpawnChance) // Check if number is in the spawn chance
                 {
                     int lane = Random.Range(0, lanes.Length); // Lane to spawn in
-                    var validPickups = levelOnePickups.FindAll(p => p.name != "BossOnePickup" || IsBossActive);
+                    var validPickups = levelOnePickups.FindAll(p => p.name != "Boss One Pickup" || IsBossActive);
                     if (validPickups.Count == 0) continue;
                     Vector3 spawnPos = UtilityMethods.YZVector(pickupRow.transform.position) + UtilityMethods.XVector(lanes[lane].position);
                     if (IsBossActive)
@@ -164,7 +164,7 @@ public class LevelManager : MonoBehaviour
                         List<GameObject> weightedPickups = new List<GameObject>();
                         foreach (var validPickup in validPickups)
                         {
-                            int weight = validPickup.name == "BossOnePickup" ? 2 : 1;
+                            int weight = validPickup.name == "Boss One Pickup" ? 5 : 1;
                             for (int i = 0; i < weight; i++) weightedPickups.Add(validPickup);
                         }
                         int pickupIndex = Random.Range(0, weightedPickups.Count);

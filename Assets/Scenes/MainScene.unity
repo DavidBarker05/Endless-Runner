@@ -1531,8 +1531,10 @@ MonoBehaviour:
   - {fileID: 4097095060515756661, guid: 07fb56771331ede49be75f08db234cb5, type: 3}
   - {fileID: 8504936321000109286, guid: 9fa3119ce087d5f45adea93de9cc0f88, type: 3}
   levelOneTerrain:
-  - {fileID: 6362868614164263945, guid: 26014887e93885343b7507ebf56fe323, type: 3}
+  - {fileID: 8106978977493323171, guid: 0383649d301465d4abb3a85b28fcac91, type: 3}
   - {fileID: 7582245918832658922, guid: dc3fff8e82087ac4eb7119e16e542584, type: 3}
+  - {fileID: 6362868614164263945, guid: 26014887e93885343b7507ebf56fe323, type: 3}
+  - {fileID: 6278047645345509937, guid: eb375e7cc16ffc9489e7239e3912dadb, type: 3}
   - {fileID: 7717107145104514092, guid: cae7f166b7d8e4b498b14098524db18b, type: 3}
   levelOneObstacles:
   - {fileID: 7491506462756276976, guid: b89e846ed2758164890d2f75712ab7b8, type: 3}
@@ -1542,9 +1544,10 @@ MonoBehaviour:
   - {fileID: 18472835915522620, guid: dee87048553b59c49989c1d406256bf4, type: 3}
   - {fileID: 7225635886527787220, guid: 156c83d98d02b9d4e8b76b8a4822420a, type: 3}
   levelOnePickups:
-  - {fileID: 2916651130221960852, guid: 44320ff7ac34b6a4ba2e2867dc3efdfc, type: 3}
-  - {fileID: 2385143832511243022, guid: f53168e7959bfc04baf5ff07db01c658, type: 3}
   - {fileID: 1525061444814291816, guid: 386bed13c7aa3a8478ce7fd624dd81ee, type: 3}
+  - {fileID: 2695884229701808366, guid: c22547d63cb9b2e48bc9f414fb1b35e2, type: 3}
+  - {fileID: 2385143832511243022, guid: f53168e7959bfc04baf5ff07db01c658, type: 3}
+  - {fileID: 2916651130221960852, guid: 44320ff7ac34b6a4ba2e2867dc3efdfc, type: 3}
   levelOneBoss: {fileID: 5349580612360630572, guid: e478332471e0ecf4d9987cf9e993f9c6, type: 3}
 --- !u!114 &1835439953
 MonoBehaviour:

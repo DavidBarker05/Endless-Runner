@@ -38,11 +38,12 @@ public class LevelOneBoss : Boss
         if (GameManager.Instance.State != GameManager.GameState.Alive) return;
         if (State != BossState.Slide) transform.position = UtilityMethods.YZVector(transform.position) + UtilityMethods.XVector(PlayerManager.Instance.transform.position);
         transform.position += UtilityMethods.ZVector((State == BossState.Run ? speed : State == BossState.Setback ? -setbackSpeed : State == BossState.Disengage ? -LevelManager.Instance.Speed : 0f) * Time.fixedDeltaTime);
+        transform.position = new Vector3(transform.position.x, transform.position.y, Mathf.Clamp(transform.position.z, -5f, 0f));
     }
 
     void OnTriggerEnter(Collider other)
     {
-        if (State == BossState.Disengage) return;
+        if (State == BossState.Disengage || State == BossState.Setback) return;
         if (other.CompareTag("BossSlideToggle"))
         {
             State = BossState.Slide;
@@ -53,7 +54,7 @@ public class LevelOneBoss : Boss
 
     void OnTriggerExit(Collider other)
     {
-        if (State == BossState.Disengage) return;
+        if (State == BossState.Disengage || State == BossState.Setback) return;
         if (other.CompareTag("BossSlideToggle"))
         {
             State = BossState.Run;

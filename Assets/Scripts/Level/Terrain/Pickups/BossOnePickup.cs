@@ -8,11 +8,13 @@ public class BossOnePickup : MonoBehaviour, IPickup
 
     public float UseTime { get; set; }
 
+    void Awake() => UseTime = Duration;
+
     LevelOneBoss levelOneBoss;
 
     public void Effect()
     {
-        if (levelOneBoss == null) levelOneBoss = levelOneBoss = FindFirstObjectByType<LevelOneBoss>();
+        levelOneBoss = FindFirstObjectByType<LevelOneBoss>();
         if (levelOneBoss.State == LevelOneBoss.BossState.Disengage || levelOneBoss.State == LevelOneBoss.BossState.Slide) return;
         levelOneBoss.State = UseTime >= 0f ? LevelOneBoss.BossState.Setback : LevelOneBoss.BossState.Run;
     }
