@@ -720,7 +720,7 @@ MonoBehaviour:
   - {fileID: 622720465}
   - {fileID: 926611462}
   - {fileID: 1382791575}
-  switchTime: 0.25
+  switchTime: 0.5
   jumpHeight: 1
   slideHeight: 1.1
   maxSlideTime: 5
