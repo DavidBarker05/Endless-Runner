@@ -8,9 +8,13 @@ public class PickupRow : MonoBehaviour
     [SerializeField]
     [Range(0f, 1f)]
     float baseSpawnChance;
+    [SerializeField]
+    [Tooltip("")]
+    [Range(0f, 1f)]
+    float bonusSpawnChance;
 
     /// <summary>
     /// The spawn chance of a pickup in this row
     /// </summary>
-    public float SpawnChance => baseSpawnChance;
+    public float SpawnChance => Mathf.Clamp(baseSpawnChance + (LevelManager.Instance.IsBossActive ? bonusSpawnChance: 0f), 0f, 1f);
 }

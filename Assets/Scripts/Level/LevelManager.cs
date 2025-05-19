@@ -67,6 +67,11 @@ public class LevelManager : MonoBehaviour
     /// The current score that the player has
     /// </summary>
     public int Score { get; set; }
+    /// <summary>
+    /// 
+    /// </summary>
+    public bool IsBossActive => boss != null;
+
     // What terrain is currently able to be spawned
     List<GameObject> PossibleTerrain => isLevelStart ? levelOneStartingTerrain : levelOneTerrain;
 
@@ -151,7 +156,9 @@ public class LevelManager : MonoBehaviour
                 if (spawnRoll <= pickupRow.GetComponent<PickupRow>().SpawnChance) // Check if number is in the spawn chance
                 {
                     int lane = Random.Range(0, lanes.Length); // Lane to spawn in
-                    int pickupIndex = Random.Range(0, levelOnePickups.Count); // Random pickup
+                    var validPickups = levelOnePickups.FindAll(p => p.name != "BossOnePickup" || IsBossActive);
+                    if (validPickups.Count == 0) continue;
+                    int pickupIndex = Random.Range(0, validPickups.Count);
                     Vector3 spawnPos = UtilityMethods.YZVector(pickupRow.transform.position) + UtilityMethods.XVector(lanes[lane].position);
                     var pickup = Instantiate(levelOnePickups[pickupIndex], pickupRow.transform);
                     pickup.transform.position = spawnPos;
