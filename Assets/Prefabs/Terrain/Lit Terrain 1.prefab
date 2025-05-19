@@ -308,7 +308,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   obstacleRows:
   - {fileID: 6527340855901509985}
-  pickupRows: []
+  - {fileID: 8982270254446710121}
+  pickupRows:
+  - {fileID: 7537941470704885999}
 --- !u!1 &3601117934203246362
 GameObject:
   m_ObjectHideFlags: 0
@@ -750,8 +752,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7cd1269067d5cf47a64ea9c5a964a1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseSpawnChance: 0.3
-  bonusSpawnChance: 0.5
+  baseSpawnChance: 0.36
+  bonusSpawnChance: 0.532
 --- !u!1 &7540985302731482597
 GameObject:
   m_ObjectHideFlags: 0

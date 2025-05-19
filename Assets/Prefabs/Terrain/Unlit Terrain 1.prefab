@@ -907,7 +907,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   obstacleRows:
   - {fileID: 8886132474678935346}
-  pickupRows: []
+  - {fileID: 2591195661320253278}
+  pickupRows:
+  - {fileID: 120804980254985740}
 --- !u!1001 &2408401836397301337
 PrefabInstance:
   m_ObjectHideFlags: 0

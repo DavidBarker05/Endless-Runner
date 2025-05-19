@@ -561,7 +561,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   obstacleRows:
   - {fileID: 1790949434706965056}
-  pickupRows: []
+  - {fileID: 1153014259676855114}
+  pickupRows:
+  - {fileID: 2851761559563911927}
 --- !u!1 &7665214215852788563
 GameObject:
   m_ObjectHideFlags: 0
