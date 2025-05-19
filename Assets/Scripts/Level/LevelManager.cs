@@ -229,10 +229,11 @@ public class LevelManager : MonoBehaviour
         {
             boss = Instantiate(levelOneBoss);
             boss.transform.position = levelOneBossSpawnLocation.position;
+            bossTimer = 5f; // Make boss disappear 5 seconds before end of level
         }
         else
         {
-            bossTimer = 5f; // Make boss disappear 5 seconds before end of level
+            bossTimer = -5f; // Fix the timing issue cause from making disappear early
             boss.Disengage();
         }
     }
