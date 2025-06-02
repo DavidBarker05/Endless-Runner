@@ -50,7 +50,7 @@ public class PickupManager : MonoBehaviour
     GameEvents::EventType NameToEventType(string name) => name switch
     {
         "JumpBoostPickup" => GameEvents::EventType.JumpBoostPickupEffect,
-        "BonusPickup" => GameEvents::EventType.Pickup2,
+        "BonusPickup" => GameEvents::EventType.BonusPickupEffect,
         _ => GameEvents::EventType.Empty,
     };
 }

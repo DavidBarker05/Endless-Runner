@@ -85,7 +85,7 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
     void Start()
     {
         GameManager.Instance.AddListener(GameEvents::EventType.ObstaclePassed, this);
-        GameManager.Instance.AddListener(GameEvents::EventType.Pickup2, this);
+        GameManager.Instance.AddListener(GameEvents::EventType.BonusPickupEffect, this);
     }
 
     void FixedUpdate()
@@ -267,6 +267,6 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
     public void OnEvent(GameEvents::EventType eventType, Component sender, object param = null)
     {
         if (eventType == GameEvents::EventType.ObstaclePassed) Score = (int)param;
-        else if (eventType == GameEvents::EventType.Pickup2) Score = (int)param;
+        else if (eventType == GameEvents::EventType.BonusPickupEffect) Score = (int)param;
     }
 }

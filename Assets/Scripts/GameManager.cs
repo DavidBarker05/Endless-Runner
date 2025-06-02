@@ -60,7 +60,7 @@ public class GameManager : MonoBehaviour, GameEvents::IEventListener
     void Start()
     {
         AddListener(GameEvents::EventType.ObstaclePassed, this);
-        AddListener(GameEvents::EventType.Pickup2, this);
+        AddListener(GameEvents::EventType.BonusPickupEffect, this);
         StartGame();
     }
 
@@ -118,7 +118,7 @@ public class GameManager : MonoBehaviour, GameEvents::IEventListener
             scoreCounter.text = $"SCORE: {param}";
             deathScore.text = $"FINAL SCORE: {param}";
         }
-        else if (eventType == GameEvents.EventType.Pickup2)
+        else if (eventType == GameEvents.EventType.BonusPickupEffect)
         {
             scoreCounter.text = $"SCORE: {param}";
             deathScore.text = $"FINAL SCORE: {param}";
