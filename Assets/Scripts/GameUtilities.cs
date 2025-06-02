@@ -89,7 +89,7 @@ namespace GameUtilities
             JumpBoostPickupEffect,
             BonusPickupEffect,
             InvulnerabilityPickupEffect,
-            Pickup4,
+            BossOnePickupEffect,
             BossOneSpawn,
             BossTwoSpawn,
             BossOneBeaten,

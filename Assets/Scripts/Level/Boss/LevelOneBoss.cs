@@ -1,9 +1,10 @@
 using GameUtilities;
+using GameEvents = GameUtilities.GameEvents;
 using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
-public class LevelOneBoss : Boss
+public class LevelOneBoss : Boss, GameEvents::IEventListener
 {
     public enum BossState
     {
@@ -32,6 +33,11 @@ public class LevelOneBoss : Boss
         State = BossState.Run;
         animator = GetComponent<Animator>();
         c = GetComponent<CapsuleCollider>();
+    }
+
+    void Start()
+    {
+        GameManager.Instance.AddListener(GameEvents::EventType.BossOnePickupEffect, this);
     }
 
     void FixedUpdate()
@@ -70,5 +76,15 @@ public class LevelOneBoss : Boss
     {
         State = BossState.Disengage;
         base.Disengage();
+    }
+
+    public void OnEvent(GameEvents.EventType eventType, Component sender, object param = null)
+    {
+        if (eventType == GameEvents::EventType.BossOnePickupEffect)
+        {
+            if (State == BossState.Disengage || State == BossState.Slide) return;
+            State = (float)param >= 0f ? BossState.Setback : BossState.Run;
+            setbackParticles.gameObject.SetActive((float)param >= 0f);
+        }
     }
 }
