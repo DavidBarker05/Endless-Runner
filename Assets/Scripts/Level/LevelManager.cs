@@ -251,6 +251,7 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
         lastGeneratedObstacleCount = 0;
         Speed = startingSpeed;
         GenerateTerrainOnTrigger = false;
+        GameManager.Instance.InvokeEvent(GameEvents::EventType.ObstaclePassed, this, 0);
         Score = 0;
         bossTimer = 0f;
         if (boss != null) Destroy(boss.gameObject);

@@ -38,8 +38,8 @@ public class PickupManager : MonoBehaviour
         List<string> toRemove = new List<string>();
         foreach (var keyValuePair in activePickups)
         {
-            keyValuePair.Value.UseTime = 0f;
-            keyValuePair.Value.Effect();
+            keyValuePair.Value.UseTime = -1f;
+            GameManager.Instance.InvokeEvent(NameToEvent(keyValuePair.Key), this, keyValuePair.Value.UseTime);
             toRemove.Add(keyValuePair.Key);
         }
         Array.ForEach<string>(toRemove.ToArray(), k => activePickups.Remove(k));
