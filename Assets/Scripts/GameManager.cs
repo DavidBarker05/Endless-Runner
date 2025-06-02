@@ -7,7 +7,7 @@ using UnityEngine.UI;
 /// <summary>
 /// Manages the game State and UI elements
 /// </summary>
-public class GameManager : MonoBehaviour
+public class GameManager : MonoBehaviour, GameEvents::IEventListener
 {
     public static GameManager Instance { get; private set; }
 
@@ -57,7 +57,11 @@ public class GameManager : MonoBehaviour
         else Instance = this;
     }
 
-    void Start() => StartGame();
+    void Start()
+    {
+        AddListener(GameEvents::EventType.ObstaclePassed, this);
+        StartGame();
+    }
 
     void Update()
     {
@@ -68,14 +72,12 @@ public class GameManager : MonoBehaviour
                 restartText.enabled = true;
                 deathScore.enabled = false;
                 restartButton.gameObject.SetActive(false);
-                scoreCounter.text = $"SCORE: {LevelManager.Instance.Score}";
                 break;
             case GameState.Dead: // UI while the player is dead
                 scoreCounter.enabled = false;
                 restartText.enabled = false;
                 deathScore.enabled = true;
                 restartButton.gameObject.SetActive(true);
-                deathScore.text = $"FINAL SCORE: {LevelManager.Instance.Score}";
                 break;
         }
     }
@@ -104,5 +106,14 @@ public class GameManager : MonoBehaviour
         if (!eventListeners.ContainsKey(eventType)) return;
         List<GameEvents::IEventListener> eventListenerList = new List<GameEvents::IEventListener>(eventListeners[eventType]);
         System.Array.ForEach<GameEvents::IEventListener>(eventListenerList.ToArray(), l => l?.OnEvent(eventType, sender, param));
+    }
+
+    public void OnEvent(GameEvents::EventType gameEventType, Component sender, object param = null)
+    {
+        if (gameEventType == GameEvents::EventType.ObstaclePassed)
+        {
+            scoreCounter.text = $"SCORE: {param}";
+            deathScore.text = $"FINAL SCORE: {param}";
+        }
     }
 }

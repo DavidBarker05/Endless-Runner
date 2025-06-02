@@ -1,4 +1,5 @@
 using GameUtilities;
+using GameEvents = GameUtilities.GameEvents;
 using System.Collections.Generic;
 using Array = System.Array;
 using UnityEngine;
@@ -6,7 +7,7 @@ using UnityEngine;
 /// <summary>
 /// Manages level generation and score
 /// </summary>
-public class LevelManager : MonoBehaviour
+public class LevelManager : MonoBehaviour, GameEvents::IEventListener
 {
     public static LevelManager Instance { get; private set; }
 
@@ -75,11 +76,13 @@ public class LevelManager : MonoBehaviour
     // What terrain is currently able to be spawned
     List<GameObject> PossibleTerrain => isLevelStart ? levelOneStartingTerrain : levelOneTerrain;
 
-    private void Awake()
+    void Awake()
     {
         if (Instance != null && Instance != this) Destroy(gameObject);
         else Instance = this;
     }
+
+    void Start() => GameManager.Instance.AddListener(GameEvents::EventType.ObstaclePassed, this);
 
     void FixedUpdate()
     {
@@ -254,5 +257,10 @@ public class LevelManager : MonoBehaviour
         GenerateStartingTerrain();
         PlayerManager.Instance.ResetPlayer();
         PickupManager.Instance.ResetPickups();
+    }
+
+    public void OnEvent(GameEvents::EventType gameEventType, Component sender, object param = null)
+    {
+        if (gameEventType == GameEvents::EventType.ObstaclePassed) Score = (int)param;
     }
 }
