@@ -94,7 +94,7 @@ public class PlayerManager : MonoBehaviour, GameEvents::IEventListener
     /// <summary>
     /// Extra jump height added to the base jump height, used for the jump boost powerup
     /// </summary>
-    public float ExtraJumpHeight { get; set; }
+    public float ExtraJumpHeight { get; private set; }
     public AnimationState State { get; set; }
     public bool Caught { get; set; }
     public bool Invulnerable { get; set; }
