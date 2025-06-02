@@ -257,6 +257,7 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
         GenerateStartingTerrain();
         PlayerManager.Instance.ResetPlayer();
         PickupManager.Instance.ResetPickups();
+        GameManager.Instance.ClearEvents();
     }
 
     public void OnEvent(GameEvents::EventType gameEventType, Component sender, object param = null)

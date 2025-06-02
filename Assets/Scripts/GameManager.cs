@@ -108,6 +108,8 @@ public class GameManager : MonoBehaviour, GameEvents::IEventListener
         System.Array.ForEach<GameEvents::IEventListener>(eventListenerList.ToArray(), l => l?.OnEvent(eventType, sender, param));
     }
 
+    public void ClearEvents() => eventListeners.Clear();
+
     public void OnEvent(GameEvents::EventType gameEventType, Component sender, object param = null)
     {
         if (gameEventType == GameEvents::EventType.ObstaclePassed)
