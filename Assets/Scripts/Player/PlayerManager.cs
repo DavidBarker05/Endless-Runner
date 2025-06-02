@@ -1,11 +1,12 @@
 using GameUtilities;
+using GameEvents = GameUtilities.GameEvents;
 using UnityEngine;
 
 /// <summary>
 /// Handles player input and movement
 /// </summary>
 [RequireComponent(typeof(CharacterController))]
-public class PlayerManager : MonoBehaviour
+public class PlayerManager : MonoBehaviour, GameEvents::IEventListener
 {
     public enum AnimationState
     {
@@ -110,6 +111,11 @@ public class PlayerManager : MonoBehaviour
         animator = GetComponentInChildren<Animator>();
     }
 
+    void Start()
+    {
+        GameManager.Instance.AddListener(GameEvents::EventType.Pickup1, this);
+    }
+
     void Update()
     {
         if ((Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D)) && CanMove)
@@ -188,5 +194,16 @@ public class PlayerManager : MonoBehaviour
         State = AnimationState.Run;
         Caught = false;
         Invulnerable = false;
+    }
+
+    public void OnEvent(GameEvents::EventType eventType, Component sender, object param = null)
+    {
+        switch (eventType)
+        {
+            case GameEvents::EventType.Pickup1:
+                ExtraJumpHeight = (float)param >= 0f? 2f: 0f;
+                jumpParticles.gameObject.SetActive((float)param >= 0f);
+                break;
+        }
     }
 }

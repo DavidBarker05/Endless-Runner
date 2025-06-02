@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using GameEvents = GameUtilities.GameEvents;
 using UnityEngine;
 
 public class PickupManager : MonoBehaviour
@@ -20,7 +21,7 @@ public class PickupManager : MonoBehaviour
         foreach (var keyValuePair in activePickups)
         {
             keyValuePair.Value.UseTime -= Time.fixedDeltaTime;
-            keyValuePair.Value.Effect();
+            GameManager.Instance.InvokeEvent(NameToEvent(keyValuePair.Key), this, keyValuePair.Value.UseTime);
             if (keyValuePair.Value.UseTime < 0f) toRemove.Add(keyValuePair.Key);
         }
         Array.ForEach<string>(toRemove.ToArray(), k => activePickups.Remove(k));
@@ -28,7 +29,7 @@ public class PickupManager : MonoBehaviour
 
     public void AddPickup(IPickup pickup)
     {
-        if (activePickups.ContainsKey(pickup.Name)) activePickups[pickup.Name].UseTime = pickup.Duration; 
+        if (activePickups.ContainsKey(pickup.Name)) activePickups[pickup.Name].UseTime = pickup.Duration;
         else activePickups.Add(pickup.Name, pickup);
     }
 
@@ -43,4 +44,10 @@ public class PickupManager : MonoBehaviour
         }
         Array.ForEach<string>(toRemove.ToArray(), k => activePickups.Remove(k));
     }
+
+    GameEvents::EventType NameToEvent(string name) => name switch
+    {
+        "JumpBoostPickup" => GameEvents::EventType.Pickup1,
+        _ => GameEvents::EventType.Empty,
+    };
 }

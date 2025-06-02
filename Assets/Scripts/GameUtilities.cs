@@ -84,6 +84,7 @@ namespace GameUtilities
     {
         public enum EventType
         {
+            Empty,
             ObstaclePassed,
             Pickup1,
             Pickup2,
@@ -97,7 +98,7 @@ namespace GameUtilities
 
         public interface IEventListener
         {
-            public void OnEvent(EventType gameEventType, UnityEngine.Component sender, object param = null);
+            public void OnEvent(EventType eventType, UnityEngine.Component sender, object param = null);
         }
     }
 }

@@ -110,9 +110,9 @@ public class GameManager : MonoBehaviour, GameEvents::IEventListener
 
     public void ClearEvents() => eventListeners.Clear();
 
-    public void OnEvent(GameEvents::EventType gameEventType, Component sender, object param = null)
+    public void OnEvent(GameEvents::EventType eventType, Component sender, object param = null)
     {
-        if (gameEventType == GameEvents::EventType.ObstaclePassed)
+        if (eventType == GameEvents::EventType.ObstaclePassed)
         {
             scoreCounter.text = $"SCORE: {param}";
             deathScore.text = $"FINAL SCORE: {param}";

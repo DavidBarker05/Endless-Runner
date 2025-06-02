@@ -1,3 +1,4 @@
+using GameEvents = GameUtilities.GameEvents;
 using UnityEngine;
 
 public class JumpBoostPickup : MonoBehaviour, IPickup

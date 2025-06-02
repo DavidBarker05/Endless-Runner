@@ -257,11 +257,10 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
         GenerateStartingTerrain();
         PlayerManager.Instance.ResetPlayer();
         PickupManager.Instance.ResetPickups();
-        GameManager.Instance.ClearEvents();
     }
 
-    public void OnEvent(GameEvents::EventType gameEventType, Component sender, object param = null)
+    public void OnEvent(GameEvents::EventType eventType, Component sender, object param = null)
     {
-        if (gameEventType == GameEvents::EventType.ObstaclePassed) Score = (int)param;
+        if (eventType == GameEvents::EventType.ObstaclePassed) Score = (int)param;
     }
 }
