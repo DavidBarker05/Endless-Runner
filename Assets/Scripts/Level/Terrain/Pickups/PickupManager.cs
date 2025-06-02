@@ -21,7 +21,7 @@ public class PickupManager : MonoBehaviour
         foreach (var keyValuePair in activePickups)
         {
             keyValuePair.Value.UseTime -= Time.fixedDeltaTime;
-            GameManager.Instance.InvokeEvent(NameToEvent(keyValuePair.Key), this, keyValuePair.Value.UseTime);
+            GameManager.Instance.InvokeEvent(NameToEventType(keyValuePair.Key), this, NameToEventParam(keyValuePair.Key, keyValuePair.Value.UseTime));
             if (keyValuePair.Value.UseTime < 0f) toRemove.Add(keyValuePair.Key);
         }
         Array.ForEach<string>(toRemove.ToArray(), k => activePickups.Remove(k));
@@ -39,15 +39,22 @@ public class PickupManager : MonoBehaviour
         foreach (var keyValuePair in activePickups)
         {
             keyValuePair.Value.UseTime = -1f;
-            GameManager.Instance.InvokeEvent(NameToEvent(keyValuePair.Key), this, keyValuePair.Value.UseTime);
+            GameManager.Instance.InvokeEvent(NameToEventType(keyValuePair.Key), this, NameToEventParam(keyValuePair.Key, keyValuePair.Value.UseTime));
             toRemove.Add(keyValuePair.Key);
         }
         Array.ForEach<string>(toRemove.ToArray(), k => activePickups.Remove(k));
     }
 
-    GameEvents::EventType NameToEvent(string name) => name switch
+    GameEvents::EventType NameToEventType(string name) => name switch
     {
         "JumpBoostPickup" => GameEvents::EventType.JumpBoostPickupEffect,
+        "BonusPickup" => GameEvents::EventType.Pickup2,
         _ => GameEvents::EventType.Empty,
+    };
+
+    object NameToEventParam(string name, float useTime) => name switch
+    {
+        "BonusPickup" => LevelManager.Instance.Score + 5,
+        _ => useTime,
     };
 }

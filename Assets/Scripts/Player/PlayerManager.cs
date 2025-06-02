@@ -114,6 +114,8 @@ public class PlayerManager : MonoBehaviour, GameEvents::IEventListener
     void Start()
     {
         GameManager.Instance.AddListener(GameEvents::EventType.JumpBoostPickupEffect, this);
+        GameManager.Instance.AddListener(GameEvents::EventType.Pickup2, this);
+        GameManager.Instance.AddListener(GameEvents::EventType.Pickup3, this);
     }
 
     void Update()
@@ -203,6 +205,9 @@ public class PlayerManager : MonoBehaviour, GameEvents::IEventListener
             case GameEvents::EventType.JumpBoostPickupEffect:
                 ExtraJumpHeight = (float)param >= 0f? 2f: 0f;
                 jumpParticles.gameObject.SetActive((float)param >= 0f);
+                break;
+            case GameEvents::EventType.Pickup2:
+                bonusParticles.Play();
                 break;
         }
     }

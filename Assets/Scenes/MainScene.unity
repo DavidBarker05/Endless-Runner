@@ -1558,7 +1558,7 @@ MonoBehaviour:
   - {fileID: 7225635886527787220, guid: 156c83d98d02b9d4e8b76b8a4822420a, type: 3}
   - {fileID: 5112577099562896526, guid: 0751dff8d9297ac459e9557db1428dab, type: 3}
   levelOnePickups:
-  - {fileID: 2916651130221960852, guid: 44320ff7ac34b6a4ba2e2867dc3efdfc, type: 3}
+  - {fileID: 1525061444814291816, guid: 386bed13c7aa3a8478ce7fd624dd81ee, type: 3}
   levelOneBoss: {fileID: 5349580612360630572, guid: e478332471e0ecf4d9987cf9e993f9c6, type: 3}
 --- !u!114 &1835439953
 MonoBehaviour:

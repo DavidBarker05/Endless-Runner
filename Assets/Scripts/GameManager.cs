@@ -60,6 +60,7 @@ public class GameManager : MonoBehaviour, GameEvents::IEventListener
     void Start()
     {
         AddListener(GameEvents::EventType.ObstaclePassed, this);
+        AddListener(GameEvents::EventType.Pickup2, this);
         StartGame();
     }
 
@@ -113,6 +114,11 @@ public class GameManager : MonoBehaviour, GameEvents::IEventListener
     public void OnEvent(GameEvents::EventType eventType, Component sender, object param = null)
     {
         if (eventType == GameEvents::EventType.ObstaclePassed)
+        {
+            scoreCounter.text = $"SCORE: {param}";
+            deathScore.text = $"FINAL SCORE: {param}";
+        }
+        else if (eventType == GameEvents.EventType.Pickup2)
         {
             scoreCounter.text = $"SCORE: {param}";
             deathScore.text = $"FINAL SCORE: {param}";
