@@ -79,4 +79,25 @@ namespace GameUtilities
             return (float)Math.Sqrt(dx * dx);
         }
     }
+
+    namespace GameEvents
+    {
+        public enum EventType
+        {
+            ObstaclePassed,
+            Pickup1,
+            Pickup2,
+            Pickup3,
+            Pickup4,
+            BossOneSpawn,
+            BossTwoSpawn,
+            BossOneBeaten,
+            BossTwoBeaten,
+        }
+
+        public interface IEventListener
+        {
+            public void OnEvent(EventType gameEventType, UnityEngine.Component sender, object param = null);
+        }
+    }
 }
