@@ -15,9 +15,4 @@ public interface IPickup
     /// The current use time of the pickup
     /// </summary>
     public float UseTime { get; set; }
-
-    /// <summary>
-    /// What the pickup does
-    /// </summary>
-    public void Effect();
 }
