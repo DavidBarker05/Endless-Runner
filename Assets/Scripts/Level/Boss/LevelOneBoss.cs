@@ -26,7 +26,6 @@ public class LevelOneBoss : Boss, GameEvents::IEventListener
     CapsuleCollider c;
 
     public BossState State { get; set; }
-    public ParticleSystem SetbackParticles { get => setbackParticles; set => setbackParticles = value; }
 
     void Awake()
     {
