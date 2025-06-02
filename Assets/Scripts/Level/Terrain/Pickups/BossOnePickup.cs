@@ -9,6 +9,4 @@ public class BossOnePickup : MonoBehaviour, IPickup
     public float UseTime { get; set; }
 
     void Awake() => UseTime = Duration;
-
-    LevelOneBoss levelOneBoss;
 }
