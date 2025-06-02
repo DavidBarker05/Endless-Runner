@@ -25,7 +25,7 @@ public class LevelOneBoss : Boss, GameEvents::IEventListener
     Animator animator;
     CapsuleCollider c;
 
-    public BossState State { get; set; }
+    public BossState State { get; private set; }
 
     void Awake()
     {
