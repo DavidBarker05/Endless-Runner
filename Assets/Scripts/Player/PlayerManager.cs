@@ -71,6 +71,7 @@ public class PlayerManager : MonoBehaviour, GameEvents::IEventListener
     float standHeight;
     float currentSlideTime;
     float currentResetHoldTime;
+    float extraJumpHeight;
     bool pressingSlide;
     Animator animator;
     bool groundedLastFrame = true;
@@ -91,10 +92,6 @@ public class PlayerManager : MonoBehaviour, GameEvents::IEventListener
     /// Indicates if the player can jump
     /// </summary>
     public bool CanJump => cc.isGrounded && !IsSliding && GameManager.Instance.State == GameManager.GameState.Alive;
-    /// <summary>
-    /// Extra jump height added to the base jump height, used for the jump boost powerup
-    /// </summary>
-    public float ExtraJumpHeight { get; private set; }
     public AnimationState State { get; set; }
     public bool Caught { get; set; }
     public bool Invulnerable { get; set; }
@@ -129,7 +126,7 @@ public class PlayerManager : MonoBehaviour, GameEvents::IEventListener
             targetLane = Mathf.Clamp(targetLane, 0, 2); // Make sure target lane can't be out of bounds
         }
         if (Input.GetKeyUp(KeyCode.A) && horizontalDirection == -1 || Input.GetKeyUp(KeyCode.D) && horizontalDirection == 1) horizontalDirection = 0; // Stop player from being able to move again if they release the key related to the direction they're moving in
-        if (Input.GetKey(KeyCode.Space) && CanJump) vVel = Mathf.Sqrt(2 * gravity * (jumpHeight + ExtraJumpHeight));
+        if (Input.GetKey(KeyCode.Space) && CanJump) vVel = Mathf.Sqrt(2 * gravity * (jumpHeight + extraJumpHeight));
         pressingSlide = Input.GetKey(KeyCode.LeftControl);
         if (!pressingSlide) currentSlideTime = 0f; // Reset time player is sliding for
         if (Input.GetKey(KeyCode.R) && GameManager.Instance.State == GameManager.GameState.Alive) currentResetHoldTime += Time.deltaTime; // Make time increase while player holds r
@@ -185,7 +182,7 @@ public class PlayerManager : MonoBehaviour, GameEvents::IEventListener
         currentSlideTime = 0f;
         currentResetHoldTime = 0f;
         pressingSlide = false;
-        ExtraJumpHeight = 0f;
+        extraJumpHeight = 0f;
         cc.height = standHeight;
         cc.center = UtilityMethods.YVector(cc.height / 2f);
         cc.enabled = false;
@@ -203,7 +200,7 @@ public class PlayerManager : MonoBehaviour, GameEvents::IEventListener
         switch (eventType)
         {
             case GameEvents::EventType.JumpBoostPickupEffect:
-                ExtraJumpHeight = (float)param >= 0f? 2f: 0f;
+                extraJumpHeight = (float)param >= 0f? 2f: 0f;
                 jumpParticles.gameObject.SetActive((float)param >= 0f);
                 break;
             case GameEvents::EventType.BonusPickupEffect:
