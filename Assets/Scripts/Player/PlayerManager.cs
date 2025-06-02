@@ -94,9 +94,8 @@ public class PlayerManager : MonoBehaviour, GameEvents::IEventListener
     public bool CanJump => cc.isGrounded && !IsSliding && GameManager.Instance.State == GameManager.GameState.Alive;
     public AnimationState State { get; set; }
     public bool Caught { get; set; }
-    public bool Invulnerable { get; set; }
+    public bool Invulnerable { get; private set; }
     public ParticleSystem BonusParticles { get => bonusParticles; set => bonusParticles = value; }
-    public GameObject ShieldBubble { get => shieldBubble; set => shieldBubble = value; }
 
     void Awake()
     {
@@ -111,7 +110,7 @@ public class PlayerManager : MonoBehaviour, GameEvents::IEventListener
     {
         GameManager.Instance.AddListener(GameEvents::EventType.JumpBoostPickupEffect, this);
         GameManager.Instance.AddListener(GameEvents::EventType.BonusPickupEffect, this);
-        GameManager.Instance.AddListener(GameEvents::EventType.Pickup3, this);
+        GameManager.Instance.AddListener(GameEvents::EventType.InvulnerabilityPickupEffect, this);
     }
 
     void Update()
@@ -204,6 +203,10 @@ public class PlayerManager : MonoBehaviour, GameEvents::IEventListener
                 break;
             case GameEvents::EventType.BonusPickupEffect:
                 bonusParticles.Play();
+                break;
+            case GameEvents::EventType.InvulnerabilityPickupEffect:
+                Invulnerable = (float)param >= 0f;
+                shieldBubble.gameObject.SetActive((float)param >= 0f);
                 break;
         }
     }

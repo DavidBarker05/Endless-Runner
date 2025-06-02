@@ -51,6 +51,7 @@ public class PickupManager : MonoBehaviour
     {
         "JumpBoostPickup" => GameEvents::EventType.JumpBoostPickupEffect,
         "BonusPickup" => GameEvents::EventType.BonusPickupEffect,
+        "InvulnerabilityPickup" => GameEvents::EventType.InvulnerabilityPickupEffect,
         _ => GameEvents::EventType.Empty,
     };
 }
