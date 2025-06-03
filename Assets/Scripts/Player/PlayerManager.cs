@@ -95,7 +95,6 @@ public class PlayerManager : MonoBehaviour, GameEvents::IEventListener
     public AnimationState State { get; set; }
     public bool Caught { get; set; }
     public bool Invulnerable { get; private set; }
-    public ParticleSystem BonusParticles { get => bonusParticles; set => bonusParticles = value; }
 
     void Awake()
     {

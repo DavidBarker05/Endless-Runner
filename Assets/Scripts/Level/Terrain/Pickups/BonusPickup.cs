@@ -7,10 +7,4 @@ public class BonusPickup : MonoBehaviour, IPickup
     public float Duration => 0f;
 
     public float UseTime { get; set; }
-
-    public void Effect()
-    {
-        LevelManager.Instance.Score += 5;
-        PlayerManager.Instance.BonusParticles.Play();
-    }
 }
