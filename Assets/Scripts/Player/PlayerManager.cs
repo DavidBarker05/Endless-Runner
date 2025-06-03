@@ -158,8 +158,7 @@ public class PlayerManager : MonoBehaviour, GameEvents::IEventListener
             if (groundedLastFrame) groundedLastFrame = false;
             else if (GameManager.Instance.State != GameManager.GameState.Dead) State = AnimationState.Fall;
         }
-        float targetDistance = UtilityMethods.XDistance(transform.position, lanes[targetLane].position);
-        if (targetDistance > SNAP_DISTANCE) return; // If distance is greater than snap distance then don't snap
+        if (Mathf.Abs(transform.position.x - lanes[targetLane].position.x) > SNAP_DISTANCE) return; // If distance is greater than snap distance then don't snap
         transform.position = UtilityMethods.YZVector(transform.position) + UtilityMethods.XVector(lanes[targetLane].position);
         currentLane = targetLane;
         targetLane += horizontalDirection;

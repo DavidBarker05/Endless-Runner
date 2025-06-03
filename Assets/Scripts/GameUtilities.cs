@@ -59,19 +59,6 @@ namespace GameUtilities
         {
             return o.transform.parent.gameObject;
         }
-
-        /// <summary>
-        /// Gets the distance on the x-axis between two <see cref="UnityEngine.Vector3"/> points.
-        /// </summary>
-        /// <param name="a"><see cref="UnityEngine.Vector3"/> a.</param>
-        /// <param name="b"><see cref="UnityEngine.Vector3"/> b.</param>
-        /// <returns>The distance on the x-axis between a and b</returns>
-        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-        public static float XDistance(UnityEngine.Vector3 a, UnityEngine.Vector3 b)
-        {
-            float dx = a.x - b.x;
-            return (float)System.Math.Sqrt(dx * dx);
-        }
     }
 
     namespace GameEvents
