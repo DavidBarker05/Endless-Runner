@@ -83,6 +83,12 @@ public class GameManager : MonoBehaviour, GameEvents::IEventListener
         }
     }
 
+    void OnDestroy()
+    {
+        RemoveListener(GameEvents::EventType.ObstaclePassed, this);
+        RemoveListener(GameEvents::EventType.BonusPickupEffect, this);
+    }
+
     /// <summary>
     /// Starts the game
     /// </summary>

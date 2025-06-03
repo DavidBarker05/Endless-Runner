@@ -167,6 +167,13 @@ public class PlayerManager : MonoBehaviour, GameEvents::IEventListener
         animator.SetInteger("AnimationState", (int)State);
     }
 
+    void OnDestroy()
+    {
+        GameManager.Instance.RemoveListener(GameEvents::EventType.JumpBoostPickupEffect, this);
+        GameManager.Instance.RemoveListener(GameEvents::EventType.BonusPickupEffect, this);
+        GameManager.Instance.RemoveListener(GameEvents::EventType.InvulnerabilityPickupEffect, this);
+    }
+
     /// <summary>
     /// Resets the player
     /// </summary>

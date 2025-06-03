@@ -111,6 +111,14 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
         GenerateTerrain(); // Manually generate a new piece of terrain
     }
 
+    void OnDestroy()
+    {
+        GameManager.Instance.RemoveListener(GameEvents::EventType.ObstaclePassed, this);
+        GameManager.Instance.RemoveListener(GameEvents::EventType.BonusPickupEffect, this);
+        GameManager.Instance.RemoveListener(GameEvents::EventType.BossOneSpawn, this);
+        GameManager.Instance.RemoveListener(GameEvents::EventType.BossOneBeaten, this);
+    }
+
     public void GenerateTerrain()
     {
         if (PossibleTerrain.Count == 0) return; // Make sure that there is terrain to generate
