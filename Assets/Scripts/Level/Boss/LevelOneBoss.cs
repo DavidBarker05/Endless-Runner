@@ -27,21 +27,15 @@ public class LevelOneBoss : Boss, GameEvents::IEventListener
     public enum BossState
     {
         /// <summary>
-        /// <para>
         /// The boss runs forward.
-        /// </para>
         /// </summary>
         Run,
         /// <summary>
-        /// <para>
         /// The boss slides.
-        /// </para>
         /// </summary>
         Slide,
         /// <summary>
-        /// <para>
         /// The boss is being set back by the <see cref="BossOnePickup"/>.
-        /// </para>
         /// </summary>
         Setback,
         /// <summary>
@@ -57,9 +51,7 @@ public class LevelOneBoss : Boss, GameEvents::IEventListener
         /// </summary>
         Disengage,
         /// <summary>
-        /// <para>
         /// The boss has caught the player.
-        /// </para>
         /// </summary>
         Catch,
     }
@@ -78,9 +70,7 @@ public class LevelOneBoss : Boss, GameEvents::IEventListener
     CapsuleCollider c;
 
     /// <summary>
-    /// <para>
     /// The current <see cref="BossState"/> that the boss is in.
-    /// </para>
     /// </summary>
     public BossState State { get; private set; }
 
