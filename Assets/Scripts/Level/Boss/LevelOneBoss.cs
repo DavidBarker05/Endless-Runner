@@ -1,6 +1,5 @@
 using GameUtilities;
 using GameEvents = GameUtilities.GameEvents;
-using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
