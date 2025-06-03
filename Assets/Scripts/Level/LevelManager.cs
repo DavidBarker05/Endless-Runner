@@ -86,6 +86,8 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
     {
         GameManager.Instance.AddListener(GameEvents::EventType.ObstaclePassed, this);
         GameManager.Instance.AddListener(GameEvents::EventType.BonusPickupEffect, this);
+        GameManager.Instance.AddListener(GameEvents::EventType.BossOneSpawn, this);
+        GameManager.Instance.AddListener(GameEvents::EventType.BossOneBeaten, this);
     }
 
     void FixedUpdate()
@@ -96,7 +98,7 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
         Speed += startingSpeed / 30f * Time.fixedDeltaTime; // Increase speed
         Speed = Mathf.Clamp(Speed, startingSpeed, MAX_SPEED); // Make sure doesn't exceed max speed
         bossTimer += Time.fixedDeltaTime;
-        if (bossTimer >= 30f) ToggleBoss();
+        if (bossTimer >= 30f) GameManager.Instance.InvokeEvent(!IsBossActive ? GameEvents::EventType.BossOneSpawn : GameEvents::EventType.BossOneBeaten, this);
     }
 
     // The trigger is behind the player
@@ -266,7 +268,26 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
 
     public void OnEvent(GameEvents::EventType eventType, Component sender, object param = null)
     {
-        if (eventType == GameEvents::EventType.ObstaclePassed) Score = (int)param;
-        else if (eventType == GameEvents::EventType.BonusPickupEffect) Score = (int)param;
+        switch (eventType)
+        {
+            case GameEvents::EventType.ObstaclePassed:
+                Score = (int)param;
+                break;
+            case GameEvents::EventType.BonusPickupEffect:
+                Score = (int)param;
+                break;
+            case GameEvents::EventType.BossOneSpawn:
+                bossTimer = 0f;
+                if (levelOneBoss == null) return;
+                boss = Instantiate(levelOneBoss);
+                boss.transform.position = levelOneBossSpawnLocation.position;
+                bossTimer = 5f; // Make boss disappear 5 seconds before end of level
+                break;
+            case GameEvents::EventType.BossOneBeaten:
+                bossTimer = 0f;
+                if (levelOneBoss == null) return;
+                bossTimer = -5f; // Fix the timing issue cause from making disappear early
+                break;
+        }
     }
 }

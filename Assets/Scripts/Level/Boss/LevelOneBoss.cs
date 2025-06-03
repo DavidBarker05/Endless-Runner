@@ -36,6 +36,7 @@ public class LevelOneBoss : Boss, GameEvents::IEventListener
     void Start()
     {
         GameManager.Instance.AddListener(GameEvents::EventType.BossOnePickupEffect, this);
+        GameManager.Instance.AddListener(GameEvents::EventType.BossOneBeaten, this);
     }
 
     void FixedUpdate()
@@ -70,12 +71,6 @@ public class LevelOneBoss : Boss, GameEvents::IEventListener
         }
     }
 
-    public override void Disengage()
-    {
-        State = BossState.Disengage;
-        base.Disengage();
-    }
-
     public void OnEvent(GameEvents::EventType eventType, Component sender, object param = null)
     {
         if (eventType == GameEvents::EventType.BossOnePickupEffect)
@@ -83,6 +78,11 @@ public class LevelOneBoss : Boss, GameEvents::IEventListener
             if (State == BossState.Disengage || State == BossState.Slide) return;
             State = (float)param >= 0f ? BossState.Setback : BossState.Run;
             setbackParticles.gameObject.SetActive((float)param >= 0f);
+        }
+        else if (eventType == GameEvents::EventType.BossOneBeaten)
+        {
+            State = BossState.Disengage;
+            base.Disengage();
         }
     }
 }
