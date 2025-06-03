@@ -1,12 +1,14 @@
 using UnityEngine;
 
 /// <summary>
-/// The base abstract class that the first and second boss scripts derive from
+/// <para>
+/// The base abstract class that the first and second boss scripts derive from.
+/// </para>
 /// </summary>
 public abstract class Boss : MonoBehaviour
 {
     /// <summary>
-    /// Begin the coroutine to deactivate the boss
+    /// Begin the coroutine to deactivate the boss.
     /// </summary>
     public virtual void Disengage() => StartCoroutine(Deactivate());
 
