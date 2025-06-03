@@ -238,23 +238,6 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
         Destroy(terrain);
     }
 
-    void ToggleBoss()
-    {
-        bossTimer = 0f;
-        if (levelOneBoss == null) return;
-        if (boss == null)
-        {
-            boss = Instantiate(levelOneBoss);
-            boss.transform.position = levelOneBossSpawnLocation.position;
-            bossTimer = 5f; // Make boss disappear 5 seconds before end of level
-        }
-        else
-        {
-            bossTimer = -5f; // Fix the timing issue cause from making disappear early
-            boss.Disengage();
-        }
-    }
-
     // Resets game to start
     public void ResetGame()
     {
