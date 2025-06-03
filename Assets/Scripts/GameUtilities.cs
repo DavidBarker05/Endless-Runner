@@ -1,15 +1,15 @@
 namespace GameUtilities
 {
     /// <summary>
-    /// A variety of different useful methods used throughout the code
+    /// A variety of different useful methods used throughout the code.
     /// </summary>
     public struct UtilityMethods
     {
         /// <summary>
-        /// Gets a vector containing only the x component of the original vector
+        /// Gets a <see cref="UnityEngine.Vector3"/> containing only the <see cref="UnityEngine.Vector3.x"/> component of the original <see cref="UnityEngine.Vector3"/>.
         /// </summary>
-        /// <param name="v">The original vector</param>
-        /// <returns>New vector that contains only the x component of the original vector</returns>
+        /// <param name="v">The original <see cref="UnityEngine.Vector3"/>.</param>
+        /// <returns>A new <see cref="UnityEngine.Vector3"/> that contains only the <see cref="UnityEngine.Vector3.x"/> component of the original <see cref="UnityEngine.Vector3"/>.</returns>
         [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
         public static UnityEngine.Vector3 XVector(UnityEngine.Vector3 v)
         {
@@ -17,10 +17,10 @@ namespace GameUtilities
         }
 
         /// <summary>
-        /// Gets a y-axis vector with a magnitude of the value provided
+        /// Gets a y-axis <see cref="UnityEngine.Vector3"/> with a magnitude of the value provided.
         /// </summary>
-        /// <param name="y">The value of the y-axis</param>
-        /// <returns>A y-axis vector based on the original value</returns>
+        /// <param name="y">The value of the y-axis.</param>
+        /// <returns>A y-axis <see cref="UnityEngine.Vector3"/> based on the original value.</returns>
         [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
         public static UnityEngine.Vector3 YVector(float y)
         {
@@ -28,10 +28,10 @@ namespace GameUtilities
         }
 
         /// <summary>
-        /// Gets a z-axis vector with a magnitude of the value provided
+        /// Gets a z-axis <see cref="UnityEngine.Vector3"/> with a magnitude of the value provided.
         /// </summary>
-        /// <param name="z">The value of the z-axis</param>
-        /// <returns>A z-axis vector based on the original value</returns>
+        /// <param name="z">The value of the z-axis.</param>
+        /// <returns>A z-axis <see cref="UnityEngine.Vector3"/> based on the original value.</returns>
         [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
         public static UnityEngine.Vector3 ZVector(float z)
         {
@@ -39,10 +39,10 @@ namespace GameUtilities
         }
 
         /// <summary>
-        /// Gets a vector containing only the y and z components of the original vector
+        /// Gets a <see cref="UnityEngine.Vector3"/> containing only the <see cref="UnityEngine.Vector3.y"/> and <see cref="UnityEngine.Vector3.z"/> components of the original <see cref="UnityEngine.Vector3"/>.
         /// </summary>
-        /// <param name="v">The original vector</param>
-        /// <returns>New vector that contains only the y and z components of the original vector</returns>
+        /// <param name="v">The original <see cref="UnityEngine.Vector3"/>.</param>
+        /// <returns>A new <see cref="UnityEngine.Vector3"/> that contains only the <see cref="UnityEngine.Vector3.y"/> and <see cref="UnityEngine.Vector3.z"/> components of the original <see cref="UnityEngine.Vector3"/>.</returns>
         [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
         public static UnityEngine.Vector3 YZVector(UnityEngine.Vector3 v)
         {
@@ -50,10 +50,10 @@ namespace GameUtilities
         }
 
         /// <summary>
-        /// Gets the parent of a child game object
+        /// Gets the parent of a child <see cref="UnityEngine.GameObject"/>.
         /// </summary>
-        /// <param name="o">The child game object</param>
-        /// <returns>The parent of the child game object</returns>
+        /// <param name="o">The child <see cref="UnityEngine.GameObject"/>.</param>
+        /// <returns>The parent of the child <see cref="UnityEngine.GameObject"/>.</returns>
         [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
         public static UnityEngine.GameObject Parent(UnityEngine.GameObject o)
         {
@@ -61,10 +61,10 @@ namespace GameUtilities
         }
 
         /// <summary>
-        /// Gets the distance on the x-axis between two vectors
+        /// Gets the distance on the x-axis between two <see cref="UnityEngine.Vector3"/> points.
         /// </summary>
-        /// <param name="a">Vector a</param>
-        /// <param name="b">Vector b</param>
+        /// <param name="a"><see cref="UnityEngine.Vector3"/> a.</param>
+        /// <param name="b"><see cref="UnityEngine.Vector3"/> b.</param>
         /// <returns>The distance on the x-axis between a and b</returns>
         [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
         public static float XDistance(UnityEngine.Vector3 a, UnityEngine.Vector3 b)
