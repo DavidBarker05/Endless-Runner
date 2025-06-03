@@ -18,7 +18,7 @@ public class SpawnableTerrain : MonoBehaviour
     /// <summary>
     /// The size of the terrain on the z-axis
     /// </summary>
-    public float Size => gameObject.transform.localScale.z * 10f;
+    public float Size => GetComponent<Collider>().bounds.size.z;
     /// <summary>
     /// The obstacle rows attatched to the terrain
     /// </summary>
