@@ -1,7 +1,7 @@
 using UnityEngine;
 
 /// <summary>
-/// The base <see langword="abstract"/> class that child <see cref="Boss"/> scripts will derive from.
+/// The base abstract class that child <see cref="Boss"/> scripts will derive from.
 /// </summary>
 public abstract class Boss : MonoBehaviour
 {
