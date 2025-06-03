@@ -97,6 +97,7 @@ public class GameManager : MonoBehaviour, GameEvents::IEventListener
     public void AddListener(GameEvents::EventType eventType, GameEvents::IEventListener eventListener)
     {
         if (eventListener == null) return;
+        if (eventType == GameEvents::EventType.Empty) return;
         if (!eventListeners.ContainsKey(eventType)) eventListeners.Add(eventType, new List<GameEvents::IEventListener>());
         if (!eventListeners[eventType].Contains(eventListener)) eventListeners[eventType].Add(eventListener);
     }
@@ -104,6 +105,7 @@ public class GameManager : MonoBehaviour, GameEvents::IEventListener
     public void RemoveListener(GameEvents::EventType eventType, GameEvents::IEventListener eventListener)
     {
         if (eventListener == null) return;
+        if (eventType == GameEvents::EventType.Empty) return;
         if (!eventListeners.ContainsKey(eventType)) return;
         eventListeners[eventType].Remove(eventListener);
     }
@@ -111,6 +113,7 @@ public class GameManager : MonoBehaviour, GameEvents::IEventListener
     public void InvokeEvent(GameEvents::EventType eventType, Component sender, object param = null)
     {
         if (!eventListeners.ContainsKey(eventType)) return;
+        if (eventType == GameEvents::EventType.Empty) return;
         List<GameEvents::IEventListener> eventListenerList = new List<GameEvents::IEventListener>(eventListeners[eventType]);
         System.Array.ForEach<GameEvents::IEventListener>(eventListenerList.ToArray(), l => l?.OnEvent(eventType, sender, param));
     }
