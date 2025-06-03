@@ -8,7 +8,9 @@ using UnityEngine;
 public abstract class Boss : MonoBehaviour
 {
     /// <summary>
+    /// <para>
     /// Begin the coroutine to deactivate the boss.
+    /// </para>
     /// </summary>
     public virtual void Disengage() => StartCoroutine(Deactivate());
 
