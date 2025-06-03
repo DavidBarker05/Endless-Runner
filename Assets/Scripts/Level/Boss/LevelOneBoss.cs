@@ -77,7 +77,7 @@ public class LevelOneBoss : Boss, GameEvents::IEventListener
         base.Disengage();
     }
 
-    public void OnEvent(GameEvents.EventType eventType, Component sender, object param = null)
+    public void OnEvent(GameEvents::EventType eventType, Component sender, object param = null)
     {
         if (eventType == GameEvents::EventType.BossOnePickupEffect)
         {
