@@ -1,9 +1,3 @@
-using Vector3 = UnityEngine.Vector3;
-using GameObject = UnityEngine.GameObject;
-using Math = System.Math;
-using MethodImpl = System.Runtime.CompilerServices.MethodImplAttribute;
-using MethodImplOptions = System.Runtime.CompilerServices.MethodImplOptions;
-
 namespace GameUtilities
 {
     /// <summary>
@@ -16,10 +10,10 @@ namespace GameUtilities
         /// </summary>
         /// <param name="v">The original vector</param>
         /// <returns>New vector that contains only the x component of the original vector</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Vector3 XVector(Vector3 v)
+        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+        public static UnityEngine.Vector3 XVector(UnityEngine.Vector3 v)
         {
-            return new Vector3(v.x, 0f, 0f);
+            return new UnityEngine.Vector3(v.x, 0f, 0f);
         }
 
         /// <summary>
@@ -27,10 +21,10 @@ namespace GameUtilities
         /// </summary>
         /// <param name="y">The value of the y-axis</param>
         /// <returns>A y-axis vector based on the original value</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Vector3 YVector(float y)
+        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+        public static UnityEngine.Vector3 YVector(float y)
         {
-            return new Vector3(0f, y, 0f);
+            return new UnityEngine.Vector3(0f, y, 0f);
         }
 
         /// <summary>
@@ -38,10 +32,10 @@ namespace GameUtilities
         /// </summary>
         /// <param name="z">The value of the z-axis</param>
         /// <returns>A z-axis vector based on the original value</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Vector3 ZVector(float z)
+        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+        public static UnityEngine.Vector3 ZVector(float z)
         {
-            return new Vector3(0f, 0f, z);
+            return new UnityEngine.Vector3(0f, 0f, z);
         }
 
         /// <summary>
@@ -49,10 +43,10 @@ namespace GameUtilities
         /// </summary>
         /// <param name="v">The original vector</param>
         /// <returns>New vector that contains only the y and z components of the original vector</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Vector3 YZVector(Vector3 v)
+        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+        public static UnityEngine.Vector3 YZVector(UnityEngine.Vector3 v)
         {
-            return new Vector3(0f, v.y, v.z);
+            return new UnityEngine.Vector3(0f, v.y, v.z);
         }
 
         /// <summary>
@@ -60,8 +54,8 @@ namespace GameUtilities
         /// </summary>
         /// <param name="o">The child game object</param>
         /// <returns>The parent of the child game object</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static GameObject Parent(GameObject o)
+        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+        public static UnityEngine.GameObject Parent(UnityEngine.GameObject o)
         {
             return o.transform.parent.gameObject;
         }
@@ -72,11 +66,11 @@ namespace GameUtilities
         /// <param name="a">Vector a</param>
         /// <param name="b">Vector b</param>
         /// <returns>The distance on the x-axis between a and b</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float XDistance(Vector3 a, Vector3 b)
+        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+        public static float XDistance(UnityEngine.Vector3 a, UnityEngine.Vector3 b)
         {
             float dx = a.x - b.x;
-            return (float)Math.Sqrt(dx * dx);
+            return (float)System.Math.Sqrt(dx * dx);
         }
     }
 
