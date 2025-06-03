@@ -1,3 +1,4 @@
+using GameUtilities.GameEvents;
 using GameEvents = GameUtilities.GameEvents;
 using System.Collections.Generic;
 using TMPro;
@@ -7,7 +8,7 @@ using UnityEngine.UI;
 /// <summary>
 /// Manages the game State and UI elements
 /// </summary>
-public class GameManager : MonoBehaviour, GameEvents::IEventListener
+public class GameManager : MonoBehaviour, IEventListener
 {
     public static GameManager Instance { get; private set; }
 
@@ -49,7 +50,7 @@ public class GameManager : MonoBehaviour, GameEvents::IEventListener
     /// </summary>
     public GameState State { get; set; }
 
-    Dictionary<GameEvents::EventType, List<GameEvents::IEventListener>> eventListeners = new Dictionary<GameEvents::EventType, List<GameEvents::IEventListener>>();
+    Dictionary<GameEvents::EventType, List<IEventListener>> eventListeners = new Dictionary<GameEvents::EventType, List<IEventListener>>();
 
     void Awake()
     {
@@ -94,15 +95,15 @@ public class GameManager : MonoBehaviour, GameEvents::IEventListener
     /// </summary>
     public void StartGame() => LevelManager.Instance.ResetGame();
 
-    public void AddListener(GameEvents::EventType eventType, GameEvents::IEventListener eventListener)
+    public void AddListener(GameEvents::EventType eventType, IEventListener eventListener)
     {
         if (eventListener == null) return;
         if (eventType == GameEvents::EventType.Empty) return;
-        if (!eventListeners.ContainsKey(eventType)) eventListeners.Add(eventType, new List<GameEvents::IEventListener>());
+        if (!eventListeners.ContainsKey(eventType)) eventListeners.Add(eventType, new List<IEventListener>());
         if (!eventListeners[eventType].Contains(eventListener)) eventListeners[eventType].Add(eventListener);
     }
 
-    public void RemoveListener(GameEvents::EventType eventType, GameEvents::IEventListener eventListener)
+    public void RemoveListener(GameEvents::EventType eventType, IEventListener eventListener)
     {
         if (eventListener == null) return;
         if (eventType == GameEvents::EventType.Empty) return;
@@ -114,8 +115,8 @@ public class GameManager : MonoBehaviour, GameEvents::IEventListener
     {
         if (!eventListeners.ContainsKey(eventType)) return;
         if (eventType == GameEvents::EventType.Empty) return;
-        List<GameEvents::IEventListener> eventListenerList = new List<GameEvents::IEventListener>(eventListeners[eventType]);
-        System.Array.ForEach<GameEvents::IEventListener>(eventListenerList.ToArray(), l => l?.OnEvent(eventType, sender, param));
+        List<IEventListener> eventListenerList = new List<IEventListener>(eventListeners[eventType]);
+        System.Array.ForEach<IEventListener>(eventListenerList.ToArray(), l => l?.OnEvent(eventType, sender, param));
     }
 
     public void ClearEvents() => eventListeners.Clear();

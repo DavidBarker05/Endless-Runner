@@ -1,4 +1,5 @@
 using GameUtilities.UtilityMethods;
+using GameUtilities.GameEvents;
 using GameEvents = GameUtilities.GameEvents;
 using UnityEngine;
 
@@ -6,7 +7,7 @@ using UnityEngine;
 /// Handles player input and movement
 /// </summary>
 [RequireComponent(typeof(CharacterController))]
-public class PlayerManager : MonoBehaviour, GameEvents::IEventListener
+public class PlayerManager : MonoBehaviour, IEventListener
 {
     public enum AnimationState
     {

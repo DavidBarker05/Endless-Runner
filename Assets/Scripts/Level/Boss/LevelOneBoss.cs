@@ -1,4 +1,5 @@
 using GameUtilities.UtilityMethods;
+using GameUtilities.GameEvents;
 using GameEvents = GameUtilities.GameEvents;
 using UnityEngine;
 
@@ -7,14 +8,14 @@ using UnityEngine;
 /// The script for the level one boss.
 /// </para>
 /// <para>
-/// Derives from the <see cref="Boss"/> script and implements the <see cref="GameEvents::IEventListener"/> interface.
+/// Derives from the <see cref="Boss"/> script and implements the <see cref="IEventListener"/> interface.
 /// </para>
 /// <para>
 /// Requires an <see cref="Animator"/> component to be attached.
 /// </para>
 /// </summary>
 [RequireComponent(typeof(Animator))]
-public class LevelOneBoss : Boss, GameEvents::IEventListener
+public class LevelOneBoss : Boss, IEventListener
 {
     /// <summary>
     /// <para>

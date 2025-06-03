@@ -1,4 +1,5 @@
 using GameUtilities.UtilityMethods;
+using GameUtilities.GameEvents;
 using GameEvents = GameUtilities.GameEvents;
 using System.Collections.Generic;
 using Array = System.Array;
@@ -7,7 +8,7 @@ using UnityEngine;
 /// <summary>
 /// Manages level generation and score
 /// </summary>
-public class LevelManager : MonoBehaviour, GameEvents::IEventListener
+public class LevelManager : MonoBehaviour, IEventListener
 {
     public static LevelManager Instance { get; private set; }
 
