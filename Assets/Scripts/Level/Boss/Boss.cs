@@ -2,7 +2,7 @@ using UnityEngine;
 
 /// <summary>
 /// <para>
-/// The base abstract class that the first and second boss scripts derive from.
+/// The base abstract class that child <see cref="Boss"/> scripts will derive from.
 /// </para>
 /// </summary>
 public abstract class Boss : MonoBehaviour
