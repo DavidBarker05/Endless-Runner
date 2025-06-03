@@ -1,4 +1,4 @@
-using GameUtilities;
+using GameUtilities.UtilityMethods;
 using GameEvents = GameUtilities.GameEvents;
 using UnityEngine;
 
@@ -140,10 +140,10 @@ public class PlayerManager : MonoBehaviour, GameEvents::IEventListener
             State = AnimationState.Slide;
         }
         cc.height = IsSliding ? slideHeight : standHeight; // Set appropriate height
-        cc.center = UtilityMethods.YVector(cc.height / 2f); // Set appropriate center
-        Vector3 laneDisplacement = UtilityMethods.XVector(lanes[targetLane].position - lanes[currentLane].position);
+        cc.center = VectorMethods.YVector(cc.height / 2f); // Set appropriate center
+        Vector3 laneDisplacement = VectorMethods.XVector(lanes[targetLane].position - lanes[currentLane].position);
         Vector3 hVel = laneDisplacement / switchTime;
-        Vector3 movement = (hVel + UtilityMethods.YVector(vVel)) * Time.fixedDeltaTime;
+        Vector3 movement = (hVel + VectorMethods.YVector(vVel)) * Time.fixedDeltaTime;
         cc.Move(movement);
         if (cc.isGrounded)
         {
@@ -159,7 +159,7 @@ public class PlayerManager : MonoBehaviour, GameEvents::IEventListener
             else if (GameManager.Instance.State != GameManager.GameState.Dead) State = AnimationState.Fall;
         }
         if (Mathf.Abs(transform.position.x - lanes[targetLane].position.x) > SNAP_DISTANCE) return; // If distance is greater than snap distance then don't snap
-        transform.position = UtilityMethods.YZVector(transform.position) + UtilityMethods.XVector(lanes[targetLane].position);
+        transform.position = VectorMethods.YZVector(transform.position) + VectorMethods.XVector(lanes[targetLane].position);
         currentLane = targetLane;
         targetLane += horizontalDirection;
         targetLane = Mathf.Clamp(targetLane, 0, 2);
@@ -187,11 +187,11 @@ public class PlayerManager : MonoBehaviour, GameEvents::IEventListener
         pressingSlide = false;
         extraJumpHeight = 0f;
         cc.height = standHeight;
-        cc.center = UtilityMethods.YVector(cc.height / 2f);
+        cc.center = VectorMethods.YVector(cc.height / 2f);
         cc.enabled = false;
         transform.position = lanes[currentLane].position;
         cc.enabled = true;
-        cc.Move(UtilityMethods.YVector(vVel)); // Move into ground so that is grounded can start working
+        cc.Move(VectorMethods.YVector(vVel)); // Move into ground so that is grounded can start working
         groundedLastFrame = true;
         State = AnimationState.Run;
         Caught = false;

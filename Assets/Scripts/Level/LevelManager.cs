@@ -1,4 +1,4 @@
-using GameUtilities;
+using GameUtilities.UtilityMethods;
 using GameEvents = GameUtilities.GameEvents;
 using System.Collections.Generic;
 using Array = System.Array;
@@ -94,7 +94,7 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
     {
         if (GameManager.Instance.State != GameManager.GameState.Alive) return;
         GameObject[] moveableTerrain = Array.FindAll<GameObject>(generatedTerrain.ToArray(), (GameObject t) => t.GetComponent<SpawnableTerrain>().CanMove); // Find all terrain that can move
-        Array.ForEach<GameObject>(moveableTerrain, t => t.transform.position -= UtilityMethods.ZVector(Speed)); // Move all the terrain that can move
+        Array.ForEach<GameObject>(moveableTerrain, t => t.transform.position -= VectorMethods.ZVector(Speed)); // Move all the terrain that can move
         Speed += startingSpeed / 30f * Time.fixedDeltaTime; // Increase speed
         Speed = Mathf.Clamp(Speed, startingSpeed, MAX_SPEED); // Make sure doesn't exceed max speed
         bossTimer += Time.fixedDeltaTime;
@@ -105,7 +105,7 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
     void OnTriggerEnter(Collider other)
     {
         if (!other.CompareTag("FrontTerrain")) return; // If it isn't the front of a terrain that collides then skip it
-        DestroyTerrain(UtilityMethods.Parent(other.gameObject)); // Destroy the terrain
+        DestroyTerrain(GameObjectMethods.Parent(other.gameObject)); // Destroy the terrain
         if (GenerateTerrainOnTrigger) return; // If terrain is generated on trigger then don't manually generate new terrain
         GenerateTerrainOnTrigger = true; // Update the bool
         GenerateTerrain(); // Manually generate a new piece of terrain
@@ -143,7 +143,7 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
                 obstacleRow.GetComponent<ObstacleRow>().HasObstacles = true;
                 int firstSpawnLane = Random.Range(0, lanes.Length); // Lane to spawn in
                 int obstacleIndex = Random.Range(0, levelOneObstacles.Count); // Random obstaclw
-                Vector3 spawnPos = UtilityMethods.YZVector(obstacleRow.transform.position) + UtilityMethods.XVector(lanes[firstSpawnLane].position);
+                Vector3 spawnPos = VectorMethods.YZVector(obstacleRow.transform.position) + VectorMethods.XVector(lanes[firstSpawnLane].position);
                 var firstObstacle = Instantiate(levelOneObstacles[obstacleIndex], obstacleRow.transform);
                 firstObstacle.transform.position = spawnPos;
                 if (numberOfObstacles == 1 || lastGeneratedObstacleCount == 1) // If number of obstacles is 1, or the previous number was 1 then can't generate 2 obstacles
@@ -158,7 +158,7 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
                     secondSpawnLane = Random.Range(0, lanes.Length);
                 }
                 obstacleIndex = Random.Range(0, levelOneObstacles.Count); // Random obstacle
-                spawnPos = UtilityMethods.YZVector(obstacleRow.transform.position) + UtilityMethods.XVector(lanes[secondSpawnLane].position);
+                spawnPos = VectorMethods.YZVector(obstacleRow.transform.position) + VectorMethods.XVector(lanes[secondSpawnLane].position);
                 var secondObstacle = Instantiate(levelOneObstacles[obstacleIndex], obstacleRow.transform);
                 secondObstacle.transform.position = spawnPos;
             }
@@ -175,7 +175,7 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
                     int lane = Random.Range(0, lanes.Length); // Lane to spawn in
                     var validPickups = levelOnePickups.FindAll(p => p.name != "Boss One Pickup" || IsBossActive);
                     if (validPickups.Count == 0) continue;
-                    Vector3 spawnPos = UtilityMethods.YZVector(pickupRow.transform.position) + UtilityMethods.XVector(lanes[lane].position);
+                    Vector3 spawnPos = VectorMethods.YZVector(pickupRow.transform.position) + VectorMethods.XVector(lanes[lane].position);
                     if (IsBossActive)
                     {
                         List<GameObject> weightedPickups = new List<GameObject>();
@@ -213,10 +213,10 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
         {
             for (int j = startingTerrainCount - 1; j > i; j--)
             {
-                if (j == startingTerrainCount - 1) generatedTerrain[i].transform.position -= UtilityMethods.ZVector(generatedTerrain[j].GetComponent<SpawnableTerrain>().Size / 2f);
-                else generatedTerrain[i].transform.position -= UtilityMethods.ZVector(generatedTerrain[j].GetComponent<SpawnableTerrain>().Size);
+                if (j == startingTerrainCount - 1) generatedTerrain[i].transform.position -= VectorMethods.ZVector(generatedTerrain[j].GetComponent<SpawnableTerrain>().Size / 2f);
+                else generatedTerrain[i].transform.position -= VectorMethods.ZVector(generatedTerrain[j].GetComponent<SpawnableTerrain>().Size);
             }
-            generatedTerrain[i].transform.position -= UtilityMethods.ZVector(generatedTerrain[i].GetComponent<SpawnableTerrain>().Size / 2f);
+            generatedTerrain[i].transform.position -= VectorMethods.ZVector(generatedTerrain[i].GetComponent<SpawnableTerrain>().Size / 2f);
         }
         generatedTerrain[0].GetComponent<SpawnableTerrain>().CanMove = true;
         isLevelStart = false;
@@ -281,7 +281,7 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
                 bossTimer = -5f; // Fix the timing issue cause from making disappear early
                 IsBossActive = false;
                 BossOnePickup[] bossOnePickups = FindObjectsByType<BossOnePickup>(FindObjectsSortMode.None);
-                Array.ForEach<BossOnePickup>(bossOnePickups, b => GameObject.Destroy(UtilityMethods.Parent(b.gameObject)));
+                Array.ForEach<BossOnePickup>(bossOnePickups, b => GameObject.Destroy(GameObjectMethods.Parent(b.gameObject)));
                 break;
         }
     }

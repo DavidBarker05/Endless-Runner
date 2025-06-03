@@ -1,4 +1,4 @@
-using GameUtilities;
+using GameUtilities.UtilityMethods;
 using GameEvents = GameUtilities.GameEvents;
 using UnityEngine;
 
@@ -92,8 +92,8 @@ public class LevelOneBoss : Boss, GameEvents::IEventListener
         if (GameManager.Instance.State == GameManager.GameState.Dead) State = BossState.Catch; // Force boss to idle even if player dies to something that isn't the boss
         animator.SetInteger("AnimationState", (int)State); // Set the animation state to the boss state
         if (GameManager.Instance.State != GameManager.GameState.Alive) return; // If the player is dead don't bother with the following movement code
-        if (State != BossState.Slide) transform.position = UtilityMethods.YZVector(transform.position) + UtilityMethods.XVector(PlayerManager.Instance.transform.position); // Match the horizontal position of the player if the boss isn't sliding
-        transform.position += UtilityMethods.ZVector((State == BossState.Run ? speed : State == BossState.Setback ? -setbackSpeed : State == BossState.Disengage ? -LevelManager.Instance.Speed / Time.fixedDeltaTime : 0f) * Time.fixedDeltaTime); // The speed at which the boss moves
+        if (State != BossState.Slide) transform.position = VectorMethods.YZVector(transform.position) + VectorMethods.XVector(PlayerManager.Instance.transform.position); // Match the horizontal position of the player if the boss isn't sliding
+        transform.position += VectorMethods.ZVector((State == BossState.Run ? speed : State == BossState.Setback ? -setbackSpeed : State == BossState.Disengage ? -LevelManager.Instance.Speed / Time.fixedDeltaTime : 0f) * Time.fixedDeltaTime); // The speed at which the boss moves
         transform.position = new Vector3(transform.position.x, transform.position.y, Mathf.Clamp(transform.position.z, -5f, 0f)); // Make sure boss can't go too far back
     }
 

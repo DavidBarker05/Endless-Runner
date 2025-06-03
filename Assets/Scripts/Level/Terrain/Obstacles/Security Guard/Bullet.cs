@@ -1,4 +1,4 @@
-using GameUtilities;
+using GameUtilities.UtilityMethods;
 using UnityEngine;
 
 /// <summary>
@@ -34,7 +34,7 @@ public class Bullet : MonoBehaviour
             hit.collider.gameObject.GetComponent<ExplosiveBarrel>()?.DestroyObstacle(); // Explode the object if it is a barrel
             if (hit.collider.gameObject.layer == LayerMask.NameToLayer("MaxGuardRange"))
             {
-                GameObject maxRange = UtilityMethods.Parent(gameObject).GetComponentInParent<SecurityGuard>().MaxRange;
+                GameObject maxRange = GameObjectMethods.Parent(gameObject).GetComponentInParent<SecurityGuard>().MaxRange;
                 if (hit.collider.gameObject.GetInstanceID() == maxRange.GetInstanceID()) Destroy(gameObject); // Check if the max range it hits belongs to the bullet's guard and not another guard before destroying the bullet
             }
             else Destroy(gameObject); // Destroy the bullet if it hits something

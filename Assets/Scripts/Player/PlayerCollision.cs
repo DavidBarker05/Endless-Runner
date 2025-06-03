@@ -1,4 +1,4 @@
-using GameUtilities;
+using GameUtilities.UtilityMethods;
 using UnityEngine;
 
 public class PlayerCollision : MonoBehaviour
@@ -7,7 +7,7 @@ public class PlayerCollision : MonoBehaviour
     {
         if (!other.CompareTag("Pickup")) return;
         IPickup pickup = other.GetComponent<IPickup>();
-        Destroy(UtilityMethods.Parent(other.gameObject)); // Destroy the pickup
+        Destroy(GameObjectMethods.Parent(other.gameObject)); // Destroy the pickup
         PickupManager.Instance.AddPickup(pickup);
     }
 }
