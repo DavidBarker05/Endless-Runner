@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 /// <summary>
@@ -26,7 +25,7 @@ public class SecurityGuard : MonoBehaviour
 
     public void EnableShooting() => StartCoroutine(Shoot());
 
-    IEnumerator Shoot()
+    System.Collections.IEnumerator Shoot()
     {
         while (true)
         {

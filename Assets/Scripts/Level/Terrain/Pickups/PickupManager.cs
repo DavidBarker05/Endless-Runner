@@ -1,6 +1,6 @@
-using System;
-using System.Collections.Generic;
 using GameEvents = GameUtilities.GameEvents;
+using System.Collections.Generic;
+using Array = System.Array;
 using UnityEngine;
 
 public class PickupManager : MonoBehaviour
