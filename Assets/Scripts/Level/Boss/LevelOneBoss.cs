@@ -18,7 +18,7 @@ public class LevelOneBoss : Boss, GameEvents::IEventListener
 {
     /// <summary>
     /// <para>
-    /// The different states that the boss can be in.
+    /// An enum containing the different states that the boss can be in.
     /// </para>
     /// <para>
     /// Determines how the boss behaves as well as what animation to play.
