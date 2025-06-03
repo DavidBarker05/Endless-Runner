@@ -297,6 +297,8 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
                 if (levelOneBoss == null) return;
                 bossTimer = -5f; // Fix the timing issue cause from making disappear early
                 IsBossActive = false;
+                BossOnePickup[] bossOnePickups = FindObjectsByType<BossOnePickup>(FindObjectsSortMode.None);
+                Array.ForEach<BossOnePickup>(bossOnePickups, b => GameObject.Destroy(UtilityMethods.Parent(b.gameObject)));
                 break;
         }
     }
