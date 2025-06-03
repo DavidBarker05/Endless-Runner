@@ -71,6 +71,12 @@ public class LevelOneBoss : Boss, GameEvents::IEventListener
         }
     }
 
+    void OnDestroy()
+    {
+        GameManager.Instance.RemoveListener(GameEvents::EventType.BossOnePickupEffect, this);
+        GameManager.Instance.RemoveListener(GameEvents::EventType.BossOneBeaten, this);
+    }
+
     public void OnEvent(GameEvents::EventType eventType, Component sender, object param = null)
     {
         if (eventType == GameEvents::EventType.BossOnePickupEffect)
