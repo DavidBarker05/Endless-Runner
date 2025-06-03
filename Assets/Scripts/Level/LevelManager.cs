@@ -71,7 +71,7 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
     /// <summary>
     /// 
     /// </summary>
-    public bool IsBossActive => boss != null;
+    public bool IsBossActive { get; private set; }
 
     // What terrain is currently able to be spawned
     List<GameObject> PossibleTerrain => isLevelStart ? levelOneStartingTerrain : levelOneTerrain;
@@ -290,11 +290,13 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
                 boss = Instantiate(levelOneBoss);
                 boss.transform.position = levelOneBossSpawnLocation.position;
                 bossTimer = 5f; // Make boss disappear 5 seconds before end of level
+                IsBossActive = true;
                 break;
             case GameEvents::EventType.BossOneBeaten:
                 bossTimer = 0f;
                 if (levelOneBoss == null) return;
                 bossTimer = -5f; // Fix the timing issue cause from making disappear early
+                IsBossActive = false;
                 break;
         }
     }
