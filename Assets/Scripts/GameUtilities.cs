@@ -1,7 +1,10 @@
 namespace GameUtilities
 {
-    namespace UtilityMethods // A variety of different useful methods used throughout the code.
+    namespace UtilityMethods
     {
+        /// <summary>
+        /// A variety of different useful methods to be used throughout the code.
+        /// </summary>
         public struct UtilityMethods
         {
             /// <summary>
