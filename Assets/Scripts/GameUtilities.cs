@@ -2,7 +2,7 @@ namespace GameUtilities
 {
     namespace UtilityMethods // A variety of different useful methods used throughout the code.
     {
-        public struct VectorMethods
+        public struct UtilityMethods
         {
             /// <summary>
             /// Gets a <see cref="UnityEngine.Vector3"/> containing only the <see cref="UnityEngine.Vector3.x"/> component of the original <see cref="UnityEngine.Vector3"/>.
@@ -47,10 +47,7 @@ namespace GameUtilities
             {
                 return new UnityEngine.Vector3(0f, v.y, v.z);
             }
-        }
 
-        public struct GameObjectMethods
-        {
             /// <summary>
             /// Gets the parent of a child <see cref="UnityEngine.GameObject"/>.
             /// </summary>
