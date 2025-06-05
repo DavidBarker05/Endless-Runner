@@ -136,19 +136,17 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
             foreach (GameObject row in _terrain.ObstacleRows)
             {
                 ObstacleRow _row = row.GetComponent<ObstacleRow>();
-                int numberOfObstacles = Random.Range(_row.MinimumObstacles, _row.MaximumObstacles + 1);
-                lastGeneratedObstacleCount = lastGeneratedObstacleCount == 2 || (numberOfObstacles == 2 && lastGeneratedObstacleCount > 0) ? 0 : numberOfObstacles;
+                lastGeneratedObstacleCount = lastGeneratedObstacleCount == 2 || (_row.NumberOfObstacles == 2 && lastGeneratedObstacleCount > 0) ? 0 : _row.NumberOfObstacles;
                 if (lastGeneratedObstacleCount == 0) continue;
                 _row.HasObstacles = true;
-                SpawnTerrainObjects(row, levelOneObstacles, numberOfObstacles);
+                SpawnTerrainObjects(row, levelOneObstacles, _row.NumberOfObstacles);
             }
         }
         if (levelOnePickups.Count > 0 && _terrain.PickupRows.Count > 0)
         {
             foreach (GameObject row in _terrain.PickupRows)
             {
-                float spawnRoll = Random.Range(0f, 1f);
-                if (spawnRoll > row.GetComponent<PickupRow>().SpawnChance) continue;
+                if (!row.GetComponent<PickupRow>().IsSuccessfulSpawn) continue;
                 List<GameObject> pickups = new List<GameObject>();
                 foreach (GameObject pickup in levelOnePickups)
                 {

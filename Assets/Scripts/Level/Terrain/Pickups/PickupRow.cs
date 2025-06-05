@@ -14,7 +14,9 @@ public class PickupRow : MonoBehaviour
     float bonusSpawnChance;
 
     /// <summary>
-    /// The spawn chance of a pickup in this row
+    /// 
     /// </summary>
-    public float SpawnChance => Mathf.Clamp(baseSpawnChance + (LevelManager.Instance.IsBossActive ? bonusSpawnChance: 0f), 0f, 1f);
+    public bool IsSuccessfulSpawn { get; private set; }
+
+    void Awake() => IsSuccessfulSpawn = Random.Range(0f, 1f) <= Mathf.Min(baseSpawnChance + (LevelManager.Instance.IsBossActive ? bonusSpawnChance : 0f), 1f);
 }
