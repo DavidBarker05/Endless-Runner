@@ -56,10 +56,11 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
     float bossTimer;
     Boss boss;
 
+    float _speed;
     /// <summary>
     /// The speed that all terrain moves
     /// </summary>
-    public float Speed { get; private set; }
+    public float Speed { get => _speed; private set => _speed = Mathf.Clamp(value, startingSpeed, MAX_SPEED); }
     /// <summary>
     /// Bool that indicates if terrain can be generated when they go into eachother's triggers
     /// </summary>
@@ -96,7 +97,6 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
         GameObject[] moveableTerrain = Array.FindAll<GameObject>(generatedTerrain.ToArray(), (GameObject t) => t.GetComponent<SpawnableTerrain>().CanMove); // Find all terrain that can move
         Array.ForEach<GameObject>(moveableTerrain, t => t.transform.position -= VectorMethods.ZVector(Speed)); // Move all the terrain that can move
         Speed += startingSpeed / 30f * Time.fixedDeltaTime; // Increase speed
-        Speed = Mathf.Clamp(Speed, startingSpeed, MAX_SPEED); // Make sure doesn't exceed max speed
         bossTimer += Time.fixedDeltaTime;
         if (bossTimer >= 30f) GameManager.Instance.InvokeEvent(!IsBossActive ? GameEvents::EventType.BossOneSpawn : GameEvents::EventType.BossOneBeaten, this);
     }
