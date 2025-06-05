@@ -8,7 +8,7 @@ public class Destructible : MonoBehaviour
 
     ParticleSystem destructionParticles;
 
-    void Awake() => destructionParticles = UtilityMethods.Parent(gameObject).GetComponentInChildren<ParticleSystem>();
+    void Awake() => destructionParticles = UtilMethods.Parent(gameObject).GetComponentInChildren<ParticleSystem>();
 
     void OnTriggerEnter(Collider other)
     {
@@ -21,6 +21,6 @@ public class Destructible : MonoBehaviour
         objectMesh.SetActive(false);
         gameObject.SetActive(false);
         destructionParticles.Play();
-        Destroy(UtilityMethods.Parent(gameObject), destructionParticles.main.duration);
+        Destroy(UtilMethods.Parent(gameObject), destructionParticles.main.duration);
     }
 }

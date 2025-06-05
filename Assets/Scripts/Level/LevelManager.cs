@@ -95,7 +95,7 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
     {
         if (GameManager.Instance.State != GameManager.GameState.Alive) return;
         GameObject[] moveableTerrain = Array.FindAll<GameObject>(generatedTerrain.ToArray(), (GameObject t) => t.GetComponent<SpawnableTerrain>().CanMove); // Find all terrain that can move
-        Array.ForEach<GameObject>(moveableTerrain, t => t.transform.position -= UtilityMethods.ZVector(Speed)); // Move all the terrain that can move
+        Array.ForEach<GameObject>(moveableTerrain, t => t.transform.position -= UtilMethods.ZVector(Speed)); // Move all the terrain that can move
         Speed += startingSpeed / 30f * Time.fixedDeltaTime; // Increase speed
         bossTimer += Time.fixedDeltaTime;
         if (bossTimer >= 30f) GameManager.Instance.InvokeEvent(!IsBossActive ? GameEvents::EventType.BossOneSpawn : GameEvents::EventType.BossOneBeaten, this);
@@ -105,7 +105,7 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
     void OnTriggerEnter(Collider other)
     {
         if (!other.CompareTag("FrontTerrain")) return; // If it isn't the front of a terrain that collides then skip it
-        DestroyTerrain(UtilityMethods.Parent(other.gameObject)); // Destroy the terrain
+        DestroyTerrain(UtilMethods.Parent(other.gameObject)); // Destroy the terrain
         if (GenerateTerrainOnTrigger) return; // If terrain is generated on trigger then don't manually generate new terrain
         GenerateTerrainOnTrigger = true; // Update the bool
         GenerateTerrain(); // Manually generate a new piece of terrain
@@ -185,10 +185,10 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
         {
             for (int j = startingTerrainCount - 1; j > i; j--)
             {
-                if (j == startingTerrainCount - 1) generatedTerrain[i].transform.position -= UtilityMethods.ZVector(generatedTerrain[j].GetComponent<SpawnableTerrain>().Size / 2f);
-                else generatedTerrain[i].transform.position -= UtilityMethods.ZVector(generatedTerrain[j].GetComponent<SpawnableTerrain>().Size);
+                if (j == startingTerrainCount - 1) generatedTerrain[i].transform.position -= UtilMethods.ZVector(generatedTerrain[j].GetComponent<SpawnableTerrain>().Size / 2f);
+                else generatedTerrain[i].transform.position -= UtilMethods.ZVector(generatedTerrain[j].GetComponent<SpawnableTerrain>().Size);
             }
-            generatedTerrain[i].transform.position -= UtilityMethods.ZVector(generatedTerrain[i].GetComponent<SpawnableTerrain>().Size / 2f);
+            generatedTerrain[i].transform.position -= UtilMethods.ZVector(generatedTerrain[i].GetComponent<SpawnableTerrain>().Size / 2f);
         }
         generatedTerrain[0].GetComponent<SpawnableTerrain>().CanMove = true;
         isLevelStart = false;
@@ -253,7 +253,7 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
                 bossTimer = -5f; // Fix the timing issue cause from making disappear early
                 IsBossActive = false;
                 BossOnePickup[] bossOnePickups = FindObjectsByType<BossOnePickup>(FindObjectsSortMode.None);
-                Array.ForEach<BossOnePickup>(bossOnePickups, b => GameObject.Destroy(UtilityMethods.Parent(b.gameObject)));
+                Array.ForEach<BossOnePickup>(bossOnePickups, b => GameObject.Destroy(UtilMethods.Parent(b.gameObject)));
                 break;
         }
     }

@@ -141,10 +141,10 @@ public class PlayerManager : MonoBehaviour, GameEvents::IEventListener
             State = AnimationState.Slide;
         }
         cc.height = IsSliding ? slideHeight : standHeight; // Set appropriate height
-        cc.center = UtilityMethods.YVector(cc.height / 2f); // Set appropriate center
+        cc.center = UtilMethods.YVector(cc.height / 2f); // Set appropriate center
         Vector3 laneDisplacement = new Vector3(lanes[targetLane].position.x - lanes[currentLane].position.x, 0f);
         Vector3 hVel = laneDisplacement / switchTime;
-        Vector3 movement = (hVel + UtilityMethods.YVector(vVel)) * Time.fixedDeltaTime;
+        Vector3 movement = (hVel + UtilMethods.YVector(vVel)) * Time.fixedDeltaTime;
         cc.Move(movement);
         if (cc.isGrounded)
         {
@@ -188,11 +188,11 @@ public class PlayerManager : MonoBehaviour, GameEvents::IEventListener
         pressingSlide = false;
         extraJumpHeight = 0f;
         cc.height = standHeight;
-        cc.center = UtilityMethods.YVector(cc.height / 2f);
+        cc.center = UtilMethods.YVector(cc.height / 2f);
         cc.enabled = false;
         transform.position = lanes[currentLane].position;
         cc.enabled = true;
-        cc.Move(UtilityMethods.YVector(vVel)); // Move into ground so that is grounded can start working
+        cc.Move(UtilMethods.YVector(vVel)); // Move into ground so that is grounded can start working
         groundedLastFrame = true;
         State = AnimationState.Run;
         Caught = false;
