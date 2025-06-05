@@ -129,77 +129,51 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
         }
         var terrain = Instantiate(PossibleTerrain[terrainIndex], transform);
         terrain.transform.position = spawnLocation.position;
-        // Make sure can generate obstacles
-        if (levelOneObstacles.Count > 0 && terrain.GetComponent<SpawnableTerrain>().ObstacleRows.Count > 0)
-        {
-            foreach (var obstacleRow in terrain.GetComponent<SpawnableTerrain>().ObstacleRows) // Go through all obstacle rows
-            {
-                int numberOfObstacles = Random.Range(obstacleRow.GetComponent<ObstacleRow>().MinimumObstacles, obstacleRow.GetComponent<ObstacleRow>().MaximumObstacles + 1); // Get random number of obstacles to generate
-                if (numberOfObstacles == 0 || lastGeneratedObstacleCount == 2) // If number of obstacles to generate is 0, or the previous number was 2 (which would make the game too hard if generate again)
-                {
-                    lastGeneratedObstacleCount = 0;
-                    continue; // Skip this obstacle row
-                }
-                obstacleRow.GetComponent<ObstacleRow>().HasObstacles = true;
-                int firstSpawnLane = Random.Range(0, lanes.Length); // Lane to spawn in
-                int obstacleIndex = Random.Range(0, levelOneObstacles.Count); // Random obstaclw
-                Vector3 spawnPos = VectorMethods.YZVector(obstacleRow.transform.position) + VectorMethods.XVector(lanes[firstSpawnLane].position);
-                var firstObstacle = Instantiate(levelOneObstacles[obstacleIndex], obstacleRow.transform);
-                firstObstacle.transform.position = spawnPos;
-                if (numberOfObstacles == 1 || lastGeneratedObstacleCount == 1) // If number of obstacles is 1, or the previous number was 1 then can't generate 2 obstacles
-                {
-                    lastGeneratedObstacleCount = 1;
-                    continue; // Go to next obstacle row
-                }
-                lastGeneratedObstacleCount = 2;
-                int secondSpawnLane = Random.Range(0, lanes.Length); // Next lane to spawn in
-                while (firstSpawnLane == secondSpawnLane) // Make sure empty
-                {
-                    secondSpawnLane = Random.Range(0, lanes.Length);
-                }
-                obstacleIndex = Random.Range(0, levelOneObstacles.Count); // Random obstacle
-                spawnPos = VectorMethods.YZVector(obstacleRow.transform.position) + VectorMethods.XVector(lanes[secondSpawnLane].position);
-                var secondObstacle = Instantiate(levelOneObstacles[obstacleIndex], obstacleRow.transform);
-                secondObstacle.transform.position = spawnPos;
-            }
-        }
-        else lastGeneratedObstacleCount = 0;
-        // Make sure can generate pickups
-        if (levelOnePickups.Count > 0 && terrain.GetComponent<SpawnableTerrain>().PickupRows.Count > 0)
-        {
-            foreach (var pickupRow in terrain.GetComponent<SpawnableTerrain>().PickupRows) // Go through all pickups rows
-            {
-                float spawnRoll = Random.Range(0f, 1f); // Random nummber to see if can spawn
-                if (spawnRoll <= pickupRow.GetComponent<PickupRow>().SpawnChance) // Check if number is in the spawn chance
-                {
-                    int lane = Random.Range(0, lanes.Length); // Lane to spawn in
-                    var validPickups = levelOnePickups.FindAll(p => p.name != "Boss One Pickup" || IsBossActive);
-                    if (validPickups.Count == 0) continue;
-                    Vector3 spawnPos = VectorMethods.YZVector(pickupRow.transform.position) + VectorMethods.XVector(lanes[lane].position);
-                    if (IsBossActive)
-                    {
-                        List<GameObject> weightedPickups = new List<GameObject>();
-                        foreach (var validPickup in validPickups)
-                        {
-                            int weight = validPickup.name == "Boss One Pickup" ? 5 : 1;
-                            for (int i = 0; i < weight; i++) weightedPickups.Add(validPickup);
-                        }
-                        int pickupIndex = Random.Range(0, weightedPickups.Count);
-                        var pickup = Instantiate(weightedPickups[pickupIndex], pickupRow.transform);
-                        pickup.transform.position = spawnPos;
-                    }
-                    else
-                    {
-                        int pickupIndex = Random.Range(0, validPickups.Count);
-                        var pickup = Instantiate(validPickups[pickupIndex], pickupRow.transform);
-                        pickup.transform.position = spawnPos;
-                    }
-                }
-            }
-        }
+        SpawnableTerrain _terrain = terrain.GetComponent<SpawnableTerrain>();
         if (terrain.CompareTag("SecurityDoor")) lastGeneratedObstacleCount = 2;
+        if (levelOneObstacles.Count > 0 && _terrain.ObstacleRows.Count > 0)
+        {
+            foreach (GameObject row in _terrain.ObstacleRows)
+            {
+                ObstacleRow _row = row.GetComponent<ObstacleRow>();
+                int numberOfObstacles = Random.Range(_row.MinimumObstacles, _row.MaximumObstacles + 1);
+                lastGeneratedObstacleCount = lastGeneratedObstacleCount == 2 || (numberOfObstacles == 2 && lastGeneratedObstacleCount > 0) ? 0 : numberOfObstacles;
+                if (lastGeneratedObstacleCount == 0) continue;
+                _row.HasObstacles = true;
+                SpawnTerrainObjects(row, levelOneObstacles, numberOfObstacles);
+            }
+        }
+        if (levelOnePickups.Count > 0 && _terrain.PickupRows.Count > 0)
+        {
+            foreach (GameObject row in _terrain.PickupRows)
+            {
+                float spawnRoll = Random.Range(0f, 1f);
+                if (spawnRoll > row.GetComponent<PickupRow>().SpawnChance) continue;
+                List<GameObject> pickups = new List<GameObject>();
+                foreach (GameObject pickup in levelOnePickups)
+                {
+                    if (pickup.name != "Boss One Pickup") pickups.Add(pickup);
+                    if (pickup.name != "Boss One Pickup" || !IsBossActive) continue;
+                    for (int i = 0; i < 5; i++) pickups.Add(pickup);
+                }
+                if (pickups.Count == 0) continue;
+                SpawnTerrainObjects(row, pickups);
+            }
+        }
         generatedTerrain.Add(terrain);
         lastGeneratedTerrain = terrain;
+    }
+
+    void SpawnTerrainObjects(GameObject row, List<GameObject> spawnables, int depth = 1, int lane = -1)
+    {
+        if (depth == 0) return;
+        int _lane;
+        do _lane = Random.Range(0, lanes.Length); while (_lane == lane);
+        int index = Random.Range(0, spawnables.Count);
+        Vector3 spawnPos = VectorMethods.YZVector(row.transform.position) + VectorMethods.XVector(lanes[_lane].position);
+        GameObject spawnable = Instantiate(spawnables[index], row.transform);
+        spawnable.transform.position = spawnPos;
+        SpawnTerrainObjects(row, spawnables, depth - 1, _lane);
     }
 
     // Generate starting terrain based off of starting variables
