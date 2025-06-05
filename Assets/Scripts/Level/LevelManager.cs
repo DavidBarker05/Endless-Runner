@@ -168,7 +168,7 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
         int _lane;
         do _lane = Random.Range(0, lanes.Length); while (_lane == lane);
         int index = Random.Range(0, spawnables.Count);
-        Vector3 spawnPos = UtilityMethods.YZVector(row.transform.position) + UtilityMethods.XVector(lanes[_lane].position);
+        Vector3 spawnPos = new Vector3(lanes[_lane].position.x, row.transform.position.y, row.transform.position.z);
         GameObject spawnable = Instantiate(spawnables[index], row.transform);
         spawnable.transform.position = spawnPos;
         SpawnTerrainObjects(row, spawnables, depth - 1, _lane);

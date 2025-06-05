@@ -142,7 +142,7 @@ public class PlayerManager : MonoBehaviour, GameEvents::IEventListener
         }
         cc.height = IsSliding ? slideHeight : standHeight; // Set appropriate height
         cc.center = UtilityMethods.YVector(cc.height / 2f); // Set appropriate center
-        Vector3 laneDisplacement = UtilityMethods.XVector(lanes[targetLane].position - lanes[currentLane].position);
+        Vector3 laneDisplacement = new Vector3(lanes[targetLane].position.x - lanes[currentLane].position.x, 0f);
         Vector3 hVel = laneDisplacement / switchTime;
         Vector3 movement = (hVel + UtilityMethods.YVector(vVel)) * Time.fixedDeltaTime;
         cc.Move(movement);
@@ -160,7 +160,7 @@ public class PlayerManager : MonoBehaviour, GameEvents::IEventListener
             else if (GameManager.Instance.State != GameManager.GameState.Dead) State = AnimationState.Fall;
         }
         if (Mathf.Abs(transform.position.x - lanes[targetLane].position.x) > SNAP_DISTANCE) return; // If distance is greater than snap distance then don't snap
-        transform.position = UtilityMethods.YZVector(transform.position) + UtilityMethods.XVector(lanes[targetLane].position);
+        transform.position = new Vector3(lanes[targetLane].position.x, transform.position.y, transform.position.z);
         currentLane = targetLane;
         targetLane += horizontalDirection;
         targetLane = Mathf.Clamp(targetLane, 0, 2);

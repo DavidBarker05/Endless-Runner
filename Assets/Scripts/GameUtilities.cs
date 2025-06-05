@@ -5,17 +5,6 @@ namespace GameUtilities
         public struct UtilityMethods
         {
             /// <summary>
-            /// Gets a <see cref="UnityEngine.Vector3"/> containing only the <see cref="UnityEngine.Vector3.x"/> component of the original <see cref="UnityEngine.Vector3"/>.
-            /// </summary>
-            /// <param name="v">The original <see cref="UnityEngine.Vector3"/>.</param>
-            /// <returns>A new <see cref="UnityEngine.Vector3"/> that contains only the <see cref="UnityEngine.Vector3.x"/> component of the original <see cref="UnityEngine.Vector3"/>.</returns>
-            [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-            public static UnityEngine.Vector3 XVector(UnityEngine.Vector3 v)
-            {
-                return new UnityEngine.Vector3(v.x, 0f, 0f);
-            }
-
-            /// <summary>
             /// Gets a y-axis <see cref="UnityEngine.Vector3"/> with a magnitude of the value provided.
             /// </summary>
             /// <param name="y">The value of the y-axis.</param>
@@ -35,17 +24,6 @@ namespace GameUtilities
             public static UnityEngine.Vector3 ZVector(float z)
             {
                 return new UnityEngine.Vector3(0f, 0f, z);
-            }
-
-            /// <summary>
-            /// Gets a <see cref="UnityEngine.Vector3"/> containing only the <see cref="UnityEngine.Vector3.y"/> and <see cref="UnityEngine.Vector3.z"/> components of the original <see cref="UnityEngine.Vector3"/>.
-            /// </summary>
-            /// <param name="v">The original <see cref="UnityEngine.Vector3"/>.</param>
-            /// <returns>A new <see cref="UnityEngine.Vector3"/> that contains only the <see cref="UnityEngine.Vector3.y"/> and <see cref="UnityEngine.Vector3.z"/> components of the original <see cref="UnityEngine.Vector3"/>.</returns>
-            [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-            public static UnityEngine.Vector3 YZVector(UnityEngine.Vector3 v)
-            {
-                return new UnityEngine.Vector3(0f, v.y, v.z);
             }
 
             /// <summary>
