@@ -116,7 +116,10 @@ public class GameManager : MonoBehaviour, GameEvents::IEventListener
         if (!eventListeners.ContainsKey(eventType)) return;
         if (eventType == GameEvents::EventType.Empty) return;
         List<GameEvents::IEventListener> eventListenerList = new List<GameEvents::IEventListener>(eventListeners[eventType]);
-        System.Array.ForEach<GameEvents::IEventListener>(eventListenerList.ToArray(), l => l?.OnEvent(eventType, sender, param));
+        foreach (GameEvents::IEventListener listener in eventListenerList)
+        {
+            listener?.OnEvent(eventType, sender, param);
+        }
     }
 
     public void ClearEvents() => eventListeners.Clear();
