@@ -185,8 +185,7 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
         {
             for (int j = startingTerrainCount - 1; j > i; j--)
             {
-                if (j == startingTerrainCount - 1) generatedTerrain[i].transform.position -= UtilMethods.ZVector(generatedTerrain[j].GetComponent<SpawnableTerrain>().Size / 2f);
-                else generatedTerrain[i].transform.position -= UtilMethods.ZVector(generatedTerrain[j].GetComponent<SpawnableTerrain>().Size);
+                generatedTerrain[i].transform.position -= UtilMethods.ZVector(generatedTerrain[j].GetComponent<SpawnableTerrain>().Size / (j == startingTerrainCount - 1 ? 2 : 1));
             }
             generatedTerrain[i].transform.position -= UtilMethods.ZVector(generatedTerrain[i].GetComponent<SpawnableTerrain>().Size / 2f);
         }
