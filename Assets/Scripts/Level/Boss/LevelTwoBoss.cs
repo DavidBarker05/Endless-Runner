@@ -1,16 +1,25 @@
+using GameEvents = GameUtilities.GameEvents;
 using UnityEngine;
 
-public class LevelTwoBoss : MonoBehaviour
+public class LevelTwoBoss : Boss, GameEvents::IEventListener
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void Awake()
     {
-        
     }
 
-    // Update is called once per frame
+    void Start()
+    {
+        GameManager.Instance.AddListener(GameEvents::EventType.BossTwoBeaten, this);
+    }
+
     void Update()
     {
-        
+    }
+
+    public void OnEvent(GameEvents::EventType eventType, Component sender, object param = null)
+    {
+        if (eventType != GameEvents::EventType.BossTwoBeaten) return;
+        // Fly up?
+        base.Disengage();
     }
 }
