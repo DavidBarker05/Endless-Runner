@@ -5,7 +5,7 @@ namespace GameUtilities
         /// <summary>
         /// A variety of different useful methods to be used throughout the code.
         /// </summary>
-        public struct UtilMethods
+        public static class UtilMethods
         {
             /// <summary>
             /// Gets a y-axis <see cref="UnityEngine.Vector3"/> with a magnitude of the value provided.
