@@ -68,7 +68,7 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
     /// <summary>
     /// The current score that the player has
     /// </summary>
-    public int Score { get; set; }
+    public int Score { get; private set; }
     /// <summary>
     /// 
     /// </summary>
