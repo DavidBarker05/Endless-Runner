@@ -131,8 +131,11 @@ public class LevelOneBoss : Boss, GameEvents::IEventListener
         if (eventType == GameEvents::EventType.BossOnePickupEffect) // Code that executes during the BossOnePickupEffect event
         {
             if (State == BossState.Disengage || State == BossState.Slide) return; // If the boss is currently disengaging or sliding then don't set them back
-            State = (float)param >= 0f ? BossState.Setback : BossState.Run; // If the use time for the pickup is greater than or equal to 0 set State to Setback otherwise set State to Run
-            setbackParticles.gameObject.SetActive((float)param >= 0f); // Make the setback particles visible if the use time is greater than or equal to 0
+            if (param is float bossOnePickupUseTime)
+            {
+                State = bossOnePickupUseTime >= 0f ? BossState.Setback : BossState.Run; // If the use time for the pickup is greater than or equal to 0 set State to Setback otherwise set State to Run
+                setbackParticles.gameObject.SetActive(bossOnePickupUseTime >= 0f); // Make the setback particles visible if the use time is greater than or equal to 0
+            }
         }
         else if (eventType == GameEvents::EventType.BossOneBeaten) // Code that executes during the BossOneBeaten event
         {

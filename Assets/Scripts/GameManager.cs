@@ -128,13 +128,19 @@ public class GameManager : MonoBehaviour, GameEvents::IEventListener
     {
         if (eventType == GameEvents::EventType.ObstaclePassed)
         {
-            scoreCounter.text = $"SCORE: {param}";
-            deathScore.text = $"FINAL SCORE: {param}";
+            if (param is int passScore)
+            {
+                scoreCounter.text = $"SCORE: {passScore}";
+                deathScore.text = $"FINAL SCORE: {passScore}";
+            }
         }
         else if (eventType == GameEvents.EventType.BonusPickupEffect)
         {
-            scoreCounter.text = $"SCORE: {param}";
-            deathScore.text = $"FINAL SCORE: {param}";
+            if (param is int bonusScore)
+            {
+                scoreCounter.text = $"SCORE: {bonusScore}";
+                deathScore.text = $"FINAL SCORE: {bonusScore}";
+            }
         }
     }
 }

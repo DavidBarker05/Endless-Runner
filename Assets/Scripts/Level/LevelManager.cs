@@ -254,10 +254,10 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
         switch (eventType)
         {
             case GameEvents::EventType.ObstaclePassed:
-                Score = (int)param;
+                if (param is int passScore) Score = passScore;
                 break;
             case GameEvents::EventType.BonusPickupEffect:
-                Score = (int)param;
+                if (param is int bonusScore) Score = bonusScore;
                 break;
             case GameEvents::EventType.BossOneSpawn:
                 bossTimer = 0f;
@@ -272,7 +272,7 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
                 IsBossActive = false;
                 BossOnePickup[] bossOnePickups = FindObjectsByType<BossOnePickup>(FindObjectsSortMode.None);
                 if (bossOnePickups.Length > 0) Array.ForEach<BossOnePickup>(bossOnePickups, b => GameObject.Destroy(UtilMethods.Parent(b.gameObject)));
-                BossesBeaten = (int)param;
+                if (param is int beatenOne) BossesBeaten = beatenOne;
                 isBossTimerEnabled = false;
                 // TODO: Spawn exit door
                 break;

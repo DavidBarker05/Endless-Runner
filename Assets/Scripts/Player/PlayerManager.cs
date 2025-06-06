@@ -203,15 +203,21 @@ public class PlayerManager : MonoBehaviour, GameEvents::IEventListener
         switch (eventType)
         {
             case GameEvents::EventType.JumpBoostPickupEffect:
-                extraJumpHeight = (float)param >= 0f? 2f: 0f;
-                jumpParticles.gameObject.SetActive((float)param >= 0f);
+                if (param is float jumpUseTime)
+                {
+                    extraJumpHeight = jumpUseTime >= 0f ? 2f : 0f;
+                    jumpParticles.gameObject.SetActive(jumpUseTime >= 0f);
+                }
                 break;
             case GameEvents::EventType.BonusPickupEffect:
                 bonusParticles.Play();
                 break;
             case GameEvents::EventType.InvulnerabilityPickupEffect:
-                Invulnerable = (float)param >= 0f;
-                shieldBubble.gameObject.SetActive((float)param >= 0f);
+                if (param is float invulnerabilityUseTime)
+                {
+                    Invulnerable = invulnerabilityUseTime >= 0f;
+                    shieldBubble.gameObject.SetActive(invulnerabilityUseTime >= 0f);
+                }
                 break;
         }
     }
