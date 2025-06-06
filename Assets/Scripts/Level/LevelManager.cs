@@ -107,7 +107,7 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
         Speed += startingSpeed / 30f * Time.fixedDeltaTime; // Increase speed
         if (!isBossTimerEnabled) return; // Don't deal with boss timer logic until the level starts
         bossTimer += Time.fixedDeltaTime;
-        if (bossTimer >= 30f) GameManager.Instance.InvokeEvent(!IsBossActive ? GameEvents::EventType.BossOneSpawn : GameEvents::EventType.BossOneBeaten, this); // Spawn or defeat boss after timer reaches 30 seconds
+        if (bossTimer >= 30f) GameManager.Instance.InvokeEvent(!IsBossActive ? GameEvents::EventType.BossOneSpawn : GameEvents::EventType.BossOneBeaten, this, BossesBeaten + 1); // Spawn or defeat boss after timer reaches 30 seconds
     }
 
     // The trigger is behind the player
@@ -272,7 +272,7 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
                 IsBossActive = false;
                 BossOnePickup[] bossOnePickups = FindObjectsByType<BossOnePickup>(FindObjectsSortMode.None);
                 if (bossOnePickups.Length > 0) Array.ForEach<BossOnePickup>(bossOnePickups, b => GameObject.Destroy(UtilMethods.Parent(b.gameObject)));
-                //BossesBeaten = (int)param;
+                BossesBeaten = (int)param;
                 isBossTimerEnabled = false;
                 // TODO: Spawn exit door
                 break;
