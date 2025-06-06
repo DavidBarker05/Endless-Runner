@@ -17,7 +17,7 @@ public class ExplosiveBarrel : Destructible
     
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") && !PlayerManager.Instance.Invulnerable) DestroyObstacle();
+        if (other.CompareTag("Player")) DestroyObstacle();
         if (other.CompareTag("LevelOneBoss")) base.DestroyObstacle();
     }
 
