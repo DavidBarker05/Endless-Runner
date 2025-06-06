@@ -1,6 +1,5 @@
 using GameEvents = GameUtilities.GameEvents;
 using System.Collections.Generic;
-using Array = System.Array;
 using UnityEngine;
 
 public class PickupManager : MonoBehaviour
@@ -8,6 +7,8 @@ public class PickupManager : MonoBehaviour
     public static PickupManager Instance { get; private set; }
 
     Dictionary<string, IPickup> activePickups = new Dictionary<string, IPickup>();
+
+    readonly List<string> _toRemove = new List<string>();
 
     void Awake()
     {
@@ -17,15 +18,18 @@ public class PickupManager : MonoBehaviour
 
     void FixedUpdate()
     {
-        List<string> toRemove = new List<string>();
         foreach (var keyValuePair in activePickups)
         {
             keyValuePair.Value.UseTime -= Time.fixedDeltaTime;
             if (keyValuePair.Key == "BonusPickup") GameManager.Instance.InvokeEvent(NameToEventType(keyValuePair.Key), this, LevelManager.Instance.Score + 5);
             else GameManager.Instance.InvokeEvent(NameToEventType(keyValuePair.Key), this, keyValuePair.Value.UseTime);
-            if (keyValuePair.Value.UseTime < 0f) toRemove.Add(keyValuePair.Key);
+            if (keyValuePair.Value.UseTime < 0f) _toRemove.Add(keyValuePair.Key);
         }
-        Array.ForEach<string>(toRemove.ToArray(), k => activePickups.Remove(k));
+        foreach (string key in _toRemove)
+        {
+            activePickups.Remove(key);
+        }
+        _toRemove.Clear();
     }
 
     public void AddPickup(IPickup pickup)
@@ -36,15 +40,18 @@ public class PickupManager : MonoBehaviour
 
     public void ResetPickups()
     {
-        List<string> toRemove = new List<string>();
         foreach (var keyValuePair in activePickups)
         {
             keyValuePair.Value.UseTime = -1f;
             if (keyValuePair.Key == "BonusPickup") GameManager.Instance.InvokeEvent(NameToEventType(keyValuePair.Key), this, LevelManager.Instance.Score + 5);
             else GameManager.Instance.InvokeEvent(NameToEventType(keyValuePair.Key), this, keyValuePair.Value.UseTime);
-            toRemove.Add(keyValuePair.Key);
+            _toRemove.Add(keyValuePair.Key);
         }
-        Array.ForEach<string>(toRemove.ToArray(), k => activePickups.Remove(k));
+        foreach(string key in _toRemove)
+        {
+            activePickups.Remove(key);
+        }
+        _toRemove.Clear();
     }
 
     GameEvents::EventType NameToEventType(string name) => name switch
