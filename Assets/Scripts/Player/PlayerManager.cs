@@ -130,7 +130,6 @@ public class PlayerManager : MonoBehaviour, GameEvents::IEventListener
         if (Input.GetKey(KeyCode.R) && GameManager.Instance.State == GameManager.GameState.Alive) currentResetHoldTime += Time.deltaTime; // Make time increase while player holds r
         else currentResetHoldTime = 0f; // Reset timer when release r
         if (currentResetHoldTime >= resetHoldTime) LevelManager.Instance.ResetGame(); // Reset game once timer excedes time
-        if (Input.GetKey(KeyCode.L)) Time.timeScale = 0f;
     }
 
     void FixedUpdate()
