@@ -100,8 +100,10 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
     void FixedUpdate()
     {
         if (GameManager.Instance.State != GameManager.GameState.Alive) return;
-        GameObject[] moveableTerrain = Array.FindAll<GameObject>(generatedTerrain.ToArray(), (GameObject t) => t.GetComponent<SpawnableTerrain>().CanMove); // Find all terrain that can move
-        Array.ForEach<GameObject>(moveableTerrain, t => t.transform.position -= UtilMethods.ZVector(Speed)); // Move all the terrain that can move
+        foreach (GameObject terrain in generatedTerrain)
+        {
+            if (terrain.GetComponent<SpawnableTerrain>().CanMove) terrain.transform.position -= UtilMethods.ZVector(Speed);
+        }
         Speed += startingSpeed / 30f * Time.fixedDeltaTime; // Increase speed
         if (!isBossTimerEnabled) return; // Don't deal with boss timer logic until the level starts
         bossTimer += Time.fixedDeltaTime;
