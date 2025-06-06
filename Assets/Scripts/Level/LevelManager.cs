@@ -55,6 +55,8 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
     int lastGeneratedObstacleCount;
     float bossTimer;
     Boss boss;
+    int currentLevel = 1;
+    bool isBossTimerEnabled = true;
 
     float _speed;
     /// <summary>
@@ -69,6 +71,10 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
     /// The current score that the player has
     /// </summary>
     public int Score { get; private set; }
+    /// <summary>
+    /// 
+    /// </summary>
+    public int BossesBeaten { get; private set; }
     /// <summary>
     /// 
     /// </summary>
@@ -97,8 +103,9 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
         GameObject[] moveableTerrain = Array.FindAll<GameObject>(generatedTerrain.ToArray(), (GameObject t) => t.GetComponent<SpawnableTerrain>().CanMove); // Find all terrain that can move
         Array.ForEach<GameObject>(moveableTerrain, t => t.transform.position -= UtilMethods.ZVector(Speed)); // Move all the terrain that can move
         Speed += startingSpeed / 30f * Time.fixedDeltaTime; // Increase speed
+        if (!isBossTimerEnabled) return; // Don't deal with boss timer logic until the level starts
         bossTimer += Time.fixedDeltaTime;
-        if (bossTimer >= 30f) GameManager.Instance.InvokeEvent(!IsBossActive ? GameEvents::EventType.BossOneSpawn : GameEvents::EventType.BossOneBeaten, this);
+        if (bossTimer >= 30f) GameManager.Instance.InvokeEvent(!IsBossActive ? GameEvents::EventType.BossOneSpawn : GameEvents::EventType.BossOneBeaten, this); // Spawn or defeat boss after timer reaches 30 seconds
     }
 
     // The trigger is behind the player
@@ -209,6 +216,16 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
         Destroy(terrain);
     }
 
+    public void LevelUp()
+    {
+        currentLevel = currentLevel == 1 ? 2 : 1;
+        isLevelStart = true;
+        GenerateTerrainOnTrigger = false;
+        isBossTimerEnabled = true;
+        Array.ForEach<GameObject>(generatedTerrain.ToArray(), t => DestroyTerrain(t));
+        GenerateStartingTerrain();
+    }
+
     // Resets game to start
     public void ResetGame()
     {
@@ -221,7 +238,9 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
         GenerateTerrainOnTrigger = false;
         GameManager.Instance.InvokeEvent(GameEvents::EventType.ObstaclePassed, this, 0);
         Score = 0;
+        BossesBeaten = 0;
         bossTimer = 0f;
+        currentLevel = 1;
         if (boss != null) Destroy(boss.gameObject);
         GenerateStartingTerrain();
         PlayerManager.Instance.ResetPlayer();
@@ -243,16 +262,17 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
                 if (levelOneBoss == null) return;
                 boss = Instantiate(levelOneBoss);
                 boss.transform.position = levelOneBossSpawnLocation.position;
-                bossTimer = 5f; // Make boss disappear 5 seconds before end of level
                 IsBossActive = true;
                 break;
             case GameEvents::EventType.BossOneBeaten:
                 bossTimer = 0f;
                 if (levelOneBoss == null) return;
-                bossTimer = -5f; // Fix the timing issue cause from making disappear early
                 IsBossActive = false;
                 BossOnePickup[] bossOnePickups = FindObjectsByType<BossOnePickup>(FindObjectsSortMode.None);
-                Array.ForEach<BossOnePickup>(bossOnePickups, b => GameObject.Destroy(UtilMethods.Parent(b.gameObject)));
+                if (bossOnePickups.Length > 0) Array.ForEach<BossOnePickup>(bossOnePickups, b => GameObject.Destroy(UtilMethods.Parent(b.gameObject)));
+                //BossesBeaten = (int)param;
+                isBossTimerEnabled = false;
+                // TODO: Spawn exit door
                 break;
         }
     }
