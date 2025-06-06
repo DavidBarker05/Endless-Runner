@@ -49,7 +49,7 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
 
     const float MAX_SPEED = 0.5f; // The max speed that everything can reach
 
-    List<GameObject> generatedTerrain = new List<GameObject>();
+    List<SpawnableTerrain> generatedTerrain = new List<SpawnableTerrain>();
     bool isLevelStart = true;
     GameObject lastGeneratedTerrain;
     int lastGeneratedObstacleCount;
@@ -100,9 +100,9 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
     void FixedUpdate()
     {
         if (GameManager.Instance.State != GameManager.GameState.Alive) return;
-        foreach (GameObject terrain in generatedTerrain)
+        foreach (SpawnableTerrain terrain in generatedTerrain)
         {
-            if (terrain.GetComponent<SpawnableTerrain>().CanMove) terrain.transform.position -= UtilMethods.ZVector(Speed);
+            if (terrain.CanMove) terrain.transform.position -= UtilMethods.ZVector(Speed);
         }
         Speed += startingSpeed / 30f * Time.fixedDeltaTime; // Increase speed
         if (!isBossTimerEnabled) return; // Don't deal with boss timer logic until the level starts
@@ -114,7 +114,7 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
     void OnTriggerEnter(Collider other)
     {
         if (!other.CompareTag("FrontTerrain")) return; // If it isn't the front of a terrain that collides then skip it
-        DestroyTerrain(UtilMethods.Parent(other.gameObject)); // Destroy the terrain
+        DestroyTerrain(other.GetComponentInParent<SpawnableTerrain>()); // Destroy the terrain
         if (GenerateTerrainOnTrigger) return; // If terrain is generated on trigger then don't manually generate new terrain
         GenerateTerrainOnTrigger = true; // Update the bool
         GenerateTerrain(); // Manually generate a new piece of terrain
@@ -167,7 +167,7 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
                 SpawnTerrainObjects(row, pickups);
             }
         }
-        generatedTerrain.Add(terrain);
+        generatedTerrain.Add(_terrain);
         lastGeneratedTerrain = terrain;
     }
 
@@ -212,10 +212,10 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
     };
 
     // Destroys terrain and removes it from the list
-    void DestroyTerrain(GameObject terrain)
+    void DestroyTerrain(SpawnableTerrain terrain)
     {
         generatedTerrain.Remove(terrain);
-        Destroy(terrain);
+        Destroy(terrain.gameObject);
     }
 
     public void LevelUp()
@@ -224,7 +224,7 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
         isLevelStart = true;
         GenerateTerrainOnTrigger = false;
         isBossTimerEnabled = true;
-        Array.ForEach<GameObject>(generatedTerrain.ToArray(), t => DestroyTerrain(t));
+        Array.ForEach<SpawnableTerrain>(generatedTerrain.ToArray(), t => DestroyTerrain(t));
         GenerateStartingTerrain();
     }
 
@@ -232,7 +232,7 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
     public void ResetGame()
     {
         GameManager.Instance.State = GameManager.GameState.Alive;
-        Array.ForEach<GameObject>(generatedTerrain.ToArray(), t => DestroyTerrain(t));
+        Array.ForEach<SpawnableTerrain>(generatedTerrain.ToArray(), t => DestroyTerrain(t));
         isLevelStart = true;
         lastGeneratedTerrain = null;
         lastGeneratedObstacleCount = 0;
