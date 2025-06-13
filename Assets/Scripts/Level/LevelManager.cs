@@ -241,6 +241,7 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
         GameManager.Instance.InvokeEvent(GameEvents::EventType.ObstaclePassed, this, 0);
         Score = 0;
         BossesBeaten = 0;
+        IsBossActive = false;
         bossTimer = 0f;
         currentLevel = 1;
         if (boss != null) Destroy(boss.gameObject);
