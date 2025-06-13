@@ -213,10 +213,13 @@ public class PlayerManager : MonoBehaviour, GameEvents::IEventListener
                 bonusParticles.Play();
                 break;
             case GameEvents::EventType.InvulnerabilityPickupEffect:
-                if (param is float invulnerabilityUseTime)
+                if (param is InvulnerabilityPickup invulnerabilityPickup)
                 {
-                    Invulnerable = invulnerabilityUseTime >= 0f;
-                    shieldBubble.gameObject.SetActive(invulnerabilityUseTime >= 0f);
+                    Invulnerable = invulnerabilityPickup.UseTime >= 0f;
+                    Color _color = shieldBubble.gameObject.GetComponent<MeshRenderer>().material.color;
+                    _color.a = invulnerabilityPickup.UseTime / invulnerabilityPickup.Duration;
+                    shieldBubble.gameObject.GetComponent<MeshRenderer>().material.color = _color;
+                    shieldBubble.gameObject.SetActive(invulnerabilityPickup.UseTime >= 0f);
                 }
                 break;
         }

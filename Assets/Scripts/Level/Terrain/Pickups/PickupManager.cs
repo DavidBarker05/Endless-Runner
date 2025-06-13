@@ -22,7 +22,7 @@ public class PickupManager : MonoBehaviour
         {
             keyValuePair.Value.UseTime -= Time.fixedDeltaTime;
             if (keyValuePair.Key == "BonusPickup") GameManager.Instance.InvokeEvent(NameToEventType(keyValuePair.Key), this, LevelManager.Instance.Score + 5);
-            else GameManager.Instance.InvokeEvent(NameToEventType(keyValuePair.Key), this, keyValuePair.Value.UseTime);
+            else GameManager.Instance.InvokeEvent(NameToEventType(keyValuePair.Key), this, keyValuePair.Value);
             if (keyValuePair.Value.UseTime < 0f) _toRemove.Add(keyValuePair.Key);
         }
         foreach (string key in _toRemove)
@@ -44,7 +44,7 @@ public class PickupManager : MonoBehaviour
         {
             keyValuePair.Value.UseTime = -1f;
             if (keyValuePair.Key == "BonusPickup") GameManager.Instance.InvokeEvent(NameToEventType(keyValuePair.Key), this, LevelManager.Instance.Score + 5);
-            else GameManager.Instance.InvokeEvent(NameToEventType(keyValuePair.Key), this, keyValuePair.Value.UseTime);
+            else GameManager.Instance.InvokeEvent(NameToEventType(keyValuePair.Key), this, keyValuePair.Value);
             _toRemove.Add(keyValuePair.Key);
         }
         foreach(string key in _toRemove)
