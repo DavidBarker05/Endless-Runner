@@ -1536,9 +1536,7 @@ MonoBehaviour:
   startingSpeed: 0.1
   startingTerrainCount: 10
   levelOneBossSpawnLocation: {fileID: 2080497171}
-  levelOneStartingTerrain:
-  - {fileID: 4097095060515756661, guid: 07fb56771331ede49be75f08db234cb5, type: 3}
-  - {fileID: 8504936321000109286, guid: 9fa3119ce087d5f45adea93de9cc0f88, type: 3}
+  levelOneStartingTerrain: []
   levelOneTerrain:
   - {fileID: 2833069336074916037, guid: 5dcf537a960851c46a75bf9bf6408be6, type: 3}
   - {fileID: 1155628210402743520, guid: 8568dffcc0b413e448b06f5f68ded755, type: 3}
