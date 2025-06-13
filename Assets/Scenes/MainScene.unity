@@ -1611,9 +1611,7 @@ MonoBehaviour:
   - {fileID: 6503495134511654158, guid: 77316602930272e48acd7b1f706c2d6a, type: 3}
   - {fileID: 6503495134511654158, guid: dbb5d179c07311643bb8c08bff0d687b, type: 3}
   - {fileID: 6503495134511654158, guid: b4c37e3a9496683448a35a4523c1012c, type: 3}
-  levelOneTerrain:
-  - {fileID: 6503495134511654158, guid: eed15164e33a48a4f879de7c5d851607, type: 3}
-  - {fileID: 6503495134511654158, guid: bc0af85236cd6f345a291817ad2d860b, type: 3}
+  levelOneTerrain: []
   levelOneObstacles:
   - {fileID: 9128166342370351869, guid: 8fc1a4f9485e4b743905534b60cfd138, type: 3}
   - {fileID: 6701938753514999783, guid: a163124032eeead439ffa421027465f8, type: 3}
