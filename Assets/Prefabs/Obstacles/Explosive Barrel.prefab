@@ -5063,6 +5063,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BarrelTextured
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 78410f4610a5e734eb9f4f8cf44821da, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
