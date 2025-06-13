@@ -126,6 +126,7 @@ public class LevelOneBoss : Boss, GameEvents::IEventListener
         GameManager.Instance.RemoveListener(GameEvents::EventType.BossOneBeaten, this); // Remove this from the list of listeners for the BossOneBeaten event when the boss is destroyed
     }
 
+    [System.Obsolete] // Because particle.startColor is deprecated, but particle.main.startColor doesn't let you change colours
     public void OnEvent(GameEvents::EventType eventType, Component sender, object param = null)
     {
         if (eventType == GameEvents::EventType.BossOnePickupEffect) // Code that executes during the BossOnePickupEffect event
@@ -134,6 +135,9 @@ public class LevelOneBoss : Boss, GameEvents::IEventListener
             if (param is BossOnePickup bossOnePickup)
             {
                 State = bossOnePickup.UseTime >= 0f ? BossState.Setback : BossState.Run; // If the use time for the pickup is greater than or equal to 0 set State to Setback otherwise set State to Run
+                Color _colour = setbackParticles.startColor;
+                _colour.a = (bossOnePickup.UseTime * bossOnePickup.UseTime) / (bossOnePickup.Duration * bossOnePickup.Duration); // UseTime^2 / Duration^2 looks best
+                setbackParticles.startColor = _colour;
                 setbackParticles.gameObject.SetActive(bossOnePickup.UseTime >= 0f); // Make the setback particles visible if the use time is greater than or equal to 0
             }
         }
