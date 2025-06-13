@@ -203,10 +203,10 @@ public class PlayerManager : MonoBehaviour, GameEvents::IEventListener
         switch (eventType)
         {
             case GameEvents::EventType.JumpBoostPickupEffect:
-                if (param is float jumpUseTime)
+                if (param is JumpBoostPickup jumpBoostPickup)
                 {
-                    extraJumpHeight = jumpUseTime >= 0f ? 2f : 0f;
-                    jumpParticles.gameObject.SetActive(jumpUseTime >= 0f);
+                    extraJumpHeight = jumpBoostPickup.UseTime >= 0f ? 2f : 0f;
+                    jumpParticles.gameObject.SetActive(jumpBoostPickup.UseTime >= 0f);
                 }
                 break;
             case GameEvents::EventType.BonusPickupEffect:
