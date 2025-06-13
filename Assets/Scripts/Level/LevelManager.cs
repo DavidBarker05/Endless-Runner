@@ -202,13 +202,13 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
         isLevelStart = false;
     }
 
-    // Check what terrain is valid based off of last generated terrain tag
-    bool IsValidTerrain(GameObject terrain) => lastGeneratedTerrain?.tag switch
+    // Check what terrain is valid based off of it's tag and the last generated terrain's tag
+    bool IsValidTerrain(GameObject terrain) => terrain.tag switch
     {
-        "SecurityDoor" => !terrain.CompareTag("SecurityDoor"),
-        "LitTerrain" => !terrain.CompareTag("LitTerrain"),
-        "UnlitTerrain" => !terrain.CompareTag("UnlitTerrain"),
-        _ => true,
+        "SecurityDoor" => !lastGeneratedTerrain?.CompareTag("SecurityDoor") ?? true,
+        "LitTerrain" => !lastGeneratedTerrain?.CompareTag("LitTerrain") ?? true,
+        "UnlitTerrain" => !lastGeneratedTerrain?.CompareTag("UnlitTerrain") ?? true,
+        _ => true
     };
 
     // Destroys terrain and removes it from the list
