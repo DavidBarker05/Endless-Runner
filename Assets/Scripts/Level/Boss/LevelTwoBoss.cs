@@ -16,6 +16,11 @@ public class LevelTwoBoss : Boss, GameEvents::IEventListener
     {
     }
 
+    void OnDestroy()
+    {
+        GameManager.Instance.RemoveListener(GameEvents::EventType.BossTwoBeaten, this);
+    }
+
     public void OnEvent(GameEvents::EventType eventType, Component sender, object param = null)
     {
         if (eventType != GameEvents::EventType.BossTwoBeaten) return;
