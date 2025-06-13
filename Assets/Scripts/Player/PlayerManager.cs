@@ -198,6 +198,7 @@ public class PlayerManager : MonoBehaviour, GameEvents::IEventListener
         Invulnerable = false;
     }
 
+    [System.Obsolete] // Because particle.startColor is deprecated, but particle.main.startColor doesn't let you change colours
     public void OnEvent(GameEvents::EventType eventType, Component sender, object param = null)
     {
         switch (eventType)
@@ -206,6 +207,9 @@ public class PlayerManager : MonoBehaviour, GameEvents::IEventListener
                 if (param is JumpBoostPickup jumpBoostPickup)
                 {
                     extraJumpHeight = jumpBoostPickup.UseTime >= 0f ? 2f : 0f;
+                    Color _colour = jumpParticles.startColor;
+                    _colour.a = (jumpBoostPickup.UseTime * jumpBoostPickup.UseTime) / (jumpBoostPickup.Duration * jumpBoostPickup.Duration); // UseTime^2 / Duration^2 looks best
+                    jumpParticles.startColor = _colour;
                     jumpParticles.gameObject.SetActive(jumpBoostPickup.UseTime >= 0f);
                 }
                 break;
