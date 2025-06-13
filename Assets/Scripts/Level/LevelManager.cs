@@ -210,6 +210,7 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
         "LitTerrain" => (
             (!lastGeneratedTerrain?.CompareTag("LitTerrain") ?? true)
             && (!lastGeneratedTerrain?.CompareTag("SecurityDoor") ?? true)
+            && (!lastGeneratedTerrain?.CompareTag("AfterSecurityDoor") ?? true)
         ),
         "UnlitTerrain" => (
             (!lastGeneratedTerrain?.CompareTag("UnlitTerrain") ?? true)
