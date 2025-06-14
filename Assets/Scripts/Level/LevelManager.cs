@@ -46,6 +46,9 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
     [SerializeField]
     [Tooltip("")]
     LevelOneBoss levelOneBoss;
+    [SerializeField]
+    [Tooltip("")]
+    GameObject levelOneExit;
 
     const float MAX_SPEED = 0.5f; // The max speed that everything can reach
 
@@ -296,7 +299,11 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
                 isBossTimerEnabled = false;
                 GenerateTerrainOnTrigger = false;
                 isLevelEnd = true;
-                // TODO: Spawn exit door
+                if (levelOneExit != null)
+                {
+                    GameObject exit = Instantiate(levelOneExit, transform);
+                    exit.transform.position = spawnLocation.position;
+                }
                 break;
         }
     }
