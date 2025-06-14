@@ -144,7 +144,8 @@ public class PlayerManager : MonoBehaviour, GameEvents::IEventListener
     {
         if (State == AnimationState.WallrunRight || State == AnimationState.WallrunLeft)
         {
-            // TODO: Move CharacterController to correct position and player model to correct rotation
+            // TODO: Rotate player model
+            vVel = 0f;
             animator.SetInteger("AnimationState", (int)State); // Set animation state
             return; // Stop CharacterController from doing any movement while wallrunning
         }
