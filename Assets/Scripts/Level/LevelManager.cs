@@ -49,6 +49,25 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
     [SerializeField]
     [Tooltip("")]
     GameObject levelOneExit;
+    [Header("Level Two Spawnables")]
+    [SerializeField]
+    [Tooltip("")]
+    List<GameObject> levelTwoStartingTerrain = new List<GameObject>();
+    [SerializeField]
+    [Tooltip("")]
+    List<GameObject> levelTwoTerrain = new List<GameObject>();
+    [SerializeField]
+    [Tooltip("")]
+    List<GameObject> levelTwoObstacles = new List<GameObject>();
+    [SerializeField]
+    [Tooltip("")]
+    List<GameObject> levelTwoPickups = new List<GameObject>();
+    [SerializeField]
+    [Tooltip("")]
+    LevelTwoBoss levelTwoBoss;
+    [SerializeField]
+    [Tooltip("")]
+    GameObject levelTwoExit;
 
     const float MAX_SPEED = 0.5f; // The max speed that everything can reach
 
@@ -61,6 +80,8 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
     int currentLevel = 1;
     bool isBossTimerEnabled = true;
     bool isLevelEnd = false;
+    List<GameObject> levelOnePickupsNoBoss;
+    List<GameObject> levelOnePickupsBoss;
 
     float _speed;
     /// <summary>
@@ -85,12 +106,23 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
     public bool IsBossActive { get; private set; }
 
     // What terrain is currently able to be spawned
-    List<GameObject> PossibleTerrain => isLevelStart ? levelOneStartingTerrain : levelOneTerrain;
+    List<GameObject> PossibleTerrain => currentLevel == 1 ? (isLevelStart ? levelOneStartingTerrain : levelOneTerrain) : (isLevelStart ? levelTwoStartingTerrain : levelTwoTerrain);
+    // What obstacles are currently able to be spawned
+    List<GameObject> PossibleObstacles => currentLevel == 1 ? levelOneObstacles : levelTwoObstacles;
+    // What pickups are currently able to be spawned
+    List<GameObject> PossiblePickups => currentLevel == 1 ? (IsBossActive ? levelOnePickupsBoss : levelOnePickupsNoBoss) : levelTwoPickups;
 
     void Awake()
     {
         if (Instance != null && Instance != this) Destroy(gameObject);
         else Instance = this;
+        if (levelOnePickups.Count == 0) return;
+        levelOnePickupsNoBoss = new List<GameObject>(levelOnePickups);
+        levelOnePickupsBoss = new List<GameObject>(levelOnePickups);
+        GameObject _bossPickup = levelOnePickups.Find(p => p.name == "Boss One Pickup");
+        if (_bossPickup == null) return;
+        levelOnePickupsNoBoss.Remove(_bossPickup);
+        for (int i = 0; i < 4; i++) levelOnePickupsBoss.Add(_bossPickup);
     }
 
     void Start()
@@ -144,7 +176,7 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
         terrain.transform.position = spawnLocation.position;
         SpawnableTerrain _terrain = terrain.GetComponent<SpawnableTerrain>();
         if (terrain.CompareTag("SecurityDoor")) lastGeneratedObstacleCount = 2;
-        if (levelOneObstacles.Count > 0 && _terrain.ObstacleRows.Count > 0)
+        if (PossibleObstacles.Count > 0 && _terrain.ObstacleRows.Count > 0)
         {
             foreach (GameObject row in _terrain.ObstacleRows)
             {
@@ -152,23 +184,14 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
                 lastGeneratedObstacleCount = lastGeneratedObstacleCount == 2 || (_row.NumberOfObstacles == 2 && lastGeneratedObstacleCount > 0) ? 0 : _row.NumberOfObstacles;
                 if (lastGeneratedObstacleCount == 0) continue;
                 _row.HasObstacles = true;
-                SpawnTerrainObjects(row, levelOneObstacles, _row.NumberOfObstacles);
+                SpawnTerrainObjects(row, PossibleObstacles, _row.NumberOfObstacles);
             }
         }
-        if (levelOnePickups.Count > 0 && _terrain.PickupRows.Count > 0)
+        if (PossiblePickups.Count > 0 && _terrain.PickupRows.Count > 0)
         {
             foreach (GameObject row in _terrain.PickupRows)
             {
-                if (!row.GetComponent<PickupRow>().IsSuccessfulSpawn) continue;
-                List<GameObject> pickups = new List<GameObject>();
-                foreach (GameObject pickup in levelOnePickups)
-                {
-                    if (pickup.name != "Boss One Pickup") pickups.Add(pickup);
-                    if (pickup.name != "Boss One Pickup" || !IsBossActive) continue;
-                    for (int i = 0; i < 5; i++) pickups.Add(pickup);
-                }
-                if (pickups.Count == 0) continue;
-                SpawnTerrainObjects(row, pickups);
+                SpawnTerrainObjects(row, PossiblePickups);
             }
         }
         generatedTerrain.Add(_terrain);
