@@ -57,6 +57,7 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
     Boss boss;
     int currentLevel = 1;
     bool isBossTimerEnabled = true;
+    bool isLevelEnd = false;
 
     float _speed;
     /// <summary>
@@ -115,7 +116,7 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
     {
         if (!other.CompareTag("FrontTerrain")) return; // If it isn't the front of a terrain that collides then skip it
         DestroyTerrain(other.GetComponentInParent<SpawnableTerrain>()); // Destroy the terrain
-        if (GenerateTerrainOnTrigger) return; // If terrain is generated on trigger then don't manually generate new terrain
+        if (GenerateTerrainOnTrigger || isLevelEnd) return; // If terrain is generated on trigger then don't manually generate new terrain
         GenerateTerrainOnTrigger = true; // Update the bool
         GenerateTerrain(); // Manually generate a new piece of terrain
     }
@@ -260,6 +261,8 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
         IsBossActive = false;
         bossTimer = 0f;
         currentLevel = 1;
+        isBossTimerEnabled = true;
+        isLevelEnd = false;
         if (boss != null) Destroy(boss.gameObject);
         GenerateStartingTerrain();
         PlayerManager.Instance.ResetPlayer();
@@ -291,6 +294,8 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
                 if (bossOnePickups.Length > 0) Array.ForEach<BossOnePickup>(bossOnePickups, b => GameObject.Destroy(UtilMethods.Parent(b.gameObject)));
                 if (param is int beatenOne) BossesBeaten = beatenOne;
                 isBossTimerEnabled = false;
+                GenerateTerrainOnTrigger = false;
+                isLevelEnd = true;
                 // TODO: Spawn exit door
                 break;
         }
