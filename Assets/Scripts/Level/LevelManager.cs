@@ -140,7 +140,7 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
         {
             terrainIndex = Random.Range(0, PossibleTerrain.Count);
         }
-        var terrain = Instantiate(PossibleTerrain[terrainIndex], transform);
+        GameObject terrain = Instantiate(PossibleTerrain[terrainIndex], transform);
         terrain.transform.position = spawnLocation.position;
         SpawnableTerrain _terrain = terrain.GetComponent<SpawnableTerrain>();
         if (terrain.CompareTag("SecurityDoor")) lastGeneratedObstacleCount = 2;
