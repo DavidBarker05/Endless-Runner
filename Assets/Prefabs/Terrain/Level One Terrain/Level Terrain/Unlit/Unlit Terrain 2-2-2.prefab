@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minimumObstacles: 0
-  maximumObstacles: 1
+  maximumObstacles: 2
 --- !u!1 &1973674324402900969
 GameObject:
   m_ObjectHideFlags: 0

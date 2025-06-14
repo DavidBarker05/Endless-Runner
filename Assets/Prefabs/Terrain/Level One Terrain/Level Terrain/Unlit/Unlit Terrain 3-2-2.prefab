@@ -801,7 +801,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea1468b1be2b9c34786071e885c42139, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minimumObstacles: 0
+  minimumObstacles: 1
   maximumObstacles: 2
 --- !u!1 &9116657855488956845
 GameObject:

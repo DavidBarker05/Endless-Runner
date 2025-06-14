@@ -110,7 +110,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7cd1269067d5cf47a64ea9c5a964a1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseSpawnChance: 0.505
+  baseSpawnChance: 0.23
   bonusSpawnChance: 0.212
 --- !u!1 &2863559100436543395
 GameObject:
@@ -686,7 +686,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minimumObstacles: 1
-  maximumObstacles: 1
+  maximumObstacles: 2
 --- !u!1 &9116657855488956845
 GameObject:
   m_ObjectHideFlags: 0

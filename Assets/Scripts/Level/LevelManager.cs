@@ -191,7 +191,8 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
         {
             foreach (GameObject row in _terrain.PickupRows)
             {
-                SpawnTerrainObjects(row, PossiblePickups);
+                PickupRow _row = row.GetComponent<PickupRow>();
+                if (_row.IsSuccessfulSpawn) SpawnTerrainObjects(row, PossiblePickups);
             }
         }
         generatedTerrain.Add(_terrain);
