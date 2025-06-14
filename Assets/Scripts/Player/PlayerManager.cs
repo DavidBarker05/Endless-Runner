@@ -18,6 +18,8 @@ public class PlayerManager : MonoBehaviour, GameEvents::IEventListener
         Exploded,
         Caught,
         Slide,
+        WallrunRight,
+        WallrunLeft,
     }
 
     public static PlayerManager Instance { get; private set; }
@@ -115,6 +117,15 @@ public class PlayerManager : MonoBehaviour, GameEvents::IEventListener
 
     void Update()
     {
+        if (Input.GetKey(KeyCode.R) && GameManager.Instance.State == GameManager.GameState.Alive) currentResetHoldTime += Time.deltaTime; // Make time increase while player holds r
+        else currentResetHoldTime = 0f; // Reset timer when release r
+        if (currentResetHoldTime >= resetHoldTime) LevelManager.Instance.ResetGame(); // Reset game once timer excedes time
+        if (State == AnimationState.WallrunRight || State == AnimationState.WallrunLeft)
+        {
+            pressingSlide = false; // Reset slide when wallrunning
+            currentSlideTime = 0f; // Reset slide when wallrunning
+            return; // Stop player from inputting anything while wallrunning
+        }
         if ((Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D)) && CanMove)
         {
             currentLane = targetLane;
@@ -127,13 +138,16 @@ public class PlayerManager : MonoBehaviour, GameEvents::IEventListener
         if (Input.GetKey(KeyCode.Space) && CanJump) vVel = Mathf.Sqrt(2 * gravity * (jumpHeight + extraJumpHeight));
         pressingSlide = Input.GetKey(KeyCode.LeftControl);
         if (!pressingSlide) currentSlideTime = 0f; // Reset time player is sliding for
-        if (Input.GetKey(KeyCode.R) && GameManager.Instance.State == GameManager.GameState.Alive) currentResetHoldTime += Time.deltaTime; // Make time increase while player holds r
-        else currentResetHoldTime = 0f; // Reset timer when release r
-        if (currentResetHoldTime >= resetHoldTime) LevelManager.Instance.ResetGame(); // Reset game once timer excedes time
     }
 
     void FixedUpdate()
     {
+        if (State == AnimationState.WallrunRight || State == AnimationState.WallrunLeft)
+        {
+            // TODO: Move CharacterController to correct position and player model to correct rotation
+            animator.SetInteger("AnimationState", (int)State); // Set animation state
+            return; // Stop CharacterController from doing any movement while wallrunning
+        }
         if (IsSliding)
         {
             currentSlideTime += Time.fixedDeltaTime; // If sliding increase slide time
