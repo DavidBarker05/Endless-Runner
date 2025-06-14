@@ -25,6 +25,8 @@ public class PlayerManager : MonoBehaviour, GameEvents::IEventListener
     public static PlayerManager Instance { get; private set; }
 
     [SerializeField]
+    GameObject playerMesh;
+    [SerializeField]
     ParticleSystem jumpParticles;
     [SerializeField]
     ParticleSystem bonusParticles;
@@ -144,11 +146,12 @@ public class PlayerManager : MonoBehaviour, GameEvents::IEventListener
     {
         if (State == AnimationState.WallrunRight || State == AnimationState.WallrunLeft)
         {
-            // TODO: Rotate player model
+            playerMesh.transform.rotation = Quaternion.Euler(0f, 0f, State == AnimationState.WallrunRight ? 25f : -25f);
             vVel = 0f;
             animator.SetInteger("AnimationState", (int)State); // Set animation state
             return; // Stop CharacterController from doing any movement while wallrunning
         }
+        playerMesh.transform.rotation = Quaternion.Euler(0f, 0f, 0f); // Make sure player mesh goes back to normal rotation
         if (IsSliding)
         {
             currentSlideTime += Time.fixedDeltaTime; // If sliding increase slide time
