@@ -25,6 +25,11 @@ public class PlayerManager : MonoBehaviour, GameEvents::IEventListener
     public static PlayerManager Instance { get; private set; }
 
     [SerializeField]
+    LayerMask groundLayer;
+    [SerializeField]
+    [Min(0f)]
+    float maxGroundCheckDistance;
+    [SerializeField]
     GameObject playerMesh;
     [SerializeField]
     ParticleSystem jumpParticles;
@@ -149,6 +154,17 @@ public class PlayerManager : MonoBehaviour, GameEvents::IEventListener
 
     void FixedUpdate()
     {
+        if (Physics.Raycast(transform.position, Vector3.down, maxGroundCheckDistance, groundLayer)) // Make sure player is directly above ground not a gap
+        {
+            if (Physics.SphereCast(transform.position, cc.radius, Vector3.down, out RaycastHit hit, maxGroundCheckDistance, groundLayer)) // Check where the player would be touching the ground
+            {
+                float centreOffset = Vector3.Dot(hit.normal.normalized, Vector3.down) * cc.radius; // Figure out how far below the contact point is compared to the centre of the sphere
+                float centreY = hit.point.y - centreOffset; // Calculate the y-position of the centre
+                float bottomY = centreY - cc.radius; // Figure out where the bottom would for the sphere
+                float yShift = -bottomY; // The amount to shift the level up by so the player's theoretical bottom point remains at [0, 0, 0]
+                LevelManager.Instance.OffsetTerrainAndSpawnY(yShift); // Offset the level
+            }
+        }
         if (State == AnimationState.WallrunRight || State == AnimationState.WallrunLeft)
         {
             playerMesh.transform.rotation = Quaternion.Euler(0f, 0f, State == AnimationState.WallrunRight ? 25f : -25f);

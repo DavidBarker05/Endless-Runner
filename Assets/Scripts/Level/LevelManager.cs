@@ -357,6 +357,16 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
         PickupManager.Instance.ResetPickups();
     }
 
+    /// <summary>
+    /// Moves all generated terrain and the spawn location by a certain amount on the y-axis.
+    /// </summary>
+    /// <param name="y">The amount to move by on the y-axis.</param>
+    public void OffsetTerrainAndSpawnY(float y)
+    {
+        spawnLocation.position += UtilMethods.YVector(y);
+        Array.ForEach<SpawnableTerrain>(generatedTerrain.ToArray(), t => t.transform.position += UtilMethods.YVector(y));
+    }
+
     public void OnEvent(GameEvents::EventType eventType, Component sender, object param = null)
     {
         switch (eventType)
