@@ -64,6 +64,9 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
     List<GameObject> levelTwoPickups = new List<GameObject>();
     [SerializeField]
     [Tooltip("")]
+    Transform levelTwoBossSpawnLocation;
+    [SerializeField]
+    [Tooltip("")]
     LevelTwoBoss levelTwoBoss;
     [SerializeField]
     [Tooltip("")]
@@ -131,6 +134,8 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
         GameManager.Instance.AddListener(GameEvents::EventType.BonusPickupEffect, this);
         GameManager.Instance.AddListener(GameEvents::EventType.BossOneSpawn, this);
         GameManager.Instance.AddListener(GameEvents::EventType.BossOneBeaten, this);
+        GameManager.Instance.AddListener(GameEvents::EventType.BossTwoSpawn, this);
+        GameManager.Instance.AddListener(GameEvents::EventType.BossTwoBeaten, this);
     }
 
     void FixedUpdate()
@@ -143,7 +148,11 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
         Speed += startingSpeed / 30f * Time.fixedDeltaTime; // Increase speed
         if (!isBossTimerEnabled) return; // Don't deal with boss timer logic until the level starts
         bossTimer += Time.fixedDeltaTime;
-        if (bossTimer >= 30f) GameManager.Instance.InvokeEvent(!IsBossActive ? GameEvents::EventType.BossOneSpawn : GameEvents::EventType.BossOneBeaten, this, BossesBeaten + 1); // Spawn or defeat boss after timer reaches 30 seconds
+        if (bossTimer >= 30f) // Spawn or defeat boss after timer reaches 30 seconds
+        {
+            if (IsBossActive) GameManager.Instance.InvokeEvent(currentLevel == 1 ? GameEvents::EventType.BossOneBeaten : GameEvents::EventType.BossTwoBeaten, this, BossesBeaten + 1);
+            else GameManager.Instance.InvokeEvent(currentLevel == 1 ? GameEvents::EventType.BossOneSpawn : GameEvents::EventType.BossTwoSpawn, this);
+        }
     }
 
     // The trigger is behind the player
@@ -162,6 +171,8 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
         GameManager.Instance.RemoveListener(GameEvents::EventType.BonusPickupEffect, this);
         GameManager.Instance.RemoveListener(GameEvents::EventType.BossOneSpawn, this);
         GameManager.Instance.RemoveListener(GameEvents::EventType.BossOneBeaten, this);
+        GameManager.Instance.RemoveListener(GameEvents::EventType.BossTwoSpawn, this);
+        GameManager.Instance.RemoveListener(GameEvents::EventType.BossTwoBeaten, this);
     }
 
     public void GenerateTerrain()
@@ -326,6 +337,27 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
                 if (levelOneExit != null)
                 {
                     GameObject exit = Instantiate(levelOneExit, transform);
+                    exit.transform.position = spawnLocation.position;
+                }
+                break;
+            case GameEvents::EventType.BossTwoSpawn:
+                bossTimer = 0f;
+                if (levelTwoBoss == null) return;
+                boss = Instantiate(levelTwoBoss);
+                boss.transform.position = levelTwoBossSpawnLocation.position;
+                IsBossActive = true;
+                break;
+            case GameEvents::EventType.BossTwoBeaten:
+                bossTimer = 0f;
+                if (levelTwoBoss == null) return;
+                IsBossActive = false;
+                if (param is int beatenTwo) BossesBeaten = beatenTwo;
+                isBossTimerEnabled = false;
+                GenerateTerrainOnTrigger = false;
+                isLevelEnd = true;
+                if (levelTwoExit != null)
+                {
+                    GameObject exit = Instantiate(levelTwoExit, transform);
                     exit.transform.position = spawnLocation.position;
                 }
                 break;
