@@ -244,6 +244,7 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
     // Check what terrain is valid based off of it's tag and the last generated terrain's tag
     bool IsValidTerrain(GameObject terrain) => terrain.tag switch
     {
+        // Level One:
         "SecurityDoor" => (
             currentLevel == 1
             && (!lastGeneratedTerrain?.CompareTag("SecurityDoor") ?? false)
@@ -263,7 +264,33 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
             && (!lastGeneratedTerrain?.CompareTag("UnlitTerrain") ?? true)
             && (!lastGeneratedTerrain?.CompareTag("SecurityDoor") ?? true)
         ),
-        _ => true
+        // Level Two:
+        "Wallrun" => (
+            currentLevel == 2
+            && (lastGeneratedTerrain?.CompareTag("BeforeWallrun") ?? false)
+        ),
+        "AfterWallrun" => (
+            currentLevel == 2
+            && (lastGeneratedTerrain?.CompareTag("Wallrun") ?? false)
+        ),
+        "Gap" => (
+            currentLevel == 2
+            && (lastGeneratedTerrain?.CompareTag("Slope") ?? false)
+        ),
+        "AfterGap" => (
+            currentLevel == 2
+            && (lastGeneratedTerrain?.CompareTag("Gap") ?? false)
+        ),
+        _ => (
+            currentLevel == 1
+            || ( // BeforeWallrun and Slope currently fit into this so they don't need their own cases
+                currentLevel == 2
+                && (!lastGeneratedTerrain?.CompareTag("BeforeWallrun") ?? true)
+                && (!lastGeneratedTerrain?.CompareTag("Wallrun") ?? true)
+                && (!lastGeneratedTerrain?.CompareTag("Slope") ?? true)
+                && (!lastGeneratedTerrain?.CompareTag("Gap") ?? true)
+            )
+        )
     };
 
     // Destroys terrain and removes it from the list
