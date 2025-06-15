@@ -271,6 +271,14 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
             && (!lastGeneratedTerrain?.CompareTag("SecurityDoor") ?? true)
         ),
         // Level Two:
+        "BeforeWallrun" => (
+            currentLevel == 2
+            && !IsBossActive
+            && (!lastGeneratedTerrain?.CompareTag("BeforeWallrun") ?? true)
+            && (!lastGeneratedTerrain?.CompareTag("Wallrun") ?? true)
+            && (!lastGeneratedTerrain?.CompareTag("Slope") ?? true)
+            && (!lastGeneratedTerrain?.CompareTag("Gap") ?? true)
+        ),
         "Wallrun" => (
             currentLevel == 2
             && (lastGeneratedTerrain?.CompareTag("BeforeWallrun") ?? false)
@@ -278,6 +286,14 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
         "AfterWallrun" => (
             currentLevel == 2
             && (lastGeneratedTerrain?.CompareTag("Wallrun") ?? false)
+        ),
+        "Slope" => (
+            currentLevel == 2
+            && !IsBossActive
+            && (!lastGeneratedTerrain?.CompareTag("BeforeWallrun") ?? true)
+            && (!lastGeneratedTerrain?.CompareTag("Wallrun") ?? true)
+            && (!lastGeneratedTerrain?.CompareTag("Slope") ?? true)
+            && (!lastGeneratedTerrain?.CompareTag("Gap") ?? true)
         ),
         "Gap" => (
             currentLevel == 2
@@ -289,7 +305,7 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
         ),
         _ => (
             currentLevel == 1
-            || ( // BeforeWallrun and Slope currently fit into this so they don't need their own cases
+            || (
                 currentLevel == 2
                 && (!lastGeneratedTerrain?.CompareTag("BeforeWallrun") ?? true)
                 && (!lastGeneratedTerrain?.CompareTag("Wallrun") ?? true)
