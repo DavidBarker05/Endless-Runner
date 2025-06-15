@@ -716,6 +716,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f6991899ce510e458b2a62abca783c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerMesh: {fileID: 914387211}
   jumpParticles: {fileID: 2077486854}
   bonusParticles: {fileID: 2062153254}
   shieldBubble: {fileID: 1925747743}
@@ -1692,6 +1693,13 @@ MonoBehaviour:
   - {fileID: 2385143832511243022, guid: f53168e7959bfc04baf5ff07db01c658, type: 3}
   - {fileID: 2916651130221960852, guid: 44320ff7ac34b6a4ba2e2867dc3efdfc, type: 3}
   levelOneBoss: {fileID: 5349580612360630572, guid: e478332471e0ecf4d9987cf9e993f9c6, type: 3}
+  levelOneExit: {fileID: 0}
+  levelTwoStartingTerrain: []
+  levelTwoTerrain: []
+  levelTwoObstacles: []
+  levelTwoPickups: []
+  levelTwoBoss: {fileID: 0}
+  levelTwoExit: {fileID: 0}
 --- !u!114 &1835439953
 MonoBehaviour:
   m_ObjectHideFlags: 0
