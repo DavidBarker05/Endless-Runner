@@ -79,8 +79,13 @@ public class PlayerManager : MonoBehaviour, GameEvents::IEventListener
     float extraJumpHeight;
     bool pressingSlide;
     Animator animator;
-    bool groundedLastFrame = true;
+    bool wasGroundedLastFrame = true;
+    bool isGrounded = true;
 
+    /// <summary>
+    /// 
+    /// </summary>
+    public bool IsForcedSlide { get; set; }
     /// <summary>
     /// Indicates if the player can slide
     /// </summary>
@@ -88,7 +93,7 @@ public class PlayerManager : MonoBehaviour, GameEvents::IEventListener
     /// <summary>
     /// Indicates if the player is currently sliding
     /// </summary>
-    public bool IsSliding => CanSlide && pressingSlide;
+    public bool IsSliding => (CanSlide && pressingSlide || IsForcedSlide) && isGrounded;
     /// <summary>
     /// Indicates if the player can move
     /// </summary>
@@ -96,7 +101,7 @@ public class PlayerManager : MonoBehaviour, GameEvents::IEventListener
     /// <summary>
     /// Indicates if the player can jump
     /// </summary>
-    public bool CanJump => cc.isGrounded && !IsSliding && GameManager.Instance.State == GameManager.GameState.Alive;
+    public bool CanJump => isGrounded && !IsSliding && GameManager.Instance.State == GameManager.GameState.Alive;
     public AnimationState State { get; set; }
     public bool Caught { get; set; }
     public bool Invulnerable { get; private set; }
@@ -163,17 +168,18 @@ public class PlayerManager : MonoBehaviour, GameEvents::IEventListener
         Vector3 hVel = laneDisplacement / switchTime;
         Vector3 movement = (hVel + UtilMethods.YVector(vVel)) * Time.fixedDeltaTime;
         cc.Move(movement);
+        isGrounded = cc.isGrounded || wasGroundedLastFrame;
         if (cc.isGrounded)
         {
             vVel = SNAP_TO_GROUND_SPEED;
-            groundedLastFrame = true;
+            wasGroundedLastFrame = true;
             if (GameManager.Instance.State != GameManager.GameState.Dead && !IsSliding) State = AnimationState.Run;
             if (Caught) State = AnimationState.Caught;
         }
         else
         {
             vVel -= gravity * Time.fixedDeltaTime;
-            if (groundedLastFrame) groundedLastFrame = false;
+            if (wasGroundedLastFrame) wasGroundedLastFrame = false;
             else if (GameManager.Instance.State != GameManager.GameState.Dead) State = AnimationState.Fall;
         }
         if (Mathf.Abs(transform.position.x - lanes[targetLane].position.x) > SNAP_DISTANCE) return; // If distance is greater than snap distance then don't snap
@@ -210,7 +216,7 @@ public class PlayerManager : MonoBehaviour, GameEvents::IEventListener
         transform.position = lanes[currentLane].position;
         cc.enabled = true;
         cc.Move(UtilMethods.YVector(vVel)); // Move into ground so that is grounded can start working
-        groundedLastFrame = true;
+        wasGroundedLastFrame = true;
         State = AnimationState.Run;
         Caught = false;
         Invulnerable = false;

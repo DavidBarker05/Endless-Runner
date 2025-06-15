@@ -92,6 +92,10 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
     /// </summary>
     public float Speed { get => _speed; private set => _speed = Mathf.Clamp(value, startingSpeed, MAX_SPEED); }
     /// <summary>
+    /// 
+    /// </summary>
+    public float BonusSpeed { get; set; }
+    /// <summary>
     /// Bool that indicates if terrain can be generated when they go into eachother's triggers
     /// </summary>
     public bool GenerateTerrainOnTrigger { get; private set; }
@@ -114,6 +118,8 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
     List<GameObject> PossibleObstacles => currentLevel == 1 ? levelOneObstacles : levelTwoObstacles;
     // What pickups are currently able to be spawned
     List<GameObject> PossiblePickups => currentLevel == 1 ? (IsBossActive ? levelOnePickupsBoss : levelOnePickupsNoBoss) : levelTwoPickups;
+    //
+    float TotalSpeed => Speed + BonusSpeed;
 
     void Awake()
     {
@@ -143,7 +149,7 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
         if (GameManager.Instance.State != GameManager.GameState.Alive) return;
         foreach (SpawnableTerrain terrain in generatedTerrain)
         {
-            if (terrain.CanMove) terrain.transform.position -= UtilMethods.ZVector(Speed);
+            if (terrain.CanMove) terrain.transform.position -= UtilMethods.ZVector(TotalSpeed);
         }
         Speed += startingSpeed / 30f * Time.fixedDeltaTime; // Increase speed
         if (!isBossTimerEnabled) return; // Don't deal with boss timer logic until the level starts
@@ -319,6 +325,7 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
         lastGeneratedTerrain = null;
         lastGeneratedObstacleCount = 0;
         Speed = startingSpeed;
+        BonusSpeed = 0;
         GenerateTerrainOnTrigger = false;
         GameManager.Instance.InvokeEvent(GameEvents::EventType.ObstaclePassed, this, 0);
         Score = 0;
