@@ -29,7 +29,13 @@ public class SecurityGuard : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(1f / fireRate);
+            float timer = 0f;
+            while (timer < 1f / fireRate)
+            {
+                // while (paused) yield return null;
+                timer += Time.fixedDeltaTime;
+                yield return new WaitForFixedUpdate();
+            }
             if (GameManager.Instance.State == GameManager.GameState.Alive)
             {
                 var _bullet = Instantiate(bullet, gunBarrel);

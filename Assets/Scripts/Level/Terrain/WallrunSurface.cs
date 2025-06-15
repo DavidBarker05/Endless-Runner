@@ -38,6 +38,7 @@ public class WallrunSurface : MonoBehaviour
         Vector3 target = new Vector3(PlayerManager.Instance.transform.position.x, Mathf.Max(PlayerManager.Instance.transform.position.y, wallrunY));
         while (PlayerManager.Instance.transform.position.y < target.y)
         {
+            // while (paused) yield return null;
             float y = target.y - PlayerManager.Instance.transform.position.y;
             float dy = (y / yTransitionTime) * Time.fixedDeltaTime;
             Vector3 dyVector = GameUtilities.UtilityMethods.UtilMethods.YVector(dy);
