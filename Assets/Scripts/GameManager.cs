@@ -1,15 +1,13 @@
 using GameEvents = GameUtilities.GameEvents;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 
 /// <summary>
 /// Manages the game State and UI elements
 /// </summary>
-public class GameManager : MonoBehaviour, GameEvents::IEventListener
+public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
@@ -32,20 +30,6 @@ public class GameManager : MonoBehaviour, GameEvents::IEventListener
         Dead,
     }
 
-    [Header("UI")]
-    [SerializeField]
-    [Tooltip("Text used to display the score while the player is alive")]
-    TextMeshProUGUI scoreCounter;
-    [SerializeField]
-    [Tooltip("Text used to explain how to restart")]
-    TextMeshProUGUI restartText;
-    [SerializeField]
-    [Tooltip("Text used to display the score when the player is dead")]
-    TextMeshProUGUI deathScore;
-    [SerializeField]
-    [Tooltip("Button used to restart the game when the player is dead")]
-    Button restartButton;
-
     /// <summary>
     /// The current State of the game
     /// </summary>
@@ -56,39 +40,12 @@ public class GameManager : MonoBehaviour, GameEvents::IEventListener
     void Awake()
     {
         if (Instance != null && Instance != this) Destroy(gameObject);
-        else Instance = this;
-    }
-
-    void Start()
-    {
-        AddListener(GameEvents::EventType.ObstaclePassed, this);
-        AddListener(GameEvents::EventType.BonusPickupEffect, this);
-        if (SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(1)) LevelManager.Instance.ResetGame();
-    }
-
-    void Update()
-    {
-        switch (State)
+        else
         {
-            case GameState.Alive: // UI while the player is alive
-                scoreCounter.enabled = true;
-                restartText.enabled = true;
-                deathScore.enabled = false;
-                restartButton.gameObject.SetActive(false);
-                break;
-            case GameState.Dead: // UI while the player is dead
-                scoreCounter.enabled = false;
-                restartText.enabled = false;
-                deathScore.enabled = true;
-                restartButton.gameObject.SetActive(true);
-                break;
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+            State = GameState.None;
         }
-    }
-
-    void OnDestroy()
-    {
-        RemoveListener(GameEvents::EventType.ObstaclePassed, this);
-        RemoveListener(GameEvents::EventType.BonusPickupEffect, this);
     }
 
     public void AddListener(GameEvents::EventType eventType, GameEvents::IEventListener eventListener)
@@ -119,24 +76,4 @@ public class GameManager : MonoBehaviour, GameEvents::IEventListener
     }
 
     public void ClearEvents() => eventListeners.Clear();
-
-    public void OnEvent(GameEvents::EventType eventType, Component sender, object param = null)
-    {
-        if (eventType == GameEvents::EventType.ObstaclePassed)
-        {
-            if (param is int passScore)
-            {
-                scoreCounter.text = $"SCORE: {passScore}";
-                deathScore.text = $"FINAL SCORE: {passScore}";
-            }
-        }
-        else if (eventType == GameEvents.EventType.BonusPickupEffect)
-        {
-            if (param is int bonusScore)
-            {
-                scoreCounter.text = $"SCORE: {bonusScore}";
-                deathScore.text = $"FINAL SCORE: {bonusScore}";
-            }
-        }
-    }
 }

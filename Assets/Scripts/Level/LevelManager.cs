@@ -142,6 +142,7 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
         GameManager.Instance.AddListener(GameEvents::EventType.BossOneBeaten, this);
         GameManager.Instance.AddListener(GameEvents::EventType.BossTwoSpawn, this);
         GameManager.Instance.AddListener(GameEvents::EventType.BossTwoBeaten, this);
+        ResetGame();
     }
 
     void FixedUpdate()
