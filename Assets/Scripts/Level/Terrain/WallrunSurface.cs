@@ -29,6 +29,7 @@ public class WallrunSurface : MonoBehaviour
     void OnTriggerExit(Collider other)
     {
         if (!other.CompareTag("Player")) return;
+        if (PlayerManager.Instance.transform.position.y < wallrunY) PlayerManager.Instance.transform.position = new Vector3(PlayerManager.Instance.transform.position.x, wallrunY);
         PlayerManager.Instance.State = PlayerManager.AnimationState.Fall;
         if(changePlayerY != null) StopCoroutine(changePlayerY);
     }
