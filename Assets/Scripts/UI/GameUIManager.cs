@@ -18,7 +18,7 @@ public class GameUIManager : MonoBehaviour
         {
             if (_screen != value)
             {
-                _screen.panel.SetActive(false);
+                if (_screen != null) _screen.panel.SetActive(false);
                 _screen = value;
                 _screen.panel.SetActive(true);
             }
@@ -30,6 +30,7 @@ public class GameUIManager : MonoBehaviour
         if (Instance != null && Instance != this) Destroy(gameObject);
         else Instance = this;
         Screens = screens.ToArray();
+        System.Array.ForEach<GameScreen>(Screens, s => s.panel.SetActive(false));
         CurrentScreen = Screens[0];
     }
 }

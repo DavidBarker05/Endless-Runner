@@ -1513,6 +1513,7 @@ GameObject:
   - component: {fileID: 1626591206}
   - component: {fileID: 1626591205}
   - component: {fileID: 1626591204}
+  - component: {fileID: 1626591207}
   m_Layer: 5
   m_Name: Leaderboard
   m_TagString: Untagged
@@ -1622,6 +1623,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1626591202}
   m_CullTransparentMesh: 1
+--- !u!114 &1626591207
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1626591202}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4967a2e6e4e24d3428403a11605216d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  screenNumber: 1
 --- !u!1 &1656374767
 GameObject:
   m_ObjectHideFlags: 0
@@ -1712,6 +1726,7 @@ GameObject:
   - component: {fileID: 1753658695}
   - component: {fileID: 1753658694}
   - component: {fileID: 1753658693}
+  - component: {fileID: 1753658696}
   m_Layer: 5
   m_Name: Settings
   m_TagString: Untagged
@@ -1821,6 +1836,70 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1753658691}
   m_CullTransparentMesh: 1
+--- !u!114 &1753658696
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1753658691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4967a2e6e4e24d3428403a11605216d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  screenNumber: 2
+--- !u!1 &1794594782
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1794594784}
+  - component: {fileID: 1794594783}
+  m_Layer: 0
+  m_Name: UI Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1794594783
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1794594782}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d448663e7d67014292a2a9caaa2c587, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  screens:
+  - screenName: Main Screen
+    panel: {fileID: 310464412}
+  - screenName: Leaderboard Screen
+    panel: {fileID: 301204316}
+  - screenName: Settings Screen
+    panel: {fileID: 392001483}
+--- !u!4 &1794594784
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1794594782}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1923835550
 GameObject:
   m_ObjectHideFlags: 0
@@ -1949,3 +2028,4 @@ SceneRoots:
   - {fileID: 438736996}
   - {fileID: 780585994}
   - {fileID: 456314503}
+  - {fileID: 1794594784}
