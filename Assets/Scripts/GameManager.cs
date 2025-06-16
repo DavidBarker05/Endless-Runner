@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 
 /// <summary>
@@ -62,7 +63,7 @@ public class GameManager : MonoBehaviour, GameEvents::IEventListener
     {
         AddListener(GameEvents::EventType.ObstaclePassed, this);
         AddListener(GameEvents::EventType.BonusPickupEffect, this);
-        StartGame();
+        if (SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(1)) LevelManager.Instance.ResetGame();
     }
 
     void Update()
@@ -89,11 +90,6 @@ public class GameManager : MonoBehaviour, GameEvents::IEventListener
         RemoveListener(GameEvents::EventType.ObstaclePassed, this);
         RemoveListener(GameEvents::EventType.BonusPickupEffect, this);
     }
-
-    /// <summary>
-    /// Starts the game
-    /// </summary>
-    public void StartGame() => LevelManager.Instance.ResetGame();
 
     public void AddListener(GameEvents::EventType eventType, GameEvents::IEventListener eventListener)
     {
