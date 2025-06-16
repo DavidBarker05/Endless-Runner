@@ -7,6 +7,8 @@ public class UserSettingsManager : MonoBehaviour
 
     string path = "";
 
+    [SerializeField]
+    UserSettings _userSettings;
     public UserSettings UserSettings { get; set; }
 
     void Awake()
