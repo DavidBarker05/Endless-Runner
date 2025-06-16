@@ -72,6 +72,7 @@ public class PlayerManager : MonoBehaviour, GameEvents::IEventListener
 
     const float SNAP_DISTANCE = 0.125f; // The distance between the player and row needed to snap to the row
     const float SNAP_TO_GROUND_SPEED = -0.01f; // The speed the player moves into the ground when grounded so that character controller grounded State works
+    const float TERRAIN_RAY_THRESHOLD = -0.001f;
 
     CharacterController cc;
     int currentLane = 1;
@@ -154,15 +155,19 @@ public class PlayerManager : MonoBehaviour, GameEvents::IEventListener
 
     void FixedUpdate()
     {
-        if (Physics.Raycast(transform.position, Vector3.down, maxGroundCheckDistance, groundLayer)) // Make sure player is directly above ground not a gap
+        if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit rayHit, maxGroundCheckDistance, groundLayer)) // Make sure player is directly above ground not a gap
         {
-            if (Physics.SphereCast(transform.position, cc.radius, Vector3.down, out RaycastHit hit, maxGroundCheckDistance, groundLayer)) // Check where the player would be touching the ground
+            if (rayHit.point.y < TERRAIN_RAY_THRESHOLD) // Check that the player's feet would be below 0 but also below floating-pont threshold set
             {
-                float centreOffset = Vector3.Dot(hit.normal.normalized, Vector3.down) * cc.radius; // Figure out how far below the contact point is compared to the centre of the sphere
-                float centreY = hit.point.y - centreOffset; // Calculate the y-position of the centre
-                float bottomY = centreY - cc.radius; // Figure out where the bottom would for the sphere
-                float yShift = -bottomY; // The amount to shift the level up by so the player's theoretical bottom point remains at [0, 0, 0]
-                LevelManager.Instance.OffsetTerrainAndSpawnY(yShift); // Offset the level
+                if (Physics.SphereCast(transform.position, cc.radius, Vector3.down, out RaycastHit sphereHit, maxGroundCheckDistance, groundLayer)) // Check where the player would be touching the ground
+                {
+                    float centreOffset = Vector3.Dot(sphereHit.normal.normalized, Vector3.down) * cc.radius; // Figure out how far below the contact point is compared to the centre of the sphere
+                    float centreY = sphereHit.point.y - centreOffset; // Calculate the y-position of the centre
+                    float bottomY = centreY - cc.radius; // Figure out where the bottom would for the sphere
+                    float yShift = -bottomY; // The amount to shift the level up by so the player's theoretical bottom point remains at [0, 0, 0]
+                    LevelManager.Instance.OffsetTerrainAndSpawnY(yShift); // Offset the level
+                    transform.position += UtilMethods.YVector(yShift); // Offset the player too
+                }
             }
         }
         if (State == AnimationState.WallrunRight || State == AnimationState.WallrunLeft)
