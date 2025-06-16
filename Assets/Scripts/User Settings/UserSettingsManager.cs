@@ -9,7 +9,7 @@ public class UserSettingsManager : MonoBehaviour
 
     [SerializeField]
     UserSettings _userSettings;
-    public UserSettings UserSettings { get; set; }
+    public UserSettings UserSettings { get => _userSettings; set => _userSettings = value; }
 
     void Awake()
     {
