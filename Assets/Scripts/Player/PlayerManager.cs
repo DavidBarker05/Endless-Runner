@@ -188,27 +188,27 @@ public class PlayerManager : MonoBehaviour, GameEvents::IEventListener
         Vector3 laneDisplacement = new Vector3(lanes[targetLane].position.x - lanes[currentLane].position.x, 0f);
         Vector3 hVel = laneDisplacement / switchTime;
         Vector3 movement = (hVel + UtilMethods.YVector(vVel)) * Time.fixedDeltaTime;
-        cc.Move(movement);
+        if (GameManager.Instance.State == GameManager.GameState.Alive) cc.Move(movement);
         isGrounded = cc.isGrounded || wasGroundedLastFrame;
         if (cc.isGrounded)
         {
             vVel = SNAP_TO_GROUND_SPEED;
             wasGroundedLastFrame = true;
-            if (GameManager.Instance.State != GameManager.GameState.Dead && !IsSliding) State = AnimationState.Run;
+            if (GameManager.Instance.State == GameManager.GameState.Alive && !IsSliding) State = AnimationState.Run;
             if (Caught) State = AnimationState.Caught;
         }
         else
         {
             vVel -= gravity * Time.fixedDeltaTime;
             if (wasGroundedLastFrame) wasGroundedLastFrame = false;
-            else if (GameManager.Instance.State != GameManager.GameState.Dead) State = AnimationState.Fall;
+            else if (GameManager.Instance.State == GameManager.GameState.Alive) State = AnimationState.Fall;
         }
+        animator.SetInteger("AnimationState", (int)State);
         if (Mathf.Abs(transform.position.x - lanes[targetLane].position.x) > SNAP_DISTANCE) return; // If distance is greater than snap distance then don't snap
         transform.position = new Vector3(lanes[targetLane].position.x, transform.position.y, transform.position.z);
         currentLane = targetLane;
         targetLane += horizontalDirection;
         targetLane = Mathf.Clamp(targetLane, 0, 2);
-        animator.SetInteger("AnimationState", (int)State);
     }
 
     void OnDestroy()
