@@ -10,6 +10,8 @@ public class SpawnableTerrain : MonoBehaviour
     List<GameObject> obstacleRows = new List<GameObject>();
     [SerializeField]
     List<GameObject> pickupRows = new List<GameObject>();
+    [SerializeField]
+    Transform lowestPoint;
 
     /// <summary>
     /// Indicates if the terrain can move
@@ -27,4 +29,8 @@ public class SpawnableTerrain : MonoBehaviour
     /// The pickup rows attatched to the terrain
     /// </summary>
     public List<GameObject> PickupRows => pickupRows;
+    /// <summary>
+    /// 
+    /// </summary>
+    public Transform LowestPoint => lowestPoint;
 }

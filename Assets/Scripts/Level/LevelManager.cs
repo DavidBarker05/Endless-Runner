@@ -214,6 +214,7 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
         }
         generatedTerrain.Add(_terrain);
         lastGeneratedTerrain = terrain;
+        if (_terrain.LowestPoint != null) spawnLocation.position = new Vector3(spawnLocation.position.x, _terrain.LowestPoint.position.y, spawnLocation.position.z); // Move spawn location if we have added a lower point to the terrain (i.e. a slope having lower point than 0)
     }
 
     void SpawnTerrainObjects(GameObject row, List<GameObject> spawnables, int depth = 1, int lane = -1)
