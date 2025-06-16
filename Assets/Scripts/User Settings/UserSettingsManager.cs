@@ -55,6 +55,8 @@ public class UserSettingsManager : MonoBehaviour
             Application.targetFrameRate = UserSettings.frameRateLimit;
             previousSettings.frameRateLimit = UserSettings.frameRateLimit;
         }
+        if (previousSettings.musicVolume != UserSettings.musicVolume) previousSettings.musicVolume = UserSettings.musicVolume;
+        if (previousSettings.soundVolume != UserSettings.soundVolume) previousSettings.soundVolume = UserSettings.soundVolume;
     }
 
     void OnApplicationQuit() => SaveSettings();
