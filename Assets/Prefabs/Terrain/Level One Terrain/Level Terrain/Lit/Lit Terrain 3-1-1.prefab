@@ -518,7 +518,7 @@ GameObject:
   - component: {fileID: 8988529091594321957}
   - component: {fileID: 2307996577971270198}
   - component: {fileID: 6754142945354814723}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Lit Terrain 3-1-1
   m_TagString: LitTerrain
   m_Icon: {fileID: 0}
