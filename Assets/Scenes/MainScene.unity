@@ -718,8 +718,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   groundLayer:
     serializedVersion: 2
-    m_Bits: 0
-  maxGroundCheckDistance: 0
+    m_Bits: 256
+  maxGroundCheckDistance: 10
   playerMesh: {fileID: 914387211}
   jumpParticles: {fileID: 2077486854}
   bonusParticles: {fileID: 2062153254}
