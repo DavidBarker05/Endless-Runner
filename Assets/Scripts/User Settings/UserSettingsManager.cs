@@ -7,7 +7,9 @@ public class UserSettingsManager : MonoBehaviour
 
     string path = "";
 
-    private void Awake()
+    public UserSettings UserSettings { get; set; }
+
+    void Awake()
     {
         if (Instance != null && Instance != this) Destroy(gameObject);
         else
@@ -16,18 +18,25 @@ public class UserSettingsManager : MonoBehaviour
             DontDestroyOnLoad(gameObject);
         }
         path = Path.Combine(Application.persistentDataPath, "user_settings.json");
+        if (!File.Exists(path))
+        {
+            UserSettings = new UserSettings();
+            SaveSettings();
+        }
+        else LoadSettings();
     }
 
-    public void SaveSettings(UserSettings userSettings)
+    void OnApplicationQuit() => SaveSettings();
+
+    public void SaveSettings()
     {
-        string json = JsonUtility.ToJson(userSettings, prettyPrint: true);
+        string json = JsonUtility.ToJson(UserSettings, prettyPrint: true);
         File.WriteAllText(path, json);
     }
 
-    public UserSettings LoadSettings()
+    void LoadSettings()
     {
-        if (!File.Exists(path)) return null;
         string json = File.ReadAllText(path);
-        return JsonUtility.FromJson<UserSettings>(json);
+        UserSettings = JsonUtility.FromJson<UserSettings>(json);
     }
 }
