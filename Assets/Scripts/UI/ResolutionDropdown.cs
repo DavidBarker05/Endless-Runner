@@ -30,7 +30,7 @@ public class ResolutionDropdown : MonoBehaviour
         }
         else
         {
-            List<string> customOption = new List<string> { "CUSTOM" };
+            List<string> customOption = new List<string>() { "CUSTOM" };
             customOption.AddRange(resolutions);
             dropdown.AddOptions(customOption);
         }
