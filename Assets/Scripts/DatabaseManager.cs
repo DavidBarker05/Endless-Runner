@@ -54,9 +54,9 @@ public class DatabaseManager : MonoBehaviour
         }
     }
 
-    public async Task<Dictionary<string, int>> LoadLeaderboard()
+    public async Task<List<KeyValuePair<string, int>>> LoadLeaderboard()
     {
-        Dictionary<string, int> leaderboard = new Dictionary<string, int>();
+        List<KeyValuePair<string, int>> leaderboard = new List<KeyValuePair<string, int>>();
         if (databaseReference == null) return leaderboard;
         try
         {
@@ -66,7 +66,7 @@ public class DatabaseManager : MonoBehaviour
             {
                 string username = child?.Key ?? "";
                 int.TryParse(child?.Child("Score")?.Value?.ToString(), out int score);
-                leaderboard.Add(username, score);
+                leaderboard.Add(new KeyValuePair<string, int>(username, score));
             }
         }
         catch (Exception e)

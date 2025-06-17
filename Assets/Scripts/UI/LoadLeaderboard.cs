@@ -17,7 +17,7 @@ public class LoadLeaderboard : MonoBehaviour
 
     async void OnEnable()
     {
-        Dictionary<string, int> leaderBoard = await DatabaseManager.Instance.LoadLeaderboard();
+        List<KeyValuePair<string, int>> leaderBoard = await DatabaseManager.Instance.LoadLeaderboard();
         int index = 0;
         foreach (KeyValuePair<string, int> kVP in leaderBoard)
         {
