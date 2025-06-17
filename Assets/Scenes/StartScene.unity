@@ -1149,6 +1149,7 @@ GameObject:
   - component: {fileID: 301204317}
   - component: {fileID: 301204319}
   - component: {fileID: 301204318}
+  - component: {fileID: 301204320}
   m_Layer: 5
   m_Name: Leaderboard Screen
   m_TagString: Untagged
@@ -1216,6 +1217,29 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 301204316}
   m_CullTransparentMesh: 1
+--- !u!114 &301204320
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 301204316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d172a53c41a68449ba074c215092392, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerLabels:
+  - {fileID: 187410104}
+  - {fileID: 590691343}
+  - {fileID: 248333252}
+  - {fileID: 945478344}
+  - {fileID: 793646452}
+  - {fileID: 1536166229}
+  - {fileID: 117510799}
+  - {fileID: 1941603244}
+  - {fileID: 534003483}
+  - {fileID: 190352108}
 --- !u!1 &310464412
 GameObject:
   m_ObjectHideFlags: 0

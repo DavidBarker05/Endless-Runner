@@ -7,16 +7,13 @@ public class LoadLeaderboard : MonoBehaviour
     [SerializeField]
     List<TextMeshProUGUI> playerLabels = new List<TextMeshProUGUI>();
 
-    void Start()
-    { 
-    }
+    bool isStart = true;
 
-    void Update()
-    { 
-    }
+    void Start() => isStart = false;
 
     async void OnEnable()
     {
+        if (isStart) return;
         List<KeyValuePair<string, int>> leaderBoard = await DatabaseManager.Instance.LoadLeaderboard();
         int index = 0;
         foreach (KeyValuePair<string, int> kVP in leaderBoard)
