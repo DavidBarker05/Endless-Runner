@@ -38,6 +38,7 @@ public class GameManager : MonoBehaviour
     /// The current State of the game
     /// </summary>
     public GameState State { get; set; }
+    public int TotalScore { get; set; }
 
     Dictionary<GameEvents::EventType, List<GameEvents::IEventListener>> eventListeners = new Dictionary<GameEvents::EventType, List<GameEvents::IEventListener>>();
 

@@ -5685,6 +5685,7 @@ GameObject:
   - component: {fileID: 899761036}
   - component: {fileID: 899761038}
   - component: {fileID: 899761037}
+  - component: {fileID: 899761039}
   m_Layer: 5
   m_Name: Defeat Screen
   m_TagString: Untagged
@@ -5752,6 +5753,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 899761035}
   m_CullTransparentMesh: 1
+--- !u!114 &899761039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 899761035}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b497167cda186ba48b998b18ba56385d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentScoreLabel: {fileID: 203373965}
+  bossesBeatenLabel: {fileID: 1878266075}
+  totalScoreValueLabel: {fileID: 2147433050}
 --- !u!1 &900242890
 GameObject:
   m_ObjectHideFlags: 0
@@ -9980,7 +9996,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'BOSSES BEATEN: 0 (X100)'
+  m_text: 'BOSSES BEATEN: 0 (X50)'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -21644,7 +21660,7 @@ GameObject:
   - component: {fileID: 2147433051}
   - component: {fileID: 2147433050}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Total Score Value Label
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
