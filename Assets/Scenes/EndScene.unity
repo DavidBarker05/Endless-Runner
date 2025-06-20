@@ -4369,7 +4369,6 @@ GameObject:
   - component: {fileID: 1357590106}
   - component: {fileID: 1357590105}
   - component: {fileID: 1357590104}
-  - component: {fileID: 1357590103}
   - component: {fileID: 1357590107}
   m_Layer: 5
   m_Name: Save Button
@@ -4398,19 +4397,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -150}
   m_SizeDelta: {x: 300, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1357590103
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1357590101}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4967a2e6e4e24d3428403a11605216d9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  screenNumber: 1
 --- !u!114 &1357590104
 MonoBehaviour:
   m_ObjectHideFlags: 0

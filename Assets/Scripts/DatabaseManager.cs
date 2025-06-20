@@ -56,6 +56,7 @@ public class DatabaseManager : MonoBehaviour
 
     public async Task<List<KeyValuePair<string, int>>> LoadLeaderboard()
     {
+        await WaitUntilInitialised();
         List<KeyValuePair<string, int>> leaderboard = new List<KeyValuePair<string, int>>();
         if (databaseReference == null) return leaderboard;
         try
