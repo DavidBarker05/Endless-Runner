@@ -61,7 +61,7 @@ public class DatabaseManager : MonoBehaviour
         if (databaseReference == null) return leaderboard;
         try
         {
-            DataSnapshot dataSnapshot = await databaseReference.Child("Players").OrderByChild("Score").LimitToLast(10).GetValueAsync();
+            DataSnapshot dataSnapshot = await databaseReference.Child("Players").GetValueAsync();
             if (!dataSnapshot.Exists) return leaderboard;
             foreach (DataSnapshot child in dataSnapshot.Children.Reverse())
             {
@@ -69,6 +69,7 @@ public class DatabaseManager : MonoBehaviour
                 int.TryParse(child?.Child("Score")?.Value?.ToString(), out int score);
                 leaderboard.Add(new KeyValuePair<string, int>(username, score));
             }
+            leaderboard = leaderboard.OrderByDescending(kvp => kvp.Value).Take(10).ToList();
         }
         catch (Exception e)
         {
