@@ -1,7 +1,16 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class RestartButton : MonoBehaviour
 {
-    void Start() => GetComponent<Button>().onClick.AddListener(LevelManager.Instance.ResetGame);
+    void Awake()
+    {
+        GetComponent<Button>().onClick.AddListener(
+            () => {
+                if (LevelManager.Instance != null) LevelManager.Instance.ResetGame();
+                if (EventSystem.current != null) EventSystem.current.SetSelectedGameObject(null);
+            }
+        );
+    }
 }

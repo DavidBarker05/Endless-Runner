@@ -9,5 +9,13 @@ public class SceneChangeButton : MonoBehaviour
     [Min(0)]
     int sceneNumber;
 
-    void Awake() => GetComponent<Button>().onClick.AddListener(async () => await SceneManager.LoadSceneAsync(sceneNumber));
+    void Awake()
+    {
+        GetComponent<Button>().onClick.AddListener(
+            async () => {
+                if (GameManager.Instance != null) GameManager.Instance.State = GameManager.GameState.None;
+                await SceneManager.LoadSceneAsync(sceneNumber);
+            }
+        );
+    }
 }

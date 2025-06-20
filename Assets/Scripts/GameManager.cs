@@ -53,6 +53,12 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    void Update()
+    {
+        if (GameUIManager.Instance == null) return;
+        if (State == GameState.Dead && GameUIManager.Instance.CurrentScreen != GameUIManager.Instance.Screens[3]) GameUIManager.Instance.CurrentScreen = GameUIManager.Instance.Screens[3];
+    }
+
     public void AddListener(GameEvents::EventType eventType, GameEvents::IEventListener eventListener)
     {
         if (eventListener == null) return;

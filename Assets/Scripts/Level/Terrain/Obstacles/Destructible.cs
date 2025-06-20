@@ -32,10 +32,10 @@ public class Destructible : MonoBehaviour
 
     public virtual void DestroyObstacle()
     {
+        StartCoroutine(DestroyObject());
         objectMesh.SetActive(false);
         gameObject.SetActive(false);
         destructionParticles.Play();
-        StartCoroutine(DestroyObject());
     }
 
     IEnumerator DestroyObject()
@@ -47,5 +47,6 @@ public class Destructible : MonoBehaviour
             timer += Time.fixedDeltaTime;
             yield return new WaitForFixedUpdate();
         }
+        Destroy(gameObject);
     }
 }
