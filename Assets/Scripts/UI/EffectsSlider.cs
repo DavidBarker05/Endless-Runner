@@ -3,10 +3,10 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Slider))]
-public class MusicSlider : MonoBehaviour
+public class EffectsSlider : MonoBehaviour
 {
     [SerializeField]
-    TextMeshProUGUI musicValueLabel;
+    TextMeshProUGUI effectsValueLabel;
 
     Slider slider;
 
@@ -16,16 +16,16 @@ public class MusicSlider : MonoBehaviour
     {
         if (UserSettingsManager.Instance == null) return;
         slider.onValueChanged.RemoveAllListeners();
-        float volume = UserSettingsManager.Instance.UserSettings.musicVolume * slider.maxValue;
+        float volume = UserSettingsManager.Instance.UserSettings.soundVolume * slider.maxValue;
         slider.value = Mathf.Clamp(volume, slider.minValue, slider.maxValue);
-        musicValueLabel.text = $"{volume}";
-        slider.onValueChanged.AddListener(ChangeMusicVolume);
+        effectsValueLabel.text = $"{volume}";
+        slider.onValueChanged.AddListener(ChangeEffectsVolume);
     }
 
-    void ChangeMusicVolume(float value)
+    void ChangeEffectsVolume(float value)
     {
         float volume = Mathf.Round(value * 10f) / 10f; // Make volume have only 1 decimal
-        musicValueLabel.text = $"{volume}";
-        UserSettingsManager.Instance.UserSettings.musicVolume = volume / slider.maxValue;
+        effectsValueLabel.text = $"{volume}";
+        UserSettingsManager.Instance.UserSettings.soundVolume = volume / slider.maxValue;
     }
 }
