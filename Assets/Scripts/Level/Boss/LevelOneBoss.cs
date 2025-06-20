@@ -88,8 +88,20 @@ public class LevelOneBoss : Boss, GameEvents::IEventListener
         GameManager.Instance.AddListener(GameEvents::EventType.BossOneBeaten, this); // Add this to the list of listeners for the BossOneBeaten event when the boss is created
     }
 
+    [System.Obsolete] // Because particle.playbackSpeed is deprecated
     void FixedUpdate()
     {
+        if (GameManager.Instance.State == GameManager.GameState.Paused)
+        {
+            if (animator.speed != 0f) animator.speed = 0f;
+            if (setbackParticles.playbackSpeed != 0f) setbackParticles.playbackSpeed = 0f;
+            return;
+        }
+        else
+        {
+            if (animator.speed == 0f) animator.speed = 1f;
+            if (setbackParticles.playbackSpeed == 0f) setbackParticles.playbackSpeed = 1f;
+        }
         if (GameManager.Instance.State == GameManager.GameState.Dead) State = BossState.Catch; // Force boss to idle even if player dies to something that isn't the boss
         animator.SetInteger("AnimationState", (int)State); // Set the animation state to the boss state
         if (GameManager.Instance.State != GameManager.GameState.Alive) return; // If the player is dead don't bother with the following movement code

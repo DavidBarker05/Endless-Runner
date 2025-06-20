@@ -13,7 +13,13 @@ public abstract class Boss : MonoBehaviour
     // Deactivate (destroy) the boss after a certain number of seconds
     System.Collections.IEnumerator Deactivate()
     {
-        yield return new WaitForSeconds(2.5f);
+        float timer = 0f;
+        while (timer < 2.5f)
+        {
+            while (GameManager.Instance.State == GameManager.GameState.Paused) yield return null;
+            timer += Time.fixedDeltaTime;
+            yield return new WaitForFixedUpdate();
+        }
         Destroy(gameObject);
     }
 }

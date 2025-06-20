@@ -18,6 +18,7 @@ public class PickupManager : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (GameManager.Instance.State == GameManager.GameState.Paused) return;
         foreach (var keyValuePair in activePickups)
         {
             keyValuePair.Value.UseTime -= Time.fixedDeltaTime;

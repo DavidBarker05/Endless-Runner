@@ -39,20 +39,12 @@ public class LevelTwoBoss : Boss, GameEvents::IEventListener
 
     void OnDestroy() => GameManager.Instance.RemoveListener(GameEvents::EventType.BossTwoBeaten, this);
 
-    public void OnEvent(GameEvents::EventType eventType, Component sender, object param = null)
-    {
-        if (eventType != GameEvents::EventType.BossTwoBeaten) return;
-        isDisengaging = true;
-        StartCoroutine(FlyUp());
-        base.Disengage();
-    }
-
     IEnumerator FlyIn()
     {
         float timer = 0f;
         while (timer < flyInTime)
         {
-            // while (paused) yield return null;
+            while (GameManager.Instance.State == GameManager.GameState.Paused) yield return null;
             timer += Time.fixedDeltaTime;
             transform.position += UtilMethods.YVector((activeY - startY) / flyInTime * Time.fixedDeltaTime);
             yield return new WaitForFixedUpdate();
@@ -68,7 +60,7 @@ public class LevelTwoBoss : Boss, GameEvents::IEventListener
         float timer = 0f;
         while (timer < laneSwitchTime && !isDisengaging)
         {
-            // while (paused) yield return null;
+            while (GameManager.Instance.State == GameManager.GameState.Paused) yield return null;
             timer += Time.fixedDeltaTime;
             transform.position += new Vector3((lanes[targetLane].position.x - lanes[currentLane].position.x) / laneSwitchTime * Time.fixedDeltaTime, 0f);
             yield return new WaitForFixedUpdate();
@@ -86,7 +78,7 @@ public class LevelTwoBoss : Boss, GameEvents::IEventListener
         float timer = 0f;
         while (timer < shotChargeTime && !isDisengaging)
         {
-            // while (paused) yield return null;
+            while (GameManager.Instance.State == GameManager.GameState.Paused) yield return null;
             timer += Time.fixedDeltaTime;
             yield return new WaitForFixedUpdate();
         }
@@ -102,7 +94,7 @@ public class LevelTwoBoss : Boss, GameEvents::IEventListener
         float timer = 0f;
         while (timer < shotDuration && !isDisengaging)
         {
-            // while (paused) yield return null;
+            while (GameManager.Instance.State == GameManager.GameState.Paused) yield return null;
             timer += Time.fixedDeltaTime;
             if (PlayerManager.Instance.transform.position.x == lanes[currentLane].position.x && !PlayerManager.Instance.Invulnerable) GameManager.Instance.State = GameManager.GameState.Dead;
             yield return new WaitForFixedUpdate();
@@ -118,7 +110,7 @@ public class LevelTwoBoss : Boss, GameEvents::IEventListener
         float timer = 0f;
         while (timer < cooldownTime && !isDisengaging)
         {
-            // while (paused) yield return null;
+            while (GameManager.Instance.State == GameManager.GameState.Paused) yield return null;
             timer += Time.fixedDeltaTime;
             yield return new WaitForFixedUpdate();
         }
@@ -131,9 +123,17 @@ public class LevelTwoBoss : Boss, GameEvents::IEventListener
         while (true)
         {
             if (GameManager.Instance.State == GameManager.GameState.Dead) yield break;
-            // while (paused) yield return null;
+            while (GameManager.Instance.State == GameManager.GameState.Paused) yield return null;
             transform.position += UtilMethods.YVector(disengageSpeed * Time.fixedDeltaTime);
             yield return new WaitForFixedUpdate();
         }
+    }
+
+    public void OnEvent(GameEvents::EventType eventType, Component sender, object param = null)
+    {
+        if (eventType != GameEvents::EventType.BossTwoBeaten) return;
+        isDisengaging = true;
+        StartCoroutine(FlyUp());
+        base.Disengage();
     }
 }

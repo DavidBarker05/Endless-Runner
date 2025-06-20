@@ -130,7 +130,21 @@ public class PlayerManager : MonoBehaviour, GameEvents::IEventListener
 
     void Update()
     {
+        if (GameManager.Instance.State == GameManager.GameState.Dead) return;
         if (Input.GetKey(KeyCode.R) && GameManager.Instance.State == GameManager.GameState.Alive) currentResetHoldTime += Time.deltaTime; // Make time increase while player holds r
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (GameManager.Instance.State == GameManager.GameState.Alive)
+            {
+                GameManager.Instance.State = GameManager.GameState.Paused;
+                GameUIManager.Instance.CurrentScreen = GameUIManager.Instance.Screens[1];
+            }
+            else if (GameManager.Instance.State == GameManager.GameState.Paused)
+            {
+                GameManager.Instance.State = GameManager.GameState.Alive;
+                GameUIManager.Instance.CurrentScreen = GameUIManager.Instance.Screens[0];
+            }
+        }
         else currentResetHoldTime = 0f; // Reset timer when release r
         if (currentResetHoldTime >= resetHoldTime) LevelManager.Instance.ResetGame(); // Reset game once timer excedes time
         if (State == AnimationState.WallrunRight || State == AnimationState.WallrunLeft)
@@ -153,8 +167,22 @@ public class PlayerManager : MonoBehaviour, GameEvents::IEventListener
         if (!pressingSlide) currentSlideTime = 0f; // Reset time player is sliding for
     }
 
+    [System.Obsolete] // Because particle.playbackSpeed is deprecated
     void FixedUpdate()
     {
+        if (GameManager.Instance.State == GameManager.GameState.Paused)
+        {
+            if (animator.speed != 0f) animator.speed = 0f;
+            if (jumpParticles.playbackSpeed != 0f) jumpParticles.playbackSpeed = 0f;
+            if (bonusParticles.playbackSpeed != 0f) bonusParticles.playbackSpeed = 0f;
+            return;
+        }
+        else
+        {
+            if (animator.speed == 0f) animator.speed = 1f;
+            if (jumpParticles.playbackSpeed == 0f) jumpParticles.playbackSpeed = 1f;
+            if (bonusParticles.playbackSpeed == 0f) bonusParticles.playbackSpeed = 1f;
+        }
         if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit rayHit, maxGroundCheckDistance, groundLayer)) // Make sure player is directly above ground not a gap
         {
             if (rayHit.point.y < TERRAIN_RAY_THRESHOLD) // Check that the player's feet would be below 0 but also below floating-pont threshold set
@@ -195,7 +223,11 @@ public class PlayerManager : MonoBehaviour, GameEvents::IEventListener
             vVel = SNAP_TO_GROUND_SPEED;
             wasGroundedLastFrame = true;
             if (GameManager.Instance.State == GameManager.GameState.Alive && !IsSliding) State = AnimationState.Run;
-            if (Caught) State = AnimationState.Caught;
+            if (Caught)
+            {
+                State = AnimationState.Caught;
+                GameManager.Instance.State = GameManager.GameState.Dead;
+            }
         }
         else
         {

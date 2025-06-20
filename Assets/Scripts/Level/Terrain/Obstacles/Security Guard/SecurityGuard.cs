@@ -32,7 +32,7 @@ public class SecurityGuard : MonoBehaviour
             float timer = 0f;
             while (timer < 1f / fireRate)
             {
-                // while (paused) yield return null;
+                while (GameManager.Instance.State == GameManager.GameState.Paused) yield return null;
                 timer += Time.fixedDeltaTime;
                 yield return new WaitForFixedUpdate();
             }

@@ -28,6 +28,10 @@ public class GameManager : MonoBehaviour
         /// Player is currently dead
         /// </summary>
         Dead,
+        /// <summary>
+        /// 
+        /// </summary>
+        Paused,
     }
 
     /// <summary>
