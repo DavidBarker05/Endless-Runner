@@ -224,6 +224,7 @@ GameObject:
   - component: {fileID: 100600087}
   - component: {fileID: 100600089}
   - component: {fileID: 100600088}
+  - component: {fileID: 100600090}
   m_Layer: 5
   m_Name: Game Screen
   m_TagString: Untagged
@@ -291,6 +292,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 100600086}
   m_CullTransparentMesh: 1
+--- !u!114 &100600090
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100600086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccf7cd30cff20574fa39f2f080bbb085, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentScoreLabel: {fileID: 474078862}
+  bossesBeatenLabel: {fileID: 121936913}
 --- !u!1 &121936911
 GameObject:
   m_ObjectHideFlags: 0
