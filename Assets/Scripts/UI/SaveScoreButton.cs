@@ -12,7 +12,11 @@ public class SaveScoreButton : MonoBehaviour
     {
         GetComponent<Button>().onClick.AddListener(
             async () => {
-                if (GameManager.Instance != null && DatabaseManager.Instance != null && savedName.text != "NO NAME") await DatabaseManager.Instance.SaveScore(savedName.text, GameManager.Instance.TotalScore);
+                if (GameManager.Instance != null && DatabaseManager.Instance != null && savedName.text != "NO NAME")
+                {
+                    await DatabaseManager.Instance.SaveScore(savedName.text, GameManager.Instance.TotalScore);
+                    GameUIManager.Instance.CurrentScreen = GameUIManager.Instance.Screens[1];
+                }
             }
         );
     }
