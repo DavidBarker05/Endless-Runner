@@ -43,7 +43,7 @@ public class DatabaseManager : MonoBehaviour
             if (dataSnapshot.Exists)
             {
                 int.TryParse(dataSnapshot.Child("Score")?.Value?.ToString(), out int highScore);
-                if (score < highScore) return;
+                if (score < highScore || score <= 0) return;
             }
             Dictionary<string, object> data = new Dictionary<string, object> { { "Score", score } };
             await databaseReference.Child("Players").Child(username).SetValueAsync(data);
