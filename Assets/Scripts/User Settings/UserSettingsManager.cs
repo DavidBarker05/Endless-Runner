@@ -1,9 +1,13 @@
 using System.IO;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class UserSettingsManager : MonoBehaviour
 {
     public static UserSettingsManager Instance { get; private set; }
+
+    [SerializeField]
+    AudioMixer audioMixer;
 
     string path = "";
     UserSettings previousSettings;
@@ -26,6 +30,12 @@ public class UserSettingsManager : MonoBehaviour
         }
         else LoadSettings();
         previousSettings = new UserSettings(UserSettings);
+        Screen.SetResolution(UserSettings.resolution[0], UserSettings.resolution[1], fullscreen: true);
+        QualitySettings.vSyncCount = UserSettings.vsyncCount;
+        Application.targetFrameRate = UserSettings.targetFrameRate;
+        audioMixer.SetFloat("MasterVolume", Mathf.Log10(Mathf.Clamp(UserSettings.masterVolume, 0.001f, 1f)) * 20f);
+        audioMixer.SetFloat("MusicVolume", Mathf.Log10(Mathf.Clamp(UserSettings.musicVolume, 0.001f, 1f)) * 20f);
+        audioMixer.SetFloat("EffectsVolume", Mathf.Log10(Mathf.Clamp(UserSettings.effectsVolume, 0.001f, 1f)) * 20f);
     }
 
     void Update()
@@ -47,9 +57,21 @@ public class UserSettingsManager : MonoBehaviour
             Application.targetFrameRate = UserSettings.targetFrameRate;
             previousSettings.targetFrameRate = UserSettings.targetFrameRate;
         }
-        if (previousSettings.masterVolume != UserSettings.masterVolume) previousSettings.musicVolume = UserSettings.musicVolume;
-        if (previousSettings.musicVolume != UserSettings.musicVolume) previousSettings.musicVolume = UserSettings.musicVolume;
-        if (previousSettings.effectsVolume != UserSettings.effectsVolume) previousSettings.effectsVolume = UserSettings.effectsVolume;
+        if (previousSettings.masterVolume != UserSettings.masterVolume)
+        {
+            audioMixer.SetFloat("MasterVolume", Mathf.Log10(Mathf.Clamp(UserSettings.masterVolume, 0.001f, 1f)) * 20f);
+            previousSettings.musicVolume = UserSettings.musicVolume;
+        }
+        if (previousSettings.musicVolume != UserSettings.musicVolume)
+        {
+            audioMixer.SetFloat("MusicVolume", Mathf.Log10(Mathf.Clamp(UserSettings.musicVolume, 0.001f, 1f)) * 20f);
+            previousSettings.musicVolume = UserSettings.musicVolume;
+        }
+        if (previousSettings.effectsVolume != UserSettings.effectsVolume)
+        {
+            audioMixer.SetFloat("EffectsVolume", Mathf.Log10(Mathf.Clamp(UserSettings.effectsVolume, 0.001f, 1f)) * 20f);
+            previousSettings.effectsVolume = UserSettings.effectsVolume;
+        }
     }
 
     void OnApplicationQuit() => SaveSettings();
