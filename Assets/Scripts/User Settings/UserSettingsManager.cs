@@ -33,9 +33,9 @@ public class UserSettingsManager : MonoBehaviour
         Screen.SetResolution(UserSettings.resolution[0], UserSettings.resolution[1], fullscreen: true);
         QualitySettings.vSyncCount = UserSettings.vsyncCount;
         Application.targetFrameRate = UserSettings.targetFrameRate;
-        audioMixer.SetFloat("MasterVolume", Mathf.Log10(Mathf.Clamp(UserSettings.masterVolume, 0.001f, 1f)) * 20f);
-        audioMixer.SetFloat("MusicVolume", Mathf.Log10(Mathf.Clamp(UserSettings.musicVolume, 0.001f, 1f)) * 20f);
-        audioMixer.SetFloat("EffectsVolume", Mathf.Log10(Mathf.Clamp(UserSettings.effectsVolume, 0.001f, 1f)) * 20f);
+        audioMixer.SetFloat("MasterVolume", Mathf.Log10(Mathf.Clamp(UserSettings.masterVolume, 0.0001f, 1f)) * 20f);
+        audioMixer.SetFloat("MusicVolume", Mathf.Log10(Mathf.Clamp(UserSettings.musicVolume, 0.0001f, 1f)) * 20f);
+        audioMixer.SetFloat("EffectsVolume", Mathf.Log10(Mathf.Clamp(UserSettings.effectsVolume, 0.0001f, 1f)) * 20f);
     }
 
     void Update()
@@ -59,17 +59,17 @@ public class UserSettingsManager : MonoBehaviour
         }
         if (previousSettings.masterVolume != UserSettings.masterVolume)
         {
-            audioMixer.SetFloat("MasterVolume", Mathf.Log10(Mathf.Clamp(UserSettings.masterVolume, 0.001f, 1f)) * 20f);
+            audioMixer.SetFloat("MasterVolume", Mathf.Log10(Mathf.Clamp(UserSettings.masterVolume, 0.0001f, 1f)) * 20f);
             previousSettings.musicVolume = UserSettings.musicVolume;
         }
         if (previousSettings.musicVolume != UserSettings.musicVolume)
         {
-            audioMixer.SetFloat("MusicVolume", Mathf.Log10(Mathf.Clamp(UserSettings.musicVolume, 0.001f, 1f)) * 20f);
+            audioMixer.SetFloat("MusicVolume", Mathf.Log10(Mathf.Clamp(UserSettings.musicVolume, 0.0001f, 1f)) * 20f);
             previousSettings.musicVolume = UserSettings.musicVolume;
         }
         if (previousSettings.effectsVolume != UserSettings.effectsVolume)
         {
-            audioMixer.SetFloat("EffectsVolume", Mathf.Log10(Mathf.Clamp(UserSettings.effectsVolume, 0.001f, 1f)) * 20f);
+            audioMixer.SetFloat("EffectsVolume", Mathf.Log10(Mathf.Clamp(UserSettings.effectsVolume, 0.0001f, 1f)) * 20f);
             previousSettings.effectsVolume = UserSettings.effectsVolume;
         }
     }

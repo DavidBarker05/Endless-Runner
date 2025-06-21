@@ -24,8 +24,8 @@ public class EffectsSlider : MonoBehaviour
 
     void ChangeEffectsVolume(float value)
     {
-        float volume = Mathf.Round(value * 1000f) / 1000f; // Make volume have only 3 decimal
-        effectsValueLabel.text = $"{volume * 100f}";
+        float volume = Mathf.Round(value * 10000f) / 10000f; // Make volume have only 4 decimal
+        effectsValueLabel.text = $"{Mathf.Round(volume * 1000f) / 1000f * 100f}";
         UserSettingsManager.Instance.UserSettings.effectsVolume = volume;
     }
 }

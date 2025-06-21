@@ -24,8 +24,8 @@ public class MasterSlider : MonoBehaviour
 
     void ChangeMasterVolume(float value)
     {
-        float volume = Mathf.Round(value * 1000f) / 1000f; // Make volume have only 3 decimal
-        masterValueLabel.text = $"{volume * 100f}";
+        float volume = Mathf.Round(value * 10000f) / 10000f; // Make volume have only 4 decimal
+        masterValueLabel.text = $"{Mathf.Round(volume * 1000f) / 1000f * 100f}";
         UserSettingsManager.Instance.UserSettings.masterVolume = volume;
     }
 }
