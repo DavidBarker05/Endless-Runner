@@ -8,9 +8,7 @@ public class UserSettingsManager : MonoBehaviour
     string path = "";
     UserSettings previousSettings;
 
-    [SerializeField]
-    UserSettings _userSettings;
-    public UserSettings UserSettings { get => _userSettings; set => _userSettings = value; }
+    public UserSettings UserSettings { get; set; }
 
     void Awake()
     {
@@ -27,34 +25,29 @@ public class UserSettingsManager : MonoBehaviour
             SaveSettings();
         }
         else LoadSettings();
-        previousSettings = new UserSettings();
-        previousSettings.screenWidth = UserSettings.screenWidth;
-        previousSettings.screenHeight = UserSettings.screenHeight;
-        previousSettings.vSyncMode = UserSettings.vSyncMode;
-        previousSettings.frameRateLimit = UserSettings.frameRateLimit;
-        previousSettings.musicVolume = UserSettings.musicVolume;
-        previousSettings.soundVolume = UserSettings.soundVolume;
+        previousSettings = new UserSettings(UserSettings);
     }
 
     void Update()
     {
-        if (previousSettings.screenWidth != UserSettings.screenWidth || previousSettings.screenHeight != UserSettings.screenHeight)
+        if (previousSettings.resolution[0] != UserSettings.resolution[0] || previousSettings.resolution[1] != UserSettings.resolution[1])
         {
-            Screen.SetResolution(UserSettings.screenWidth, UserSettings.screenHeight, fullscreen: true);
-            previousSettings.screenWidth = UserSettings.screenWidth;
-            previousSettings.screenHeight = UserSettings.screenHeight;
+            Screen.SetResolution(UserSettings.resolution[0], UserSettings.resolution[1], fullscreen: true);
+            if (previousSettings.resolution[0] != UserSettings.resolution[0]) previousSettings.resolution[0] = UserSettings.resolution[0];
+            if (previousSettings.resolution[1] != UserSettings.resolution[1]) previousSettings.resolution[1] = UserSettings.resolution[1];
         }
-        if (previousSettings.vSyncMode != UserSettings.vSyncMode)
+        if (previousSettings.vsyncCount != UserSettings.vsyncCount)
         {
-            QualitySettings.vSyncCount = UserSettings.vSyncMode;
-            previousSettings.vSyncMode = UserSettings.vSyncMode;
-            if (UserSettings.vSyncMode > 0) UserSettings.frameRateLimit = 0;
+            if (UserSettings.vsyncCount > 0) UserSettings.targetFrameRate = 0;
+            QualitySettings.vSyncCount = UserSettings.vsyncCount;
+            previousSettings.vsyncCount = UserSettings.vsyncCount;
         }
-        if (previousSettings.frameRateLimit != UserSettings.frameRateLimit)
+        if (previousSettings.targetFrameRate != UserSettings.targetFrameRate)
         {
-            Application.targetFrameRate = UserSettings.frameRateLimit;
-            previousSettings.frameRateLimit = UserSettings.frameRateLimit;
+            Application.targetFrameRate = UserSettings.targetFrameRate;
+            previousSettings.targetFrameRate = UserSettings.targetFrameRate;
         }
+        if (previousSettings.masterVolume != UserSettings.masterVolume) previousSettings.musicVolume = UserSettings.musicVolume;
         if (previousSettings.musicVolume != UserSettings.musicVolume) previousSettings.musicVolume = UserSettings.musicVolume;
         if (previousSettings.soundVolume != UserSettings.soundVolume) previousSettings.soundVolume = UserSettings.soundVolume;
     }

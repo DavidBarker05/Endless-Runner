@@ -14,17 +14,17 @@ public class VsyncOptions : MonoBehaviour
     void OnEnable()
     {
         if (UserSettingsManager.Instance == null) return;
-        int vSyncMode = UserSettingsManager.Instance.UserSettings.vSyncMode;
+        int vSyncMode = UserSettingsManager.Instance.UserSettings.vsyncCount;
         int vSyncClamp = Mathf.Clamp(vSyncMode, 0, 2);
         dropdown.onValueChanged.RemoveAllListeners();
         dropdown.value = vSyncClamp;
         dropdown.onValueChanged.AddListener(ChangeVsync);
-        UserSettingsManager.Instance.UserSettings.vSyncMode = vSyncClamp;
+        UserSettingsManager.Instance.UserSettings.vsyncCount = vSyncClamp;
     }
 
     void ChangeVsync(int index)
     {
-        UserSettingsManager.Instance.UserSettings.vSyncMode = index;
+        UserSettingsManager.Instance.UserSettings.vsyncCount = index;
         if (frameLimitDropdown == null) return;
         if (index > 0)
         {

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -12,28 +13,30 @@ public class ResolutionDropdown : MonoBehaviour
         "2560x1440",
         "3840x2160"
     };
+    List<string> resList;
+    List<string> customResList = new List<string>() { "CUSTOM" };
 
     TMP_Dropdown dropdown;
 
-    void Awake() => dropdown = GetComponent<TMP_Dropdown>();
+    void Awake()
+    {
+        dropdown = GetComponent<TMP_Dropdown>();
+        resList = resolutions.ToList();
+        customResList.AddRange(resolutions);
+    }
 
     void OnEnable()
     {
         if (UserSettingsManager.Instance == null) return;
         dropdown.onValueChanged.RemoveAllListeners();
         dropdown.ClearOptions();
-        string resolution = $"{UserSettingsManager.Instance.UserSettings.screenWidth}x{UserSettingsManager.Instance.UserSettings.screenHeight}";
-        if (resolutions.Contains(resolution))
+        string resolution = $"{UserSettingsManager.Instance.UserSettings.resolution[0]}x{UserSettingsManager.Instance.UserSettings.resolution[1]}";
+        if (resList.Contains<string>(resolution))
         {
-            dropdown.AddOptions(resolutions.ToList());
-            dropdown.value = resolutions.ToList().IndexOf(resolution);
+            dropdown.AddOptions(resList);
+            dropdown.value = resList.IndexOf(resolution);
         }
-        else
-        {
-            List<string> customOption = new List<string>() { "CUSTOM" };
-            customOption.AddRange(resolutions);
-            dropdown.AddOptions(customOption);
-        }
+        else dropdown.AddOptions(customResList);
         dropdown.onValueChanged.AddListener(ChangeResolution);
     }
 
@@ -43,27 +46,26 @@ public class ResolutionDropdown : MonoBehaviour
         if (resolutions.Contains(resolution) && dropdown.options[0].text == "CUSTOM")
         {
             dropdown.onValueChanged.RemoveAllListeners();
-            int _index = resolutions.ToList().IndexOf(resolution);
             dropdown.ClearOptions();
-            dropdown.AddOptions(resolutions.ToList());
-            dropdown.value = _index;
+            dropdown.AddOptions(resList);
+            dropdown.value = resList.IndexOf(resolution);
             dropdown.onValueChanged.AddListener(ChangeResolution);
         }
-        UserSettingsManager.Instance.UserSettings.screenWidth = resolution switch
+        UserSettingsManager.Instance.UserSettings.resolution[0] = resolution switch
         {
             "1280x720" => 1280,
             "1920x1080" => 1920,
             "2560x1440" => 2560,
             "3840x2160" => 3840,
-            _ => UserSettingsManager.Instance.UserSettings.screenWidth
+            _ => UserSettingsManager.Instance.UserSettings.resolution[0]
         };
-        UserSettingsManager.Instance.UserSettings.screenHeight = resolution switch
+        UserSettingsManager.Instance.UserSettings.resolution[1] = resolution switch
         {
             "1280x720" => 720,
             "1920x1080" => 1080,
             "2560x1440" => 1440,
             "3840x2160" => 2160,
-            _ => UserSettingsManager.Instance.UserSettings.screenHeight
+            _ => UserSettingsManager.Instance.UserSettings.resolution[1]
         };
     }
 }

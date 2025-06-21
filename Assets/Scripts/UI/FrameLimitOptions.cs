@@ -27,12 +27,12 @@ public class FrameLimitOptions : MonoBehaviour
         dropdown.onValueChanged.RemoveAllListeners();
         dropdown.ClearOptions();
         dropdown.AddOptions(limits.ToList());
-        int limit = UserSettingsManager.Instance.UserSettings.frameRateLimit;
+        int limit = UserSettingsManager.Instance.UserSettings.targetFrameRate;
         int possibleIndex = limits.ToList().IndexOf($"{limit}");
         int index = limit == 0 ? 0 : (possibleIndex == -1 ? 0 : possibleIndex);
         dropdown.value = index;
         dropdown.onValueChanged.AddListener(ChangeFrameLimit);
     }
 
-    void ChangeFrameLimit(int index) => UserSettingsManager.Instance.UserSettings.frameRateLimit = (int.TryParse(dropdown.options[index].text, out int limit) ? limit : 0);
+    void ChangeFrameLimit(int index) => UserSettingsManager.Instance.UserSettings.targetFrameRate = (int.TryParse(dropdown.options[index].text, out int limit) ? limit : 0);
 }
