@@ -49,7 +49,7 @@ public class UserSettingsManager : MonoBehaviour
         }
         if (previousSettings.masterVolume != UserSettings.masterVolume) previousSettings.musicVolume = UserSettings.musicVolume;
         if (previousSettings.musicVolume != UserSettings.musicVolume) previousSettings.musicVolume = UserSettings.musicVolume;
-        if (previousSettings.soundVolume != UserSettings.soundVolume) previousSettings.soundVolume = UserSettings.soundVolume;
+        if (previousSettings.effectsVolume != UserSettings.effectsVolume) previousSettings.effectsVolume = UserSettings.effectsVolume;
     }
 
     void OnApplicationQuit() => SaveSettings();

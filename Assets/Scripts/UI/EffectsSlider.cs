@@ -16,7 +16,7 @@ public class EffectsSlider : MonoBehaviour
     {
         if (UserSettingsManager.Instance == null) return;
         slider.onValueChanged.RemoveAllListeners();
-        float volume = UserSettingsManager.Instance.UserSettings.soundVolume * slider.maxValue;
+        float volume = UserSettingsManager.Instance.UserSettings.effectsVolume * slider.maxValue;
         slider.value = Mathf.Clamp(volume, slider.minValue, slider.maxValue);
         effectsValueLabel.text = $"{volume}";
         slider.onValueChanged.AddListener(ChangeEffectsVolume);
@@ -26,6 +26,6 @@ public class EffectsSlider : MonoBehaviour
     {
         float volume = Mathf.Round(value * 10f) / 10f; // Make volume have only 1 decimal
         effectsValueLabel.text = $"{volume}";
-        UserSettingsManager.Instance.UserSettings.soundVolume = volume / slider.maxValue;
+        UserSettingsManager.Instance.UserSettings.effectsVolume = volume / slider.maxValue;
     }
 }

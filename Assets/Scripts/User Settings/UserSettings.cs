@@ -6,7 +6,7 @@ public class UserSettings
     public int targetFrameRate = 0;
     public float masterVolume = 1f;
     public float musicVolume = 1f;
-    public float soundVolume = 1f;
+    public float effectsVolume = 1f;
 
     public UserSettings()
     {
@@ -15,7 +15,7 @@ public class UserSettings
         targetFrameRate = 0;
         masterVolume = 1f;
         musicVolume = 1f;
-        soundVolume = 1f;
+        effectsVolume = 1f;
     }
 
     public UserSettings(UserSettings other)
@@ -25,6 +25,6 @@ public class UserSettings
         targetFrameRate = other.targetFrameRate;
         masterVolume = other.masterVolume;
         musicVolume = other.musicVolume;
-        soundVolume = other.soundVolume;
+        effectsVolume = other.effectsVolume;
     }
 }
