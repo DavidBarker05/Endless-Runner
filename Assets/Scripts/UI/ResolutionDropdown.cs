@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -13,16 +12,14 @@ public class ResolutionDropdown : MonoBehaviour
         "2560x1440",
         "3840x2160"
     };
-    List<string> resList;
-    List<string> customResList = new List<string>() { "CUSTOM" };
+    readonly List<string> resList = new List<string>();
 
     TMP_Dropdown dropdown;
 
     void Awake()
     {
         dropdown = GetComponent<TMP_Dropdown>();
-        resList = resolutions.ToList();
-        customResList.AddRange(resolutions);
+        resList.AddRange(resolutions);
     }
 
     void OnEnable()
@@ -31,22 +28,20 @@ public class ResolutionDropdown : MonoBehaviour
         dropdown.onValueChanged.RemoveAllListeners();
         dropdown.ClearOptions();
         string resolution = $"{UserSettingsManager.Instance.UserSettings.resolution[0]}x{UserSettingsManager.Instance.UserSettings.resolution[1]}";
-        if (resList.Contains<string>(resolution))
-        {
-            dropdown.AddOptions(resList);
-            dropdown.value = resList.IndexOf(resolution);
-        }
-        else dropdown.AddOptions(customResList);
+        if (!resList.Contains<string>(resolution)) resList.Insert(0, "CUSTOM");
+        dropdown.AddOptions(resList);
+        dropdown.value = resList[0] == "CUSTOM" ? 0 : resList.IndexOf(resolution);
         dropdown.onValueChanged.AddListener(ChangeResolution);
     }
 
     void ChangeResolution(int index)
     {
         string resolution = dropdown.options[index].text;
-        if (resolutions.Contains(resolution) && dropdown.options[0].text == "CUSTOM")
+        if (resList.Contains<string>("CUSTOM") && resolution != "CUSTOM")
         {
             dropdown.onValueChanged.RemoveAllListeners();
             dropdown.ClearOptions();
+            resList.RemoveAt(0);
             dropdown.AddOptions(resList);
             dropdown.value = resList.IndexOf(resolution);
             dropdown.onValueChanged.AddListener(ChangeResolution);

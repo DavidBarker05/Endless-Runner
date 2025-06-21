@@ -64,5 +64,7 @@ public class UserSettingsManager : MonoBehaviour
     {
         string json = File.ReadAllText(path);
         UserSettings = JsonUtility.FromJson<UserSettings>(json);
+        if (UserSettings.vsyncCount != Mathf.Clamp(UserSettings.vsyncCount, 0, 2)) UserSettings.vsyncCount = Mathf.Clamp(UserSettings.vsyncCount, 0, 2);
+        if (UserSettings.vsyncCount > 0) UserSettings.targetFrameRate = 0;
     }
 }
