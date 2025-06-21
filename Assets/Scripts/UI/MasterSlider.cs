@@ -16,9 +16,9 @@ public class MasterSlider : MonoBehaviour
     {
         if (UserSettingsManager.Instance == null) return;
         slider.onValueChanged.RemoveAllListeners();
-        float volume = UserSettingsManager.Instance.UserSettings.masterVolume * slider.maxValue;
+        float volume = UserSettingsManager.Instance.UserSettings.masterVolume;
         slider.value = Mathf.Clamp(volume, slider.minValue, slider.maxValue);
-        masterValueLabel.text = $"{volume}";
+        masterValueLabel.text = $"{volume * 100f}";
         slider.onValueChanged.AddListener(ChangeMasterVolume);
     }
 

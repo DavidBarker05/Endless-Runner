@@ -16,9 +16,9 @@ public class MusicSlider : MonoBehaviour
     {
         if (UserSettingsManager.Instance == null) return;
         slider.onValueChanged.RemoveAllListeners();
-        float volume = UserSettingsManager.Instance.UserSettings.musicVolume * slider.maxValue;
+        float volume = UserSettingsManager.Instance.UserSettings.musicVolume;
         slider.value = Mathf.Clamp(volume, slider.minValue, slider.maxValue);
-        musicValueLabel.text = $"{volume}";
+        musicValueLabel.text = $"{volume * 100f}";
         slider.onValueChanged.AddListener(ChangeMusicVolume);
     }
 
