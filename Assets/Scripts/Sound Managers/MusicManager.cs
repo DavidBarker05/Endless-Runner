@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 [RequireComponent(typeof(AudioSource))]
 public class MusicManager : MonoBehaviour
@@ -7,9 +8,17 @@ public class MusicManager : MonoBehaviour
     public static MusicManager Instance { get; private set; }
 
     [SerializeField]
+    AudioMixer audioMixer;
+    [SerializeField]
+    float normalCuttof = 22000f;
+    [SerializeField]
+    float muffledCuttof = 5000f;
+    [SerializeField]
     List<AudioClip> musicTracks = new List<AudioClip>();
 
     AudioSource audioSource;
+
+    public bool MusicMuffled { set => audioMixer.SetFloat("MusicMuffle", value ? muffledCuttof : normalCuttof); }
 
     void Awake()
     {
