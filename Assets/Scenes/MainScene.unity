@@ -4612,6 +4612,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   runningSound: {fileID: 8300000, guid: 18747abc08a96db4393419b19dc933d4, type: 3}
+  landingSound: {fileID: 8300000, guid: baaa363d984032d4fb9eea6f649ec2ad, type: 3}
   groundLayer:
     serializedVersion: 2
     m_Bits: 256

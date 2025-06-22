@@ -39,6 +39,8 @@ public class PlayerManager : MonoBehaviour, GameEvents::IEventListener
     [SerializeField]
     AudioClip runningSound;
     [SerializeField]
+    AudioClip landingSound;
+    [SerializeField]
     LayerMask groundLayer;
     [SerializeField]
     [Min(0f)]
@@ -102,6 +104,7 @@ public class PlayerManager : MonoBehaviour, GameEvents::IEventListener
     bool wasGroundedLastFrame = true;
     bool isGrounded = true;
     AudioState audioState;
+    bool inAir = false;
 
     /// <summary>
     /// 
@@ -208,6 +211,13 @@ public class PlayerManager : MonoBehaviour, GameEvents::IEventListener
                     audioState = new AudioState(runningSound, EffectsManager.Instance.PlayLoopingSound(runningSound, transform));
                 }
                 break;
+            case AnimationState.Fall:
+                if (audioState != null)
+                {
+                    EffectsManager.Instance.StopLoopingSound(audioState.clip, audioState.id);
+                    audioState = null;
+                }
+                break;
         }
         if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit rayHit, maxGroundCheckDistance, groundLayer)) // Make sure player is directly above ground not a gap
         {
@@ -244,6 +254,8 @@ public class PlayerManager : MonoBehaviour, GameEvents::IEventListener
         Vector3 movement = (hVel + UtilMethods.YVector(vVel)) * Time.fixedDeltaTime;
         if (GameManager.Instance.State == GameManager.GameState.Alive) cc.Move(movement);
         isGrounded = cc.isGrounded || wasGroundedLastFrame;
+        if (isGrounded && inAir) EffectsManager.Instance.PlaySound(landingSound, transform, 0.125f);
+        inAir = !cc.isGrounded && !wasGroundedLastFrame;
         if (cc.isGrounded)
         {
             vVel = SNAP_TO_GROUND_SPEED;
