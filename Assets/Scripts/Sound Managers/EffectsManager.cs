@@ -17,10 +17,11 @@ public class EffectsManager : MonoBehaviour
         else Instance = this;
     }
 
-    AudioSource CreateAudioSource(AudioClip audioClip, Transform spawn, float volume = 1f, bool looping = false)
+    AudioSource CreateAudioSource(AudioClip audioClip, Transform spawn, float volume = 1f, float startTime = 0f, bool looping = false)
     {
         AudioSource _soundEffect = Instantiate(soundEffect, spawn.position, Quaternion.identity);
         _soundEffect.clip = audioClip;
+        _soundEffect.time = startTime;
         _soundEffect.volume = Mathf.Clamp01(volume);
         _soundEffect.loop = looping;
         _soundEffect.Play();
@@ -28,16 +29,17 @@ public class EffectsManager : MonoBehaviour
         return _soundEffect;
     }
 
-    public void PlaySound(AudioClip audioClip, Transform spawn, float volume = 1f)
+    public void PlaySound(AudioClip audioClip, Transform spawn, float endTime, float volume = 1f, float startTime = 0f)
     {
-        AudioSource _soundEffect = CreateAudioSource(audioClip, spawn, volume);
-        StartCoroutine(DestroySound(_soundEffect.gameObject, _soundEffect.clip.length));
+        AudioSource _soundEffect = CreateAudioSource(audioClip, spawn, volume, startTime);
+        StartCoroutine(DestroySound(_soundEffect.gameObject, endTime - startTime));
     }
 
-    public void PlaySound(AudioClip audioClip, GameObject followSource, float volume = 1f) {
-        AudioSource _soundEffect = CreateAudioSource(audioClip, followSource.transform, volume);
+    public void PlaySound(AudioClip audioClip, GameObject followSource, float endTime, float volume = 1f, float startTime = 0f)
+    {
+        AudioSource _soundEffect = CreateAudioSource(audioClip, followSource.transform, volume, startTime);
         StartCoroutine(FollowSource(_soundEffect.gameObject, followSource));
-        StartCoroutine(DestroySound(_soundEffect.gameObject, _soundEffect.clip.length));
+        StartCoroutine(DestroySound(_soundEffect.gameObject, endTime - startTime));
     }
 
     public int PlayLoopingSound(AudioClip audioClip, Transform spawn, float volume = 1f)

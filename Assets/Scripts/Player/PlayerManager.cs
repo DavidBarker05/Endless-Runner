@@ -37,7 +37,15 @@ public class PlayerManager : MonoBehaviour, GameEvents::IEventListener
     public static PlayerManager Instance { get; private set; }
 
     [SerializeField]
+    float _exposedStart;
+    [SerializeField]
+    float _exposedEnd;
+    [SerializeField]
+    float _exposedVolume;
+    [SerializeField]
     AudioClip runningSound;
+    [SerializeField]
+    AudioClip jumpSound;
     [SerializeField]
     AudioClip landingSound;
     [SerializeField]
@@ -105,6 +113,8 @@ public class PlayerManager : MonoBehaviour, GameEvents::IEventListener
     bool isGrounded = true;
     AudioState audioState;
     bool inAir = false;
+    bool playJumpSound = false;
+    bool allowedToPlayJump = true;
 
     /// <summary>
     /// 
@@ -180,6 +190,7 @@ public class PlayerManager : MonoBehaviour, GameEvents::IEventListener
             targetLane = Mathf.Clamp(targetLane, 0, 2); // Make sure target lane can't be out of bounds
         }
         if (Input.GetKeyUp(KeyCode.A) && horizontalDirection == -1 || Input.GetKeyUp(KeyCode.D) && horizontalDirection == 1) horizontalDirection = 0; // Stop player from being able to move again if they release the key related to the direction they're moving in
+        playJumpSound = Input.GetKey(KeyCode.Space) && CanJump;
         if (Input.GetKey(KeyCode.Space) && CanJump) vVel = Mathf.Sqrt(2 * gravity * (jumpHeight + extraJumpHeight));
         pressingSlide = Input.GetKey(KeyCode.LeftControl);
         if (!pressingSlide) currentSlideTime = 0f; // Reset time player is sliding for
@@ -219,6 +230,11 @@ public class PlayerManager : MonoBehaviour, GameEvents::IEventListener
                 }
                 break;
         }
+        if (playJumpSound && allowedToPlayJump)
+        {
+            EffectsManager.Instance.PlaySound(jumpSound, transform, jumpSound.length, 0.1f, 0.2f);
+            allowedToPlayJump = false;
+        } 
         if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit rayHit, maxGroundCheckDistance, groundLayer)) // Make sure player is directly above ground not a gap
         {
             if (rayHit.point.y < TERRAIN_RAY_THRESHOLD) // Check that the player's feet would be below 0 but also below floating-pont threshold set
@@ -254,7 +270,11 @@ public class PlayerManager : MonoBehaviour, GameEvents::IEventListener
         Vector3 movement = (hVel + UtilMethods.YVector(vVel)) * Time.fixedDeltaTime;
         if (GameManager.Instance.State == GameManager.GameState.Alive) cc.Move(movement);
         isGrounded = cc.isGrounded || wasGroundedLastFrame;
-        if (isGrounded && inAir) EffectsManager.Instance.PlaySound(landingSound, transform, 0.01f);
+        if (isGrounded && inAir)
+        {
+            EffectsManager.Instance.PlaySound(landingSound, transform, landingSound.length, 0.025f);
+            allowedToPlayJump = true;
+        }
         inAir = !cc.isGrounded && !wasGroundedLastFrame;
         if (cc.isGrounded)
         {
