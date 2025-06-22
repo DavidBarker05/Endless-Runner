@@ -22,6 +22,12 @@ public class PlayerManager : MonoBehaviour, GameEvents::IEventListener
         WallrunLeft,
     }
 
+    struct AudioState
+    {
+        int id;
+        AudioClip clip;
+    }
+
     public static PlayerManager Instance { get; private set; }
 
     [SerializeField]
@@ -89,6 +95,7 @@ public class PlayerManager : MonoBehaviour, GameEvents::IEventListener
     Animator animator;
     bool wasGroundedLastFrame = true;
     bool isGrounded = true;
+    AudioState audioState;
 
     /// <summary>
     /// 
