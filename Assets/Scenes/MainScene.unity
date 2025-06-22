@@ -10674,14 +10674,20 @@ MonoBehaviour:
   - {fileID: 2385143832511243022, guid: f53168e7959bfc04baf5ff07db01c658, type: 3}
   - {fileID: 2916651130221960852, guid: 44320ff7ac34b6a4ba2e2867dc3efdfc, type: 3}
   levelOneBoss: {fileID: 5349580612360630572, guid: e478332471e0ecf4d9987cf9e993f9c6, type: 3}
-  levelOneExit: {fileID: 0}
-  levelTwoStartingTerrain: []
-  levelTwoTerrain: []
-  levelTwoObstacles: []
-  levelTwoPickups: []
+  levelOneExit: {fileID: 6503495134511654158, guid: be0ad5bc01b5a3c40be0de02687e9cee, type: 3}
+  levelTwoStartingTerrain:
+  - {fileID: 6503495134511654158, guid: 5a83b47a58567704badb38cf66f00cea, type: 3}
+  levelTwoTerrain:
+  - {fileID: 6503495134511654158, guid: 5a83b47a58567704badb38cf66f00cea, type: 3}
+  levelTwoObstacles:
+  - {fileID: 2119455103884263237, guid: 6a5a9334eca772b4f9d86d68b04b2640, type: 3}
+  levelTwoPickups:
+  - {fileID: 1525061444814291816, guid: 386bed13c7aa3a8478ce7fd624dd81ee, type: 3}
+  - {fileID: 2385143832511243022, guid: f53168e7959bfc04baf5ff07db01c658, type: 3}
+  - {fileID: 2916651130221960852, guid: 44320ff7ac34b6a4ba2e2867dc3efdfc, type: 3}
   levelTwoBossSpawnLocation: {fileID: 4617383}
   levelTwoBoss: {fileID: 517973283296500996, guid: 614cd91f93631944ba25c78511129f9a, type: 3}
-  levelTwoExit: {fileID: 0}
+  levelTwoExit: {fileID: 6503495134511654158, guid: be0ad5bc01b5a3c40be0de02687e9cee, type: 3}
 --- !u!65 &1835439954
 BoxCollider:
   m_ObjectHideFlags: 0
