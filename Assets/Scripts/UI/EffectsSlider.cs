@@ -18,14 +18,14 @@ public class EffectsSlider : MonoBehaviour
         slider.onValueChanged.RemoveAllListeners();
         float volume = UserSettingsManager.Instance.UserSettings.effectsVolume;
         slider.value = Mathf.Clamp(volume, slider.minValue, slider.maxValue);
-        effectsValueLabel.text = $"{volume * 100f}";
+        effectsValueLabel.text = $"{Mathf.Floor(volume * 1000f) / 10f}";
         slider.onValueChanged.AddListener(ChangeEffectsVolume);
     }
 
     void ChangeEffectsVolume(float value)
     {
         float volume = Mathf.Round(value * 10000f) / 10000f; // Make volume have only 4 decimal
-        effectsValueLabel.text = $"{Mathf.Round(volume * 1000f) / 1000f * 100f}";
+        effectsValueLabel.text = $"{Mathf.Floor(volume * 1000f) / 10f}";
         UserSettingsManager.Instance.UserSettings.effectsVolume = volume;
     }
 }

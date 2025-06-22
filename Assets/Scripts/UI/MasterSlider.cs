@@ -18,14 +18,14 @@ public class MasterSlider : MonoBehaviour
         slider.onValueChanged.RemoveAllListeners();
         float volume = UserSettingsManager.Instance.UserSettings.masterVolume;
         slider.value = Mathf.Clamp(volume, slider.minValue, slider.maxValue);
-        masterValueLabel.text = $"{volume * 100f}";
+        masterValueLabel.text = $"{Mathf.Floor(volume * 1000f) / 10f}";
         slider.onValueChanged.AddListener(ChangeMasterVolume);
     }
 
     void ChangeMasterVolume(float value)
     {
         float volume = Mathf.Round(value * 10000f) / 10000f; // Make volume have only 4 decimal
-        masterValueLabel.text = $"{Mathf.Round(volume * 1000f) / 1000f * 100f}";
+        masterValueLabel.text = $"{Mathf.Floor(volume * 1000f) / 10f}";
         UserSettingsManager.Instance.UserSettings.masterVolume = volume;
     }
 }
