@@ -254,7 +254,7 @@ public class PlayerManager : MonoBehaviour, GameEvents::IEventListener
         Vector3 movement = (hVel + UtilMethods.YVector(vVel)) * Time.fixedDeltaTime;
         if (GameManager.Instance.State == GameManager.GameState.Alive) cc.Move(movement);
         isGrounded = cc.isGrounded || wasGroundedLastFrame;
-        if (isGrounded && inAir) EffectsManager.Instance.PlaySound(landingSound, transform, 0.125f);
+        if (isGrounded && inAir) EffectsManager.Instance.PlaySound(landingSound, transform, 0.01f);
         inAir = !cc.isGrounded && !wasGroundedLastFrame;
         if (cc.isGrounded)
         {
