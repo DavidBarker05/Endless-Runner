@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -25,19 +24,20 @@ public class EffectsManager : MonoBehaviour
         _soundEffect.volume = Mathf.Clamp01(volume);
         _soundEffect.loop = looping;
         _soundEffect.Play();
+        StartCoroutine(ListenForPause(_soundEffect));
         return _soundEffect;
     }
 
     public void PlaySound(AudioClip audioClip, Transform spawn, float volume = 1f)
     {
         AudioSource _soundEffect = CreateAudioSource(audioClip, spawn, volume);
-        StartCoroutine(DestroySound(_soundEffect, _soundEffect.clip.length));
+        StartCoroutine(DestroySound(_soundEffect.gameObject, _soundEffect.clip.length));
     }
 
     public void PlaySound(AudioClip audioClip, GameObject followSource, float volume = 1f) {
         AudioSource _soundEffect = CreateAudioSource(audioClip, followSource.transform, volume);
         StartCoroutine(FollowSource(_soundEffect.gameObject, followSource));
-        StartCoroutine(DestroySound(_soundEffect, _soundEffect.clip.length));
+        StartCoroutine(DestroySound(_soundEffect.gameObject, _soundEffect.clip.length));
     }
 
     public int PlayLoopingSound(AudioClip audioClip, Transform spawn, float volume = 1f)
@@ -81,21 +81,30 @@ public class EffectsManager : MonoBehaviour
         Destroy(_soundEffect.gameObject);
     }
 
-    System.Collections.IEnumerator DestroySound(AudioSource sound, float clipLength)
+    System.Collections.IEnumerator ListenForPause(AudioSource audioSource)
+    {
+        while (audioSource != null)
+        {
+            while (GameManager.Instance.State == GameManager.GameState.Paused)
+            {
+                if (audioSource.isPlaying) audioSource.Pause();
+                yield return null;
+            }
+            if (!audioSource.isPlaying) audioSource.UnPause();
+            yield return new WaitForFixedUpdate();
+        }
+    }
+
+    System.Collections.IEnumerator DestroySound(GameObject soundObject, float clipLength)
     {
         float _timer = 0f;
         while (_timer < clipLength)
         {
-            while (GameManager.Instance.State == GameManager.GameState.Paused)
-            {
-                if (sound.isPlaying) sound.Pause();
-                yield return null;
-            }
-            if (!sound.isPlaying) sound.UnPause();
+            while (GameManager.Instance.State == GameManager.GameState.Paused) yield return null;
             _timer += Time.fixedDeltaTime;
             yield return new WaitForFixedUpdate();
         }
-        Destroy(sound.gameObject);
+        Destroy(soundObject);
     }
 
     System.Collections.IEnumerator FollowSource(GameObject soundObject, GameObject followObject)
