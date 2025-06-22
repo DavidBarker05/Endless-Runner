@@ -51,6 +51,8 @@ public class PlayerManager : MonoBehaviour, GameEvents::IEventListener
     [SerializeField]
     AudioClip slidingSound;
     [SerializeField]
+    AudioClip crashSound;
+    [SerializeField]
     LayerMask groundLayer;
     [SerializeField]
     [Min(0f)]
@@ -117,6 +119,7 @@ public class PlayerManager : MonoBehaviour, GameEvents::IEventListener
     bool inAir = false;
     bool playJumpSound = false;
     bool allowedToPlayJump = true;
+    bool allowedToPlayCrash = true;
 
     /// <summary>
     /// 
@@ -141,6 +144,7 @@ public class PlayerManager : MonoBehaviour, GameEvents::IEventListener
     public AnimationState State { get; set; }
     public bool Caught { get; set; }
     public bool Invulnerable { get; private set; }
+    public bool PlayCrash { get; set; }
 
     void Awake()
     {
@@ -239,12 +243,24 @@ public class PlayerManager : MonoBehaviour, GameEvents::IEventListener
                     audioState = new AudioState(slidingSound, EffectsManager.Instance.PlayLoopingSound(slidingSound, transform, 0.01f));
                 }
                 break;
+            default:
+                if (audioState != null)
+                {
+                    EffectsManager.Instance.StopLoopingSound(audioState.clip, audioState.id);
+                    audioState = null;
+                }
+                break;
         }
         if (playJumpSound && allowedToPlayJump)
         {
             EffectsManager.Instance.PlaySound(jumpSound, transform, jumpSound.length, 0.1f, 0.2f);
             allowedToPlayJump = false;
-        } 
+        }
+        if (PlayCrash && allowedToPlayCrash)
+        {
+            EffectsManager.Instance.PlaySound(crashSound, transform, crashSound.length, 0.5f, 0.15f);
+            allowedToPlayCrash = false;
+        }
         if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit rayHit, maxGroundCheckDistance, groundLayer)) // Make sure player is directly above ground not a gap
         {
             if (rayHit.point.y < TERRAIN_RAY_THRESHOLD) // Check that the player's feet would be below 0 but also below floating-pont threshold set

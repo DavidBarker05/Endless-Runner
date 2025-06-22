@@ -4611,13 +4611,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f6991899ce510e458b2a62abca783c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _exposedStart: 0.2
+  _exposedStart: 0.15
   _exposedEnd: 0.6
-  _exposedVolume: 0.1
+  _exposedVolume: 0.5
   runningSound: {fileID: 8300000, guid: 18747abc08a96db4393419b19dc933d4, type: 3}
   jumpSound: {fileID: 8300000, guid: baaa363d984032d4fb9eea6f649ec2ad, type: 3}
   landingSound: {fileID: 8300000, guid: baaa363d984032d4fb9eea6f649ec2ad, type: 3}
   slidingSound: {fileID: 8300000, guid: 5f8c46d2eaf4a464388003fa1b178c9c, type: 3}
+  crashSound: {fileID: 8300000, guid: 39a340eb97bad3d46987d6be82683922, type: 3}
   groundLayer:
     serializedVersion: 2
     m_Bits: 256

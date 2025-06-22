@@ -11,6 +11,10 @@ public class Obstacle : MonoBehaviour
         GameManager.Instance.State = GameManager.GameState.Dead;
         if (gameObject.CompareTag("ExplosiveBarrel")) PlayerManager.Instance.State = PlayerManager.AnimationState.Exploded;
         else if (gameObject.CompareTag("LevelOneBoss")) PlayerManager.Instance.Caught = true;
-        else PlayerManager.Instance.State = PlayerManager.AnimationState.Crash;
+        else
+        {
+            PlayerManager.Instance.State = PlayerManager.AnimationState.Crash;
+            PlayerManager.Instance.PlayCrash = true;
+        }
     }
 }
