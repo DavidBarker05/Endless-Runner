@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,48 +18,52 @@ public class EffectsManager : MonoBehaviour
         else Instance = this;
     }
 
-    public void PlaySound(AudioClip audioClip, Transform spawn, float volume = 1f)
+    AudioSource CreateAudioSource(AudioClip audioClip, Transform spawn, float volume = 1f, bool looping = false)
     {
         AudioSource _soundEffect = Instantiate(soundEffect, spawn.position, Quaternion.identity);
         _soundEffect.clip = audioClip;
         _soundEffect.volume = Mathf.Clamp01(volume);
+        _soundEffect.loop = looping;
         _soundEffect.Play();
-        StartCoroutine(DestroySound(_soundEffect.gameObject, _soundEffect.clip.length));
+        return _soundEffect;
+    }
+
+    public void PlaySound(AudioClip audioClip, Transform spawn, float volume = 1f)
+    {
+        AudioSource _soundEffect = CreateAudioSource(audioClip, spawn, volume);
+        StartCoroutine(DestroySound(_soundEffect, _soundEffect.clip.length));
     }
 
     public void PlaySound(AudioClip audioClip, GameObject followSource, float volume = 1f) {
-        AudioSource _soundEffect = Instantiate(soundEffect, followSource.transform.position, Quaternion.identity);
-        _soundEffect.clip = audioClip;
-        _soundEffect.volume = Mathf.Clamp01(volume);
-        _soundEffect.Play();
+        AudioSource _soundEffect = CreateAudioSource(audioClip, followSource.transform, volume);
         StartCoroutine(FollowSource(_soundEffect.gameObject, followSource));
-        StartCoroutine(DestroySound(_soundEffect.gameObject, _soundEffect.clip.length));
+        StartCoroutine(DestroySound(_soundEffect, _soundEffect.clip.length));
     }
 
     public int PlayLoopingSound(AudioClip audioClip, Transform spawn, float volume = 1f)
     {
-        AudioSource _audioSource = Instantiate(soundEffect, spawn.position, Quaternion.identity);
-        _audioSource.clip = audioClip;
-        _audioSource.volume = Mathf.Clamp01(volume);
-        _audioSource.loop = true;
-        _audioSource.Play();
+        AudioSource _soundEffect = CreateAudioSource(audioClip, spawn, volume, looping: true);
         if (nextSoundId.ContainsKey(audioClip.name)) nextSoundId[audioClip.name]++;
-        else nextSoundId.Add(audioClip.name, 0);
-        loopingSounds[audioClip.name].Add(nextSoundId[audioClip.name], _audioSource);
+        else
+        {
+            nextSoundId.Add(audioClip.name, 0);
+            loopingSounds.Add(audioClip.name, new Dictionary<int, AudioSource>());
+        }
+        loopingSounds[audioClip.name].Add(nextSoundId[audioClip.name], _soundEffect);
         return nextSoundId[audioClip.name];
     }
 
     public int PlayLoopingSound(AudioClip audioClip, GameObject followSource, float volume = 1f)
     {
-        AudioSource _audioSource = Instantiate(soundEffect, followSource.transform.position, Quaternion.identity);
-        _audioSource.clip = audioClip;
-        _audioSource.volume = Mathf.Clamp01(volume);
-        _audioSource.loop = true;
-        _audioSource.Play();
-        StartCoroutine(FollowSource(_audioSource.gameObject, followSource));
+        AudioSource _soundEffect = CreateAudioSource(audioClip, followSource.transform, volume, looping: true);
+        StartCoroutine(FollowSource(_soundEffect.gameObject, followSource));
         if (nextSoundId.ContainsKey(audioClip.name)) nextSoundId[audioClip.name]++;
-        else nextSoundId.Add(audioClip.name, 0);
-        loopingSounds[audioClip.name].Add(nextSoundId[audioClip.name], _audioSource);
+        else
+        {
+            nextSoundId.Add(audioClip.name, 0);
+            loopingSounds.Add(audioClip.name, new Dictionary<int, AudioSource>());
+        }
+        loopingSounds[audioClip.name].Add(nextSoundId[audioClip.name], _soundEffect);
         return nextSoundId[audioClip.name];
     }
 
@@ -76,21 +81,26 @@ public class EffectsManager : MonoBehaviour
         Destroy(_soundEffect.gameObject);
     }
 
-    System.Collections.IEnumerator DestroySound(GameObject soundObject, float clipLength)
+    System.Collections.IEnumerator DestroySound(AudioSource sound, float clipLength)
     {
         float _timer = 0f;
         while (_timer < clipLength)
         {
-            while (GameManager.Instance.State == GameManager.GameState.Paused) yield return null;
+            while (GameManager.Instance.State == GameManager.GameState.Paused)
+            {
+                if (sound.isPlaying) sound.Pause();
+                yield return null;
+            }
+            if (!sound.isPlaying) sound.UnPause();
             _timer += Time.fixedDeltaTime;
             yield return new WaitForFixedUpdate();
         }
-        Destroy(soundObject);
+        Destroy(sound.gameObject);
     }
 
     System.Collections.IEnumerator FollowSource(GameObject soundObject, GameObject followObject)
     {
-        while (true)
+        while (soundObject != null && followObject != null)
         {
             while (GameManager.Instance.State == GameManager.GameState.Paused) yield return null;
             soundObject.transform.position = followObject.transform.position;

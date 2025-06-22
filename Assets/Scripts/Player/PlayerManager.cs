@@ -25,6 +25,8 @@ public class PlayerManager : MonoBehaviour, GameEvents::IEventListener
     public static PlayerManager Instance { get; private set; }
 
     [SerializeField]
+    AudioClip running;
+    [SerializeField]
     LayerMask groundLayer;
     [SerializeField]
     [Min(0f)]
