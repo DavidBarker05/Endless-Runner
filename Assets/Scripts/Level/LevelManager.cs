@@ -155,7 +155,7 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
         Speed += startingSpeed / 30f * Time.fixedDeltaTime; // Increase speed
         if (!isBossTimerEnabled) return; // Don't deal with boss timer logic until the level starts
         bossTimer += Time.fixedDeltaTime;
-        if (bossTimer >= 30f) // Spawn or defeat boss after timer reaches 30 seconds
+        if (bossTimer >= 15f) // Spawn or defeat boss after timer reaches 30 seconds
         {
             if (IsBossActive) GameManager.Instance.InvokeEvent(currentLevel == 1 ? GameEvents::EventType.BossOneBeaten : GameEvents::EventType.BossTwoBeaten, this, BossesBeaten + 1);
             else GameManager.Instance.InvokeEvent(currentLevel == 1 ? GameEvents::EventType.BossOneSpawn : GameEvents::EventType.BossTwoSpawn, this);
@@ -327,11 +327,17 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
     public void LevelUp()
     {
         currentLevel = currentLevel == 1 ? 2 : 1;
-        isLevelStart = true;
-        GenerateTerrainOnTrigger = false;
-        isBossTimerEnabled = true;
         Array.ForEach<SpawnableTerrain>(generatedTerrain.ToArray(), t => DestroyTerrain(t));
+        isLevelStart = true;
+        lastGeneratedTerrain = null;
+        lastGeneratedObstacleCount = 0;
+        GenerateTerrainOnTrigger = false;
+        bossTimer = 0f;
+        isBossTimerEnabled = true;
+        isLevelEnd = false;
         GenerateStartingTerrain();
+        PlayerManager.Instance.ResetPlayer();
+        PickupManager.Instance.ResetPickups();
     }
 
     // Resets game to start
@@ -400,13 +406,15 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
                 {
                     GameObject exit = Instantiate(levelOneExit, transform);
                     exit.transform.position = spawnLocation.position;
+                    generatedTerrain.Add(exit.GetComponent<SpawnableTerrain>());
                 }
                 break;
             case GameEvents::EventType.BossTwoSpawn:
                 bossTimer = 0f;
                 if (levelTwoBoss == null) return;
-                boss = Instantiate(levelTwoBoss);
-                boss.transform.position = levelTwoBossSpawnLocation.position;
+                boss = Instantiate(levelTwoBoss, levelTwoBossSpawnLocation);
+                ((LevelTwoBoss)boss).Lanes = lanes;
+                boss.transform.parent = null;
                 IsBossActive = true;
                 break;
             case GameEvents::EventType.BossTwoBeaten:
@@ -421,6 +429,7 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
                 {
                     GameObject exit = Instantiate(levelTwoExit, transform);
                     exit.transform.position = spawnLocation.position;
+                    generatedTerrain.Add(exit.GetComponent<SpawnableTerrain>());
                 }
                 break;
         }

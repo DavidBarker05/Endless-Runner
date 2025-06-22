@@ -10,8 +10,6 @@ public class LevelTwoBoss : Boss, GameEvents::IEventListener
     [SerializeField]
     float activeY;
     [SerializeField]
-    Transform[] lanes = new Transform[3];
-    [SerializeField]
     float laneSwitchTime;
     [SerializeField]
     float shotChargeTime;
@@ -30,6 +28,8 @@ public class LevelTwoBoss : Boss, GameEvents::IEventListener
     int currentLane = 1;
     int targetLane = 1;
     bool isDisengaging = false;
+
+    public Transform[] Lanes { get; set; }
 
     void Awake()
     {
@@ -58,18 +58,18 @@ public class LevelTwoBoss : Boss, GameEvents::IEventListener
     IEnumerator SwitchLanes()
     {
         if (isDisengaging) yield break; // If disengaging don't switch lanes
-        targetLane = Random.Range(0, lanes.Length);
+        targetLane = Random.Range(0, Lanes.Length);
         float timer = 0f;
         while (timer < laneSwitchTime && !isDisengaging)
         {
             while (GameManager.Instance.State == GameManager.GameState.Paused) yield return null;
             timer += Time.fixedDeltaTime;
-            transform.position += new Vector3((lanes[targetLane].position.x - lanes[currentLane].position.x) / laneSwitchTime * Time.fixedDeltaTime, 0f);
+            transform.position += new Vector3((Lanes[targetLane].position.x - Lanes[currentLane].position.x) / laneSwitchTime * Time.fixedDeltaTime, 0f);
             yield return new WaitForFixedUpdate();
         }
         if (isDisengaging) yield break; // If disengaging don't snap to target lane and don't start next action
         currentLane = targetLane;
-        transform.position = new Vector3(lanes[currentLane].position.x, transform.position.y, transform.position.z);
+        transform.position = new Vector3(Lanes[currentLane].position.x, transform.position.y, transform.position.z);
         if (GameManager.Instance.State == GameManager.GameState.Dead) yield break; // If dead don't start next action
         StartCoroutine(ChargeShot());
     }
@@ -92,13 +92,12 @@ public class LevelTwoBoss : Boss, GameEvents::IEventListener
     {
         if (isDisengaging || GameManager.Instance.State == GameManager.GameState.Dead) yield break; // If disengaging or dead don't shoot
         GameObject _laserShot = Instantiate(laserShot, barrel);
-        _laserShot.transform.position = transform.position;
         float timer = 0f;
         while (timer < shotDuration && !isDisengaging)
         {
             while (GameManager.Instance.State == GameManager.GameState.Paused) yield return null;
             timer += Time.fixedDeltaTime;
-            if (PlayerManager.Instance.transform.position.x == lanes[currentLane].position.x && !PlayerManager.Instance.Invulnerable) GameManager.Instance.State = GameManager.GameState.Dead;
+            if (PlayerManager.Instance.transform.position.x == Lanes[currentLane].position.x && !PlayerManager.Instance.Invulnerable) GameManager.Instance.State = GameManager.GameState.Dead;
             yield return new WaitForFixedUpdate();
         }
         Destroy(_laserShot);
