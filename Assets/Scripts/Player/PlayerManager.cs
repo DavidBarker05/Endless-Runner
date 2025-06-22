@@ -49,6 +49,8 @@ public class PlayerManager : MonoBehaviour, GameEvents::IEventListener
     [SerializeField]
     AudioClip landingSound;
     [SerializeField]
+    AudioClip slidingSound;
+    [SerializeField]
     LayerMask groundLayer;
     [SerializeField]
     [Min(0f)]
@@ -227,6 +229,14 @@ public class PlayerManager : MonoBehaviour, GameEvents::IEventListener
                 {
                     EffectsManager.Instance.StopLoopingSound(audioState.clip, audioState.id);
                     audioState = null;
+                }
+                break;
+            case AnimationState.Slide:
+                if (audioState == null) audioState = new AudioState(slidingSound, EffectsManager.Instance.PlayLoopingSound(slidingSound, transform));
+                else if (audioState?.clip != slidingSound)
+                {
+                    EffectsManager.Instance.StopLoopingSound(audioState.clip, audioState.id);
+                    audioState = new AudioState(slidingSound, EffectsManager.Instance.PlayLoopingSound(slidingSound, transform, 0.01f));
                 }
                 break;
         }
