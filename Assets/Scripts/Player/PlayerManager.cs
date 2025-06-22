@@ -22,16 +22,22 @@ public class PlayerManager : MonoBehaviour, GameEvents::IEventListener
         WallrunLeft,
     }
 
-    struct AudioState
+    class AudioState
     {
-        int id;
-        AudioClip clip;
+        public AudioClip clip;
+        public int id;
+
+        public AudioState(AudioClip clip, int id)
+        {
+            this.clip = clip;
+            this.id = id;
+        }
     }
 
     public static PlayerManager Instance { get; private set; }
 
     [SerializeField]
-    AudioClip running;
+    AudioClip runningSound;
     [SerializeField]
     LayerMask groundLayer;
     [SerializeField]
@@ -191,6 +197,17 @@ public class PlayerManager : MonoBehaviour, GameEvents::IEventListener
             if (animator.speed == 0f) animator.speed = 1f;
             if (jumpParticles.playbackSpeed == 0f) jumpParticles.playbackSpeed = 1f;
             if (bonusParticles.playbackSpeed == 0f) bonusParticles.playbackSpeed = 1f;
+        }
+        switch (State)
+        {
+            case AnimationState.Run:
+                if (audioState == null) audioState = new AudioState(runningSound, EffectsManager.Instance.PlayLoopingSound(runningSound, transform));
+                else if (audioState?.clip != runningSound)
+                {
+                    EffectsManager.Instance.StopLoopingSound(audioState.clip, audioState.id);
+                    audioState = new AudioState(runningSound, EffectsManager.Instance.PlayLoopingSound(runningSound, transform));
+                }
+                break;
         }
         if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit rayHit, maxGroundCheckDistance, groundLayer)) // Make sure player is directly above ground not a gap
         {
