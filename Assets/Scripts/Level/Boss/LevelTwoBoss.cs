@@ -16,6 +16,8 @@ public class LevelTwoBoss : Boss, GameEvents::IEventListener
     [SerializeField]
     float shotChargeTime;
     [SerializeField]
+    Transform barrel;
+    [SerializeField]
     GameObject laserShot;
     [SerializeField]
     float shotDuration;
@@ -89,7 +91,7 @@ public class LevelTwoBoss : Boss, GameEvents::IEventListener
     IEnumerator Shoot()
     {
         if (isDisengaging || GameManager.Instance.State == GameManager.GameState.Dead) yield break; // If disengaging or dead don't shoot
-        GameObject _laserShot = Instantiate(laserShot, transform);
+        GameObject _laserShot = Instantiate(laserShot, barrel);
         _laserShot.transform.position = transform.position;
         float timer = 0f;
         while (timer < shotDuration && !isDisengaging)
