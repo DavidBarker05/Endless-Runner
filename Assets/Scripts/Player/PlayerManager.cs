@@ -278,11 +278,17 @@ public class PlayerManager : MonoBehaviour, GameEvents::IEventListener
         }
         if (State == AnimationState.WallrunRight || State == AnimationState.WallrunLeft)
         {
+            playerMesh.transform.localPosition = Vector3.zero + (State == AnimationState.WallrunRight ? 0.5f : -0.5f) * transform.right;
             playerMesh.transform.rotation = Quaternion.Euler(0f, 0f, State == AnimationState.WallrunRight ? 25f : -25f);
             vVel = 0f;
             animator.SetInteger("AnimationState", (int)State); // Set animation state
+            transform.position = new Vector3(lanes[targetLane].position.x, transform.position.y, transform.position.z);
+            currentLane = targetLane;
+            targetLane += horizontalDirection;
+            targetLane = Mathf.Clamp(targetLane, 0, 2);
             return; // Stop CharacterController from doing any movement while wallrunning
         }
+        playerMesh.transform.localPosition = Vector3.zero;
         playerMesh.transform.rotation = Quaternion.Euler(0f, 0f, 0f); // Make sure player mesh goes back to normal rotation
         if (IsSliding)
         {

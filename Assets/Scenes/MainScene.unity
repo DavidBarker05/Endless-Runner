@@ -10692,6 +10692,10 @@ MonoBehaviour:
   - {fileID: 6503495134511654158, guid: 5a83b47a58567704badb38cf66f00cea, type: 3}
   levelTwoTerrain:
   - {fileID: 6503495134511654158, guid: 5a83b47a58567704badb38cf66f00cea, type: 3}
+  - {fileID: 6503495134511654158, guid: a06eed11cb6ccf74786e605b3a9aec07, type: 3}
+  - {fileID: 6503495134511654158, guid: 54d9accb21f2c8d45b3675559fe1b7cb, type: 3}
+  - {fileID: 6503495134511654158, guid: d4f370ed539b20c43ab16407ec5a68fa, type: 3}
+  - {fileID: 6503495134511654158, guid: ec6d79628251caa49aa04c0d4827bab3, type: 3}
   levelTwoObstacles:
   - {fileID: 2119455103884263237, guid: 6a5a9334eca772b4f9d86d68b04b2640, type: 3}
   levelTwoPickups:
