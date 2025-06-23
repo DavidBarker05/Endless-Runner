@@ -30,6 +30,10 @@ public class UserSettingsManager : MonoBehaviour
         }
         else LoadSettings();
         previousSettings = new UserSettings(UserSettings);
+    }
+
+    void Start()
+    {
         Screen.SetResolution(UserSettings.resolution[0], UserSettings.resolution[1], fullscreen: true);
         QualitySettings.vSyncCount = UserSettings.vsyncCount;
         Application.targetFrameRate = UserSettings.targetFrameRate;
