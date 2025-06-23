@@ -143,7 +143,7 @@ public class PlayerManager : MonoBehaviour, GameEvents::IEventListener
     public bool CanJump => isGrounded && !IsSliding && GameManager.Instance.State == GameManager.GameState.Alive;
     public AnimationState State { get; set; }
     public bool Caught { get; set; }
-    public bool Invulnerable { get; private set; }
+    public bool Invulnerable { get; set; }
     public bool PlayCrash { get; set; }
 
     void Awake()
@@ -283,9 +283,9 @@ public class PlayerManager : MonoBehaviour, GameEvents::IEventListener
             vVel = 0f;
             animator.SetInteger("AnimationState", (int)State); // Set animation state
             transform.position = new Vector3(lanes[targetLane].position.x, transform.position.y, transform.position.z);
-            currentLane = targetLane;
-            targetLane += horizontalDirection;
-            targetLane = Mathf.Clamp(targetLane, 0, 2);
+        currentLane = targetLane;
+        targetLane += horizontalDirection;
+        targetLane = Mathf.Clamp(targetLane, 0, 2);
             return; // Stop CharacterController from doing any movement while wallrunning
         }
         playerMesh.transform.localPosition = Vector3.zero;

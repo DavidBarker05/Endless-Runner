@@ -22,6 +22,7 @@ public class WallrunSurface : MonoBehaviour
     {
         if (!other.CompareTag("Player")) return;
         PlayerManager.Instance.State = surfaceSide == SurfaceSide.Right ? PlayerManager.AnimationState.WallrunRight : PlayerManager.AnimationState.WallrunLeft;
+        PlayerManager.Instance.Invulnerable = true;
         if (changePlayerY != null) StopCoroutine(changePlayerY);
         changePlayerY = StartCoroutine(ChangePlayerY());
     }
@@ -31,6 +32,7 @@ public class WallrunSurface : MonoBehaviour
         if (!other.CompareTag("Player")) return;
         if (PlayerManager.Instance.transform.position.y < wallrunY) PlayerManager.Instance.transform.position = new Vector3(PlayerManager.Instance.transform.position.x, wallrunY);
         PlayerManager.Instance.State = PlayerManager.AnimationState.Fall;
+        PlayerManager.Instance.Invulnerable = false;
         if(changePlayerY != null) StopCoroutine(changePlayerY);
     }
 
