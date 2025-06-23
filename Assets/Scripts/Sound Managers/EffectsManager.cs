@@ -17,34 +17,35 @@ public class EffectsManager : MonoBehaviour
         else Instance = this;
     }
 
-    AudioSource CreateAudioSource(AudioClip audioClip, Transform spawn, float volume = 1f, float startTime = 0f, bool looping = false)
+    AudioSource CreateAudioSource(AudioClip audioClip, Transform spawn, float volume = 1f, float startTime = 0f, float spatialBlend = 0f, bool looping = false)
     {
         AudioSource _soundEffect = Instantiate(soundEffect, spawn.position, Quaternion.identity);
         _soundEffect.clip = audioClip;
         _soundEffect.time = startTime;
         _soundEffect.volume = Mathf.Clamp01(volume);
+        _soundEffect.spatialBlend = spatialBlend;
         _soundEffect.loop = looping;
         _soundEffect.Play();
         StartCoroutine(ListenForPause(_soundEffect));
         return _soundEffect;
     }
 
-    public void PlaySound(AudioClip audioClip, Transform spawn, float endTime, float volume = 1f, float startTime = 0f)
+    public void PlaySound(AudioClip audioClip, Transform spawn, float endTime, float volume = 1f, float startTime = 0f, float spatialBlend = 0f)
     {
-        AudioSource _soundEffect = CreateAudioSource(audioClip, spawn, volume, startTime);
+        AudioSource _soundEffect = CreateAudioSource(audioClip, spawn, volume, startTime, spatialBlend);
         StartCoroutine(DestroySound(_soundEffect.gameObject, endTime - startTime));
     }
 
-    public void PlaySound(AudioClip audioClip, GameObject followSource, float endTime, float volume = 1f, float startTime = 0f)
+    public void PlaySound(AudioClip audioClip, GameObject followSource, float endTime, float volume = 1f, float startTime = 0f, float spatialBlend = 0f)
     {
-        AudioSource _soundEffect = CreateAudioSource(audioClip, followSource.transform, volume, startTime);
+        AudioSource _soundEffect = CreateAudioSource(audioClip, followSource.transform, volume, startTime, spatialBlend);
         StartCoroutine(FollowSource(_soundEffect.gameObject, followSource));
         StartCoroutine(DestroySound(_soundEffect.gameObject, endTime - startTime));
     }
 
-    public int PlayLoopingSound(AudioClip audioClip, Transform spawn, float volume = 1f)
+    public int PlayLoopingSound(AudioClip audioClip, Transform spawn, float volume = 1f, float spatialBlend = 0f)
     {
-        AudioSource _soundEffect = CreateAudioSource(audioClip, spawn, volume, looping: true);
+        AudioSource _soundEffect = CreateAudioSource(audioClip, spawn, volume, spatialBlend, looping: true);
         if (nextSoundId.ContainsKey(audioClip.name)) nextSoundId[audioClip.name]++;
         else
         {
@@ -55,9 +56,9 @@ public class EffectsManager : MonoBehaviour
         return nextSoundId[audioClip.name];
     }
 
-    public int PlayLoopingSound(AudioClip audioClip, GameObject followSource, float volume = 1f)
+    public int PlayLoopingSound(AudioClip audioClip, GameObject followSource, float volume = 1f, float spatialBlend = 0f)
     {
-        AudioSource _soundEffect = CreateAudioSource(audioClip, followSource.transform, volume, looping: true);
+        AudioSource _soundEffect = CreateAudioSource(audioClip, followSource.transform, volume, spatialBlend, looping: true);
         StartCoroutine(FollowSource(_soundEffect.gameObject, followSource));
         if (nextSoundId.ContainsKey(audioClip.name)) nextSoundId[audioClip.name]++;
         else
