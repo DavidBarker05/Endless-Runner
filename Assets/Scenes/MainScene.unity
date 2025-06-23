@@ -10687,7 +10687,7 @@ MonoBehaviour:
   - {fileID: 2385143832511243022, guid: f53168e7959bfc04baf5ff07db01c658, type: 3}
   - {fileID: 2916651130221960852, guid: 44320ff7ac34b6a4ba2e2867dc3efdfc, type: 3}
   levelOneBoss: {fileID: 5349580612360630572, guid: e478332471e0ecf4d9987cf9e993f9c6, type: 3}
-  levelOneExit: {fileID: 6503495134511654158, guid: be0ad5bc01b5a3c40be0de02687e9cee, type: 3}
+  levelOneExit: {fileID: 6503495134511654158, guid: a3a0ff131d541de4c94b248d1a447e85, type: 3}
   levelTwoStartingTerrain:
   - {fileID: 6503495134511654158, guid: 5a83b47a58567704badb38cf66f00cea, type: 3}
   levelTwoTerrain:
