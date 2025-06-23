@@ -11923,7 +11923,11 @@ MonoBehaviour:
   levelOneExit: {fileID: 6503495134511654158, guid: a3a0ff131d541de4c94b248d1a447e85, type: 3}
   levelTwoStartingTerrain:
   - {fileID: 6503495134511654158, guid: 59704804b852f8b45a6b2e12854f1482, type: 3}
-  levelTwoTerrain: []
+  levelTwoTerrain:
+  - {fileID: 6503495134511654158, guid: 3a33b7ac94d01f148b73330a6a2d3f0a, type: 3}
+  - {fileID: 6503495134511654158, guid: f30d19d518e15e046bb8376ca42bb922, type: 3}
+  - {fileID: 6503495134511654158, guid: c3c085cbf5473444093d228dd483f994, type: 3}
+  - {fileID: 6503495134511654158, guid: d52fe01540dd6b64586209299e6ed796, type: 3}
   levelTwoObstacles: []
   levelTwoPickups:
   - {fileID: 1525061444814291816, guid: 386bed13c7aa3a8478ce7fd624dd81ee, type: 3}
