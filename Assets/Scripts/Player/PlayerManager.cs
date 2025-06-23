@@ -147,6 +147,10 @@ public class PlayerManager : MonoBehaviour, GameEvents::IEventListener
     public bool PlayCrash { get; set; }
     public Camera MainCam { get; private set; }
     public float SpeedJumpHeight { get; set; }
+    /// <summary>
+    /// This is used when the player is against the second boss and are locked in a wallrun or slide jump.
+    /// </summary>
+    public bool InvulnerableHelp { get; set; }
 
     void Awake()
     {

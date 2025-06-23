@@ -11,6 +11,7 @@ public class SlopeBoost : MonoBehaviour
     {
         if (!other.CompareTag("Player")) return;
         PlayerManager.Instance.IsForcedSlide = true;
+        PlayerManager.Instance.InvulnerableHelp = true;
         PlayerManager.Instance.MainCam.fieldOfView = boostFOV;
     }
 
