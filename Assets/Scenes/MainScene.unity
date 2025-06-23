@@ -11924,8 +11924,7 @@ MonoBehaviour:
   levelTwoStartingTerrain:
   - {fileID: 6503495134511654158, guid: 59704804b852f8b45a6b2e12854f1482, type: 3}
   levelTwoTerrain: []
-  levelTwoObstacles:
-  - {fileID: 2119455103884263237, guid: 6a5a9334eca772b4f9d86d68b04b2640, type: 3}
+  levelTwoObstacles: []
   levelTwoPickups:
   - {fileID: 1525061444814291816, guid: 386bed13c7aa3a8478ce7fd624dd81ee, type: 3}
   - {fileID: 2385143832511243022, guid: f53168e7959bfc04baf5ff07db01c658, type: 3}
