@@ -356,7 +356,7 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
         BossesBeaten = 0;
         IsBossActive = false;
         bossTimer = 0f;
-        currentLevel = 1;
+        currentLevel = 2;
         isBossTimerEnabled = true;
         isLevelEnd = false;
         if (boss != null) Destroy(boss.gameObject);
