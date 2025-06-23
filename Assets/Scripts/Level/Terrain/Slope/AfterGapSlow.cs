@@ -2,8 +2,13 @@ using UnityEngine;
 
 public class AfterGapSlow : MonoBehaviour
 {
+    [SerializeField]
+    float normalFOV;
+
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player")) LevelManager.Instance.BonusSpeed = 0f;
+        if (!other.CompareTag("Player")) return;
+        PlayerManager.Instance.MainCam.fieldOfView = normalFOV;
+        PlayerManager.Instance.SpeedJumpHeight = 0f;
     }
 }

@@ -118,8 +118,6 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
     List<GameObject> PossibleObstacles => currentLevel == 1 ? levelOneObstacles : levelTwoObstacles;
     // What pickups are currently able to be spawned
     List<GameObject> PossiblePickups => currentLevel == 1 ? (IsBossActive ? levelOnePickupsBoss : levelOnePickupsNoBoss) : levelTwoPickups;
-    //
-    float TotalSpeed => Speed + BonusSpeed;
 
     void Awake()
     {
@@ -150,12 +148,12 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
         if (GameManager.Instance.State != GameManager.GameState.Alive) return;
         foreach (SpawnableTerrain terrain in generatedTerrain)
         {
-            if (terrain.CanMove) terrain.transform.position -= UtilMethods.ZVector(TotalSpeed);
+            if (terrain.CanMove) terrain.transform.position -= UtilMethods.ZVector(Speed);
         }
         Speed += startingSpeed / 30f * Time.fixedDeltaTime; // Increase speed
         if (!isBossTimerEnabled) return; // Don't deal with boss timer logic until the level starts
         bossTimer += Time.fixedDeltaTime;
-        if (bossTimer >= 15f) // Spawn or defeat boss after timer reaches 30 seconds
+        if (bossTimer >= 20f) // Spawn or defeat boss after timer reaches 30 seconds
         {
             if (IsBossActive) GameManager.Instance.InvokeEvent(currentLevel == 1 ? GameEvents::EventType.BossOneBeaten : GameEvents::EventType.BossTwoBeaten, this, BossesBeaten + 1);
             else GameManager.Instance.InvokeEvent(currentLevel == 1 ? GameEvents::EventType.BossOneSpawn : GameEvents::EventType.BossTwoSpawn, this);
@@ -190,9 +188,11 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
         {
             terrainIndex = Random.Range(0, PossibleTerrain.Count);
         }
-        GameObject terrain = Instantiate(PossibleTerrain[terrainIndex], transform);
-        terrain.transform.position = spawnLocation.position;
+        GameObject terrain = Instantiate(PossibleTerrain[terrainIndex], spawnLocation.transform);
+        terrain.transform.parent = transform;
         SpawnableTerrain _terrain = terrain.GetComponent<SpawnableTerrain>();
+        terrain.transform.position -= UtilMethods.ZVector(10f - _terrain.Size);
+        _terrain.IsLocked = false;
         if (terrain.CompareTag("SecurityDoor")) lastGeneratedObstacleCount = 2;
         if (PossibleObstacles.Count > 0 && _terrain.ObstacleRows.Count > 0)
         {
@@ -317,6 +317,8 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
         )
     };
 
+    public bool IsCorrectTrigger(SpawnableTerrain front, SpawnableTerrain back) => generatedTerrain.IndexOf(front) == generatedTerrain.IndexOf(back) - 1;
+
     // Destroys terrain and removes it from the list
     void DestroyTerrain(SpawnableTerrain terrain)
     {
@@ -356,7 +358,7 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
         BossesBeaten = 0;
         IsBossActive = false;
         bossTimer = 0f;
-        currentLevel = 2;
+        currentLevel = 1;
         isBossTimerEnabled = true;
         isLevelEnd = false;
         if (boss != null) Destroy(boss.gameObject);
@@ -406,6 +408,7 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
                 {
                     GameObject exit = Instantiate(levelOneExit, transform);
                     exit.transform.position = spawnLocation.position;
+                    exit.GetComponent<SpawnableTerrain>().IsLocked = false;
                     generatedTerrain.Add(exit.GetComponent<SpawnableTerrain>());
                 }
                 break;
@@ -429,6 +432,7 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
                 {
                     GameObject exit = Instantiate(levelTwoExit, transform);
                     exit.transform.position = spawnLocation.position;
+                    exit.GetComponent<SpawnableTerrain>().IsLocked = false;
                     generatedTerrain.Add(exit.GetComponent<SpawnableTerrain>());
                 }
                 break;

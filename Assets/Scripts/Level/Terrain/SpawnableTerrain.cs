@@ -33,4 +33,7 @@ public class SpawnableTerrain : MonoBehaviour
     /// 
     /// </summary>
     public Transform LowestPoint => lowestPoint;
+    public bool IsLocked { get; set; }
+
+    void Awake() => IsLocked = true;
 }

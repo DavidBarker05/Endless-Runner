@@ -145,6 +145,8 @@ public class PlayerManager : MonoBehaviour, GameEvents::IEventListener
     public bool Caught { get; set; }
     public bool Invulnerable { get; set; }
     public bool PlayCrash { get; set; }
+    public Camera MainCam { get; private set; }
+    public float SpeedJumpHeight { get; set; }
 
     void Awake()
     {
@@ -153,6 +155,7 @@ public class PlayerManager : MonoBehaviour, GameEvents::IEventListener
         cc = GetComponent<CharacterController>();
         standHeight = cc.height;
         animator = GetComponentInChildren<Animator>();
+        MainCam = Camera.main;
     }
 
     void Start()
@@ -197,7 +200,7 @@ public class PlayerManager : MonoBehaviour, GameEvents::IEventListener
         }
         if (Input.GetKeyUp(KeyCode.A) && horizontalDirection == -1 || Input.GetKeyUp(KeyCode.D) && horizontalDirection == 1) horizontalDirection = 0; // Stop player from being able to move again if they release the key related to the direction they're moving in
         playJumpSound = Input.GetKey(KeyCode.Space) && CanJump;
-        if (Input.GetKey(KeyCode.Space) && CanJump) vVel = Mathf.Sqrt(2 * gravity * (jumpHeight + extraJumpHeight));
+        if (Input.GetKey(KeyCode.Space) && CanJump) vVel = Mathf.Sqrt(2 * gravity * (jumpHeight + extraJumpHeight + SpeedJumpHeight));
         pressingSlide = Input.GetKey(KeyCode.LeftControl);
         if (!pressingSlide) currentSlideTime = 0f; // Reset time player is sliding for
     }
@@ -260,12 +263,15 @@ public class PlayerManager : MonoBehaviour, GameEvents::IEventListener
             {
                 if (Physics.SphereCast(transform.position, cc.radius, Vector3.down, out RaycastHit sphereHit, maxGroundCheckDistance, groundLayer)) // Check where the player would be touching the ground
                 {
-                    float centreOffset = Vector3.Dot(sphereHit.normal.normalized, Vector3.down) * cc.radius; // Figure out how far below the contact point is compared to the centre of the sphere
-                    float centreY = sphereHit.point.y - centreOffset; // Calculate the y-position of the centre
-                    float bottomY = centreY - cc.radius; // Figure out where the bottom would for the sphere
-                    float yShift = -bottomY; // The amount to shift the level up by so the player's theoretical bottom point remains at [0, 0, 0]
-                    LevelManager.Instance.OffsetTerrainAndSpawnY(yShift); // Offset the level
-                    transform.position += UtilMethods.YVector(yShift); // Offset the player too
+                    if (!IsForcedSlide)
+                    {
+                        float centreOffset = Vector3.Dot(sphereHit.normal.normalized, Vector3.down) * cc.radius; // Figure out how far below the contact point is compared to the centre of the sphere
+                        float centreY = sphereHit.point.y - centreOffset; // Calculate the y-position of the centre
+                        float bottomY = centreY - cc.radius; // Figure out where the bottom would for the sphere
+                        float yShift = -bottomY; // The amount to shift the level up by so the player's theoretical bottom point remains at [0, 0, 0]
+                        LevelManager.Instance.OffsetTerrainAndSpawnY(yShift); // Offset the level
+                        transform.position += UtilMethods.YVector(yShift); // Offset the player too
+                    }
                 }
             }
         }

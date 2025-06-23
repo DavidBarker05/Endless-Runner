@@ -369,3 +369,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0fc5b0a7b8bad34ab4bf4a420dfa103, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  normalFOV: 60
