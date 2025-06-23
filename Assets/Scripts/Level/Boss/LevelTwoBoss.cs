@@ -97,7 +97,7 @@ public class LevelTwoBoss : Boss, GameEvents::IEventListener
         {
             while (GameManager.Instance.State == GameManager.GameState.Paused) yield return null;
             timer += Time.fixedDeltaTime;
-            if (PlayerManager.Instance.transform.position.x == Lanes[currentLane].position.x && !PlayerManager.Instance.Invulnerable)
+            if (PlayerManager.Instance.transform.position.x == Lanes[currentLane].position.x && !PlayerManager.Instance.Invulnerable && !PlayerManager.Instance.InvulnerableHelp)
             {
                 GameManager.Instance.State = GameManager.GameState.Dead;
                 PlayerManager.Instance.State = PlayerManager.AnimationState.Shot;
