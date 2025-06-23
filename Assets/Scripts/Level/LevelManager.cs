@@ -92,10 +92,6 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
     /// </summary>
     public float Speed { get => _speed; private set => _speed = Mathf.Clamp(value, startingSpeed, MAX_SPEED); }
     /// <summary>
-    /// 
-    /// </summary>
-    public float BonusSpeed { get; set; }
-    /// <summary>
     /// Bool that indicates if terrain can be generated when they go into eachother's triggers
     /// </summary>
     public bool GenerateTerrainOnTrigger { get; private set; }
@@ -353,13 +349,12 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
         lastGeneratedTerrain = null;
         lastGeneratedObstacleCount = 0;
         Speed = startingSpeed;
-        BonusSpeed = 0;
         GenerateTerrainOnTrigger = false;
         GameManager.Instance.InvokeEvent(GameEvents::EventType.ObstaclePassed, this, 0);
         GameManager.Instance.InvokeEvent(GameEvents::EventType.BossOneBeaten, this, 0);
         IsBossActive = false;
         bossTimer = 0f;
-        currentLevel = 2;
+        currentLevel = 1;
         isBossTimerEnabled = true;
         isLevelEnd = false;
         if (boss != null) Destroy(boss.gameObject);
