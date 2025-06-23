@@ -14,6 +14,9 @@ public class MusicManager : MonoBehaviour
     [SerializeField]
     float muffledCuttof = 5000f;
     [SerializeField]
+    [Range(0f, 1f)]
+    float firstMusicVolume;
+    [SerializeField]
     List<AudioClip> musicTracks = new List<AudioClip>();
 
     AudioSource audioSource;
@@ -25,7 +28,7 @@ public class MusicManager : MonoBehaviour
         if (Instance != null && Instance != this) Destroy(gameObject);
         else Instance = this;
         audioSource = GetComponent<AudioSource>();
-        PlayMusic();
+        PlayMusic(0, firstMusicVolume);
     }
 
     public void PlayMusic(int trackNumber = 0, float volume = 1f)

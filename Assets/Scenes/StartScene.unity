@@ -11171,7 +11171,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2eb675c8e9c15c448ac2559dc3dd59a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  musicTracks: []
+  audioMixer: {fileID: 24100000, guid: 5ab4f54f5d3beb54db4fde2e1183f40f, type: 2}
+  normalCuttof: 22000
+  muffledCuttof: 5000
+  firstMusicVolume: 0.3
+  musicTracks:
+  - {fileID: 8300000, guid: ac80e2c1ccebb924385c4a66a609a806, type: 3}
 --- !u!82 &1861042404
 AudioSource:
   m_ObjectHideFlags: 0
@@ -11185,9 +11190,9 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.2
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
