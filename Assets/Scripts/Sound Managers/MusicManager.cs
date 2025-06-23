@@ -31,6 +31,14 @@ public class MusicManager : MonoBehaviour
         PlayMusic(0, firstMusicVolume);
     }
 
+    void Update()
+    {
+        if (GameManager.Instance == null) return;
+        MusicMuffled = GameManager.Instance.State == GameManager.GameState.Paused;
+        if (GameManager.Instance.State == GameManager.GameState.Alive && audioSource.clip != musicTracks[0]) PlayMusic(0, firstMusicVolume);
+        if (GameManager.Instance.State == GameManager.GameState.Dead && audioSource.clip != musicTracks[1]) PlayMusic(1, 0.3f);
+    }
+
     public void PlayMusic(int trackNumber = 0, float volume = 1f)
     {
         if (musicTracks.Count == 0) return;
