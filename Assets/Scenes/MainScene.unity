@@ -11931,7 +11931,7 @@ MonoBehaviour:
   - {fileID: 2916651130221960852, guid: 44320ff7ac34b6a4ba2e2867dc3efdfc, type: 3}
   levelTwoBossSpawnLocation: {fileID: 4617383}
   levelTwoBoss: {fileID: 517973283296500996, guid: 614cd91f93631944ba25c78511129f9a, type: 3}
-  levelTwoExit: {fileID: 6503495134511654158, guid: be0ad5bc01b5a3c40be0de02687e9cee, type: 3}
+  levelTwoExit: {fileID: 6503495134511654158, guid: 9fd05a98270394c4b8cc2eb5a7ed6a50, type: 3}
 --- !u!65 &1835439954
 BoxCollider:
   m_ObjectHideFlags: 0

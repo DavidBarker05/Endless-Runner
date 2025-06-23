@@ -301,73 +301,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edaa41d18ec0ea347982a643f95e25d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &3424226315670857192
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6434622680722044765}
-  - component: {fileID: 9131682189372879146}
-  - component: {fileID: 8236609443139289608}
-  m_Layer: 0
-  m_Name: After Gap Slow
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &6434622680722044765
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3424226315670857192}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 7722802379861423769}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &9131682189372879146
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3424226315670857192}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 10, y: 5, z: 10}
-  m_Center: {x: 0, y: 2.5, z: 0}
---- !u!114 &8236609443139289608
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3424226315670857192}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c0fc5b0a7b8bad34ab4bf4a420dfa103, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  normalFOV: 60
 --- !u!1 &3690365998121154603
 GameObject:
   m_ObjectHideFlags: 0
@@ -549,7 +482,7 @@ GameObject:
   - component: {fileID: 2307996577971270198}
   - component: {fileID: 6754142945354814723}
   m_Layer: 8
-  m_Name: After Gap Terrain
+  m_Name: After Wallrun Terrain
   m_TagString: AfterWallrun
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -571,7 +504,6 @@ Transform:
   - {fileID: 2264519851136349896}
   - {fileID: 2496174153901751655}
   - {fileID: 1385083197509646492}
-  - {fileID: 6434622680722044765}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &4057644844819120238
