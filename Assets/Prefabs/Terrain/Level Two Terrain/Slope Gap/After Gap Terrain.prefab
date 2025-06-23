@@ -550,7 +550,7 @@ GameObject:
   - component: {fileID: 6754142945354814723}
   m_Layer: 8
   m_Name: After Gap Terrain
-  m_TagString: AfterWallrun
+  m_TagString: AfterGap
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

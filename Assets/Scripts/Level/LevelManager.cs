@@ -359,7 +359,7 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
         GameManager.Instance.InvokeEvent(GameEvents::EventType.BossOneBeaten, this, 0);
         IsBossActive = false;
         bossTimer = 0f;
-        currentLevel = 1;
+        currentLevel = 2;
         isBossTimerEnabled = true;
         isLevelEnd = false;
         if (boss != null) Destroy(boss.gameObject);

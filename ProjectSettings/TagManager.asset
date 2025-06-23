@@ -21,6 +21,8 @@ TagManager:
   - Slope
   - Gap
   - AfterGap
+  - SkyboxCamera
+  - DeathBarrier
   layers:
   - Default
   - TransparentFX
