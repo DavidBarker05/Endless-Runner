@@ -166,6 +166,7 @@ public class PlayerManager : MonoBehaviour, GameEvents::IEventListener
     {
         if (GameManager.Instance.State == GameManager.GameState.Dead) return;
         if (Input.GetKey(KeyCode.R) && GameManager.Instance.State == GameManager.GameState.Alive) currentResetHoldTime += Time.deltaTime; // Make time increase while player holds r
+        else currentResetHoldTime = 0f; // Reset timer when release r
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (GameManager.Instance.State == GameManager.GameState.Alive)
@@ -179,7 +180,6 @@ public class PlayerManager : MonoBehaviour, GameEvents::IEventListener
                 GameUIManager.Instance.CurrentScreen = GameUIManager.Instance.Screens[0];
             }
         }
-        else currentResetHoldTime = 0f; // Reset timer when release r
         if (currentResetHoldTime >= resetHoldTime) LevelManager.Instance.ResetGame(); // Reset game once timer excedes time
         if (State == AnimationState.WallrunRight || State == AnimationState.WallrunLeft)
         {
