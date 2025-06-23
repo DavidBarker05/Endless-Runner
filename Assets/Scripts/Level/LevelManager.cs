@@ -356,8 +356,7 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
         BonusSpeed = 0;
         GenerateTerrainOnTrigger = false;
         GameManager.Instance.InvokeEvent(GameEvents::EventType.ObstaclePassed, this, 0);
-        Score = 0;
-        BossesBeaten = 0;
+        GameManager.Instance.InvokeEvent(GameEvents::EventType.BossOneBeaten, this, 0);
         IsBossActive = false;
         bossTimer = 0f;
         currentLevel = 1;
