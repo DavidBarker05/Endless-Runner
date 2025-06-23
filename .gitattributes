@@ -4,8 +4,9 @@
 # Track everything under Assets/Firebase with LFS by default
 Assets/Firebase/** filter=lfs diff=lfs merge=lfs -text
 
-# EXCEPT .meta and .dll files — treat them as normal text
+# EXCEPT necessary — treat them as normal text
 Assets/Firebase/*.meta -filter -diff -merge text
 Assets/Firebase/**/*.meta -filter -diff -merge text
 Assets/Firebase/*.dll -filter -diff -merge binary
 Assets/Firebase/**/*.dll -filter -diff -merge binary
+Assets/Firebase/Editor/generate_xml_from_google_services_json.exe -filter -diff -merge binary
