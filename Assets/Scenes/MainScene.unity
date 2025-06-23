@@ -11505,7 +11505,7 @@ MonoBehaviour:
   audioMixer: {fileID: 24100000, guid: 5ab4f54f5d3beb54db4fde2e1183f40f, type: 2}
   normalCuttof: 22000
   muffledCuttof: 5000
-  firstMusicVolume: 0.3
+  firstMusicVolume: 0.1
   musicTracks:
   - {fileID: 8300000, guid: 68b39a1886b8b914b96de2cf1c647ec5, type: 3}
   - {fileID: 8300000, guid: 5a275d6fbe030a94da066931e75501e4, type: 3}
