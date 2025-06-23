@@ -228,13 +228,6 @@ public class PlayerManager : MonoBehaviour, GameEvents::IEventListener
                     audioState = new AudioState(runningSound, EffectsManager.Instance.PlayLoopingSound(runningSound, transform));
                 }
                 break;
-            case AnimationState.Fall:
-                if (audioState != null)
-                {
-                    EffectsManager.Instance.StopLoopingSound(audioState.clip, audioState.id);
-                    audioState = null;
-                }
-                break;
             case AnimationState.Slide:
                 if (audioState == null) audioState = new AudioState(slidingSound, EffectsManager.Instance.PlayLoopingSound(slidingSound, transform));
                 else if (audioState?.clip != slidingSound)
