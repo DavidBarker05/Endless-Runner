@@ -1,3 +1,8 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+
+# Track everything under Assets/Firebase with LFS by default
 Assets/Firebase/** filter=lfs diff=lfs merge=lfs -text
+
+# EXCEPT .meta files — treat them as normal text
+Assets/Firebase/**/*.meta -filter -diff -merge text
