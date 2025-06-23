@@ -37,12 +37,6 @@ public class PlayerManager : MonoBehaviour, GameEvents::IEventListener
     public static PlayerManager Instance { get; private set; }
 
     [SerializeField]
-    float _exposedStart;
-    [SerializeField]
-    float _exposedEnd;
-    [SerializeField]
-    float _exposedVolume;
-    [SerializeField]
     AudioClip runningSound;
     [SerializeField]
     AudioClip jumpSound;
