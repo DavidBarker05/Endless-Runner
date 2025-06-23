@@ -11,6 +11,8 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
 {
     public static LevelManager Instance { get; private set; }
 
+    [SerializeField]
+    GameObject LevelOneDistantVoid;
     [Header("Spawn Management")]
     [SerializeField]
     [Tooltip("The location where tiles spawn on")]
@@ -153,7 +155,7 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
         Speed += startingSpeed / 30f * Time.fixedDeltaTime; // Increase speed
         if (!isBossTimerEnabled) return; // Don't deal with boss timer logic until the level starts
         bossTimer += Time.fixedDeltaTime;
-        if (bossTimer >= 20f) // Spawn or defeat boss after timer reaches 30 seconds
+        if (bossTimer >= 15f) // Spawn or defeat boss after timer reaches 30 seconds
         {
             if (IsBossActive) GameManager.Instance.InvokeEvent(currentLevel == 1 ? GameEvents::EventType.BossOneBeaten : GameEvents::EventType.BossTwoBeaten, this, BossesBeaten + 1);
             else GameManager.Instance.InvokeEvent(currentLevel == 1 ? GameEvents::EventType.BossOneSpawn : GameEvents::EventType.BossTwoSpawn, this);
@@ -331,6 +333,7 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
     public void LevelUp()
     {
         currentLevel = currentLevel == 1 ? 2 : 1;
+        LevelOneDistantVoid.SetActive(currentLevel == 1);
         Array.ForEach<SpawnableTerrain>(generatedTerrain.ToArray(), t => DestroyTerrain(t));
         isLevelStart = true;
         lastGeneratedTerrain = null;
@@ -406,6 +409,7 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
                 isBossTimerEnabled = false;
                 GenerateTerrainOnTrigger = false;
                 isLevelEnd = true;
+                LevelOneDistantVoid.SetActive(false);
                 if (levelOneExit != null)
                 {
                     GameObject exit = Instantiate(levelOneExit, transform);
