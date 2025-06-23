@@ -221,19 +221,19 @@ public class PlayerManager : MonoBehaviour, GameEvents::IEventListener
         switch (State)
         {
             case AnimationState.Run:
-                if (audioState == null) audioState = new AudioState(runningSound, EffectsManager.Instance.PlayLoopingSound(runningSound, transform));
+                if (audioState == null) audioState = new AudioState(runningSound, EffectsManager.Instance.PlayLoopingSound(runningSound, gameObject));
                 else if (audioState?.clip != runningSound)
                 {
                     EffectsManager.Instance.StopLoopingSound(audioState.clip, audioState.id);
-                    audioState = new AudioState(runningSound, EffectsManager.Instance.PlayLoopingSound(runningSound, transform));
+                    audioState = new AudioState(runningSound, EffectsManager.Instance.PlayLoopingSound(runningSound, gameObject));
                 }
                 break;
             case AnimationState.Slide:
-                if (audioState == null) audioState = new AudioState(slidingSound, EffectsManager.Instance.PlayLoopingSound(slidingSound, transform));
+                if (audioState == null) audioState = new AudioState(slidingSound, EffectsManager.Instance.PlayLoopingSound(slidingSound, gameObject));
                 else if (audioState?.clip != slidingSound)
                 {
                     EffectsManager.Instance.StopLoopingSound(audioState.clip, audioState.id);
-                    audioState = new AudioState(slidingSound, EffectsManager.Instance.PlayLoopingSound(slidingSound, transform, 0.01f));
+                    audioState = new AudioState(slidingSound, EffectsManager.Instance.PlayLoopingSound(slidingSound, gameObject, 0.1f));
                 }
                 break;
             default:
@@ -251,7 +251,7 @@ public class PlayerManager : MonoBehaviour, GameEvents::IEventListener
         }
         if (PlayCrash && allowedToPlayCrash)
         {
-            EffectsManager.Instance.PlaySound(crashSound, transform, crashSound.length, 0.5f, 0.15f);
+            EffectsManager.Instance.PlaySound(crashSound, transform, crashSound.length, 0.2f, 0.15f);
             allowedToPlayCrash = false;
         }
         if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit rayHit, maxGroundCheckDistance, groundLayer)) // Make sure player is directly above ground not a gap
