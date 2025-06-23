@@ -280,6 +280,7 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
             && (!lastGeneratedTerrain?.CompareTag("Wallrun") ?? true)
             && (!lastGeneratedTerrain?.CompareTag("Slope") ?? true)
             && (!lastGeneratedTerrain?.CompareTag("Gap") ?? true)
+            && (!lastGeneratedTerrain?.CompareTag("AfterGap") ?? true)
         ),
         "Wallrun" => (
             currentLevel == 2
@@ -296,6 +297,7 @@ public class LevelManager : MonoBehaviour, GameEvents::IEventListener
             && (!lastGeneratedTerrain?.CompareTag("Wallrun") ?? true)
             && (!lastGeneratedTerrain?.CompareTag("Slope") ?? true)
             && (!lastGeneratedTerrain?.CompareTag("Gap") ?? true)
+            && (!lastGeneratedTerrain?.CompareTag("AfterGap") ?? true)
         ),
         "Gap" => (
             currentLevel == 2
